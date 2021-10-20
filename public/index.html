@@ -1,43 +1,756 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+<!-- Dark mode set in local storage -->
+<html x-data="{ darkMode: localStorage.getItem('dark') === 'true' }" 
+    x-init="$watch('darkMode', val => localStorage.setItem('dark', val))"
+    x-bind:class="{ 'dark': darkMode }"
+    lang="en">
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#42f584"/>
+    <link rel="manifest" href="./manifest.json" crossorigin="use-credentials">
+    <link rel="apple-touch-icon" href="./imgs/koala.png">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="./js.js" defer></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGF1ZrpSQEII3NXkui4e2Sppw0P42irZI&callback=initMap&v=weekly" async></script>
+    <title>Wildlife Watcher</title>
+      
+</head>
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
+<body onload="checkForLogin()" class="dark:bg-gray-700 dark:text-gray-100 bg-gray-50">
+    
+    <div hidden id="root"></div>
+
+    <!-- Alert box -->
+    <div role="alert" id="alertbox" class="absolute inset-x-0 top-0 z-10" hidden>
+        <div class="max-w-md px-3 mx-auto py-7">
+            <span id="alertmsg"></span>
+                <svg onclick="hideAlert()" class="absolute inset-y-0 w-6 h-6 m-auto fill-current right-3" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" id="alertclose"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+            </span>
+        </div>
+    </div>
+
+    <!-- Login -->
+    <div id="login-div" hidden>
+                            <!-- Logout -->
+                    <br>Logout:
+                    <form method="GET" onsubmit="logout(event)" action="ws.php?page=logout">
+                        <input type="submit" value="Logout" class="btn btn-indigo">
+                    </form>
+        <div class="flex items-center justify-center min-h-screen px-4 py-12 sm:px-6 lg:px-8">
+            <div class="w-full max-w-md space-y-8">
+                <div>
+                    <img class="w-auto h-12 mx-auto" src="imgs/koala.png" alt="Workflow">
+                    <h2 class="mt-6 text-3xl font-extrabold text-center text-gray-900 dark:text-gray-200">
+                        Sign in to your account
+                    </h2>
+                    <p class="mt-2 text-sm text-center text-gray-600 dark:text-gray-200">
+                    Or
+                        <a onclick="showRegister()" class="font-medium text-green-500 dark:text-green-300">
+                            register now
+                        </a>
+                    </p>
+                </div>
+                <form id="login-form" method="POST" action="ws.php?page=login" onsubmit="login(event)" oninput="LoginValidationIcon()" class="mt-8 space-y-6">
+                    <div class="space-y-2 rounded-md shadow-sm">
+                   
+                        <div class="relative flex">
+                            <span id="login_email_icon" class="absolute inset-y-0 right-0 items-center hidden pr-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>  
+                            </span>
+                            <input name="email" type="text" class="input" autocomplete="email" placeholder="Email address">
+                        </div>
+
+                        <div class="relative flex">
+                            <span id="login_password_icon" class="absolute inset-y-0 right-0 items-center hidden pr-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>  
+                            </span>
+                            <input name="password" type="password" class="input" autocomplete="current-password" placeholder="Password">
+                        </div>
+                        
+                    </div>
+                    <input type="submit" id="login-form-submit" hidden>
+                </form>
+                <button onclick="submitLogin()" class="relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-green-500 border border-transparent rounded-md group hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                        <svg class="w-5 h-5 text-green-700 group-hover:text-indigo-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                        </svg>
+                    </span>
+                Sign in
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register -->
+    <div id="register" hidden>
+        <div class="flex items-center justify-center min-h-screen px-4 py-12 sm:px-6 lg:px-8">
+            <div class="w-full max-w-md space-y-8">
+                <div>
+                    <img class="w-auto h-12 mx-auto" src="imgs/koala.png" alt="Workflow">
+                    <h2 class="mt-6 text-3xl font-extrabold text-center text-gray-900">
+                        Register account
+                    </h2>
+                    <p class="mt-2 text-sm text-center text-gray-600">
+                    Or
+                    <a onclick="showLogin()" class="font-medium text-green-500 hover:text-indigo-500">
+                        back to sign in
+                    </a>
+                    </p>
+                </div>
+                <form id="register-form" method="POST" onsubmit="register(event)" oninput="RegisterValidationIcon()" action="ws.php?page=register" class="mt-8 space-y-6">
+                    <div class="space-y-2 rounded-md shadow-sm">
+
+                        <div class="relative flex">
+                            <span id="first_icon" class="absolute inset-y-0 right-0 items-center hidden pr-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>  
+                            </span>
+                            <input name="first-name" type="text" class="input" autocomplete="name" placeholder="First name">
+                        </div>
+                        
+                        <div class="relative flex">
+                            <span id="last_icon" class="absolute inset-y-0 right-0 items-center hidden pr-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>  
+                            </span>
+                            <input name="last-name" type="text" class="input" autocomplete="family-name" placeholder="Last name">
+                        </div>
+
+                        <div class="relative flex">
+                            <span id="email_icon" class="absolute inset-y-0 right-0 items-center hidden pr-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>  
+                            </span>
+                            <input name="email" type="text" autocomplete="email" class="input" autocomplete="email" placeholder="Email address">
+                        </div>
+                        
+                        <div class="relative flex">
+                            <span id="password_icon" class="absolute inset-y-0 right-0 items-center hidden pr-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>  
+                            </span>
+                            <input name="password" type="password" autocomplete="email" class="input" autocomplete="new-password" placeholder="Password">
+                        </div>
+                    </div>
+
+                    <input type="submit" id="register-form-submit" hidden>    
+                </form>
+
+                <button onclick="submitRegister()" class="relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-green-500 border border-transparent rounded-md group hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                        <svg class="w-5 h-5 text-green-500 group-hover:text-indigo-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                        </svg>
+                    </span>
+                Sign up
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Everything shown after login/register -->
+    <div id="after-login-div">
+
+        <!-- Header on every page: user pic, page title, settings icon -->
+        <div id="container" class="pb-24">
+            <div class="relative z-50 pb-3">
+                <div class="absolute px-8 mx-auto max-w-7xl sm:px-6">
+                    <div class="grid py-6 border-b-2 border-gray-100 md:space-x-10">
+                        <div class="flex-col md:flex md:flex-row md:min-h-screen">
+                            <div @click.away="open = false" class="flex flex-col flex-shrink-0 text-gray-700 md:w-64 dark-mode:text-gray-200 dark-mode:bg-gray-800" x-data="{ open: false }">
+                                <div class="flex flex-row items-center justify-between flex-shrink-0 py-4">
+                                    <img src="imgs/koala.png" alt="" class="mr-2 w-7 h-7">
+                                    <span id="page-title" class="text-2xl font-bold text-gray-600">My Wildlife</span>     
+                                    <button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline" @click="open = !open">
+                                        <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
+                                            <path x-show="!open" fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                                            <path x-show="open" fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </button>
+
+                                    <button onclick="toggleDarkMode()" class="btn btn-indigo">
+                                         <!-- Sun -->
+                                        <svg class="h-6 mr-1 text-yellow-200" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                                        </svg>
+                                    </button>
+
+                                </div>
+                                <nav :class="{'block': open, 'hidden': !open}" class="flex-grow px-4 pb-4 bg-white md:block md:pb-0 md:overflow-y-auto">
+                                    <p class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Update details</p>
+                                    <p class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Logout</p>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+
+        <!-- Buttons for three seperate pages -->
+        <div id="page-btns" class="fixed inset-x-0 bottom-0 z-50 grid h-20 grid-cols-2 bg-gray-100 bg-opacity-100 border-t-2 border-gray-100 justify-items-stretch">
+            <button onclick="showPage('2'); return false" class="px-3 text-sm text-gray-500 bg-gray-100 focus:text-green-500">
+                <span class="grid justify-items-center">
+                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </span>
+                Add Wildlife</button>
+            <button onclick="showPage('3'); return false" class="px-3 text-sm text-gray-500 bg-gray-100 outline-none focus:text-green-500" id="home">
+                <span class="grid justify-items-center">
+                    <svg  class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                    </svg>
+                </span>
+                My Wildlife</button>
+        </div>
+    
+        <!-- Div for seperate pages -->
+        <div id="pages" class="px-4 sm:px-6 lg:px-8">
+
+            <!-- Container 1
+                Add log page -->
+
+            <section id="container1" hidden>
+                <div class="">
+        
+                    <!-- Heading -->
+                    <div class="grid grid-flow-col grid-rows-2 px-3 mt-6 mb-8">
+                        <img class="inline row-span-3 ml-6 rounded-full w-28 h-28" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
+                        <div class="self-end col-span-2 row-span-1 -ml-10 font-medium justify-self-center" id="animal_nickname_div2"></div>
+                        <div class="self-start col-span-2 row-span-1 -ml-10 justify-self-center" id="species_name_div5"></div>
+                    </div>
+
+                    <!-- Add log -->
+                    <form id="log-form" method="POST" onsubmit="addLog(event)" oninput="LogValidationIcon()" action="ws.php?page=add-log">                    
+                        <div class="space-y-2 rounded-md shadow-sm">
+                            
+                            <input type="text" name="animal_id" class="animal_id" hidden>
+                    
+                            <div class="relative flex">
+                                <span id="title_icon" class="absolute inset-y-0 right-0 items-center hidden pr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>  
+                                </span>
+                                <input type="text" name="title" class="input" autocomplete="off" placeholder="Title">
+                            </div>
+                            
+                            <div class="relative flex">
+                                <span id="text_icon" class="absolute inset-y-0 right-0 items-start hidden pt-2 pr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>  
+                                </span>
+                                <textarea rows="6" name="text" class="input" autocomplete="off" placeholder="Log information"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="grid mt-5">
+                            <input type="submit" value="Add log" class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-green-500 border border-transparent rounded-md">
+                        </div>
+
+                    </form>
+                </div>
+                
+            </section>
+
+            <!-- Container 2
+                Add animal page -->
+                
+            <section id="container2" hidden>
+                <div class="min-h-screen mb-16">
+
+                    <!-- Hidden form
+                        Get species ID for animal add -->
+                        <form method="POST" action="ws.php?page=get-species-id" onsubmit="getSpeciesID_AddAnimal(event)" hidden>
+                            <input type="text" name="species" id="species_id_1">
+                            <input type="submit" id="species_id_button_1">
+                        </form>
+
+                    <!-- Hidden form
+                        List species for animal add -->
+                    <form method="POST" action="ws.php?page=view-species" onsubmit="listSpecies_AddAnimal(event) & clearSpeciesList()" hidden>
+                        <input type="text" name="animal_type_id" id="animal_type_id_1">
+                        <input type="submit" id="animal_type_button_1">
+                    </form>
+
+                    <!-- Add image -->
+                    <div class="grid px-3 mt-3 mb-5 justify-items-center">
+                        <img class="inline row-span-2 rounded-full w-28 h-28" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
+                    </div>
+
+                    <!-- Animal type dropdown -->
+                    <form id="add-animal-type-dropdown" method="POST" onchange="populateSpeciesDropdown_AnimalAdd()" class="mb-5">
+                        <select name="animal_type_id" id="animal_type_id_2" class="input">
+                            <option value="" disabled selected>Animal type</option>
+                            <option value="17">Reptile</option>
+                            <option value="18">Invertebrate</option>
+                            <option value="19">Fish</option>
+                            <option value="20">Amphibian</option>
+                            <option value="21">Bird</option>
+                            <option value="22">Mammal</option>
+                        </select>
+                    </form>
+
+                    <!-- Species dropwdown -->
+                    <select id="species_dropdown" name="species_dropdown" onchange="getSpeciesIDforDropdown_Add() & clickButton1()" class="mb-5 input">
+                        <option value="" disabled selected>Species</option>
+                    </select>
+
+                    <!-- Add animal -->
+                    <form id="add-animal-form" method="POST" action="ws.php?page=add-animal" onsubmit="addAnimal(event)" oninput="addAnimalValidationIcon()" action="">
+                        <div class="space-y-5">
+
+                            <input type="text" name="species_id" id="species_id_input" hidden>
+
+                            <div class="relative flex">
+                                <span id="name_icon" class="absolute inset-y-0 right-0 items-center hidden pr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>                                  
+                                </span>
+                                <input type="text" name="name" class="input" autocomplete="off" placeholder="Name">                           
+                            </div>
+
+                            <div class="relative flex">
+                                <span id="gender_icon" class="absolute inset-y-0 right-0 items-center hidden pr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>                                    
+                                </span>
+                                <input type="text" name="gender" class="input" autocomplete="off" placeholder="Gender">
+                            </div>
+
+                            <div class="relative flex">
+                                <span id="maturity_icon" class="absolute inset-y-0 right-0 items-center hidden pr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>                                    
+                                </span>
+                                <input type="text" name="maturity" class="input" autocomplete="off" placeholder="Maturity">
+                            </div>
+                            
+                            <div class="relative flex">
+                                <span id="notes_icon" class="absolute inset-y-0 right-0 items-start hidden pt-2 pr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>                              
+                                </span>
+                                <textarea rows="3" name="notes" class="input" autocomplete="off" placeholder="Notes"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="grid mt-5">
+                            <input type="submit" value="Add animal" class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-green-500 border border-transparent rounded-md">
+                        </div>
+
+                    </form>
+                </div>
+            </section>
+
+            <!-- Container 3
+                View animals page -->
+                
+            <section id="container3" hidden>
+                <div class="w-full max-w-md px-4 pt-4">
+
+                    <!-- Search bar -->
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center w-full pl-2">
+                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="p-1 text-gray-500 w-7 h-7"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </span>
+                        <input type="search" placeholder="Search..." autocomplete="off">
+                    </div>
+
+                    <!-- Animal types with icons -->
+                    <div class="py-4">
+                        <button onclick="showSpinner() & selectType(this.id) & showPage('5'); return false" id="Invertebrates" class="relative flex justify-center w-full px-4 py-3 mt-2 font-medium text-gray-500 bg-white border border-gray-200 rounded dark:text-white dark:bg-gray-400 text-m">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                <img src="imgs/hermit-crab.png" alt="" class="inline">
+                            </span>
+                        Invertebrates</button>
+                        <button onclick="showSpinner() & selectType(this.id) & showPage('5'); return false" id="Fish" class="relative flex justify-center w-full px-4 py-3 mt-2 font-medium text-gray-500 bg-white border border-gray-200 rounded dark:text-white dark:bg-gray-400 text-m">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                <img src="imgs/fish.png" alt="" class="inline">
+                            </span>
+                        Fish</button>
+                        <button onclick="showSpinner() & selectType(this.id) & showPage('5'); return false" id="Amphibians" class="relative flex justify-center w-full px-4 py-3 mt-2 font-medium text-gray-500 bg-white border border-gray-200 rounded dark:text-white dark:bg-gray-400 text-m">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                <img src="imgs/frog.png" alt="" class="inline">
+                            </span>
+                        Amphibians</button>
+                        <button onclick="showSpinner() & selectType(this.id) & showPage('5'); return false" id="Birds" class="relative flex justify-center w-full px-4 py-3 mt-2 font-medium text-gray-500 bg-white border border-gray-200 rounded dark:text-white dark:bg-gray-400 text-m">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                <img src="imgs/parrot.png" alt="" class="inline">
+                            </span>
+                        Birds</button>
+                        <button onclick="showSpinner() & selectType(this.id) & showPage('5'); return false" id="Mammals" class="relative flex justify-center w-full px-4 py-3 mt-2 font-medium text-gray-500 bg-white border border-gray-200 rounded dark:text-white dark:bg-gray-400 text-m">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                <img src="imgs/kangaroo.png" alt="" class="inline">
+                            </span>
+                        Mammals</button>
+                        <button onclick="showSpinner() & selectType(this.id) & showPage('5'); return false" id="Reptiles" class="relative flex justify-center w-full px-4 py-3 mt-2 font-medium text-gray-500 bg-white border border-gray-200 rounded dark:text-white dark:bg-gray-400 text-m">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                <img src="imgs/snake.png" alt="" class="inline">
+                            </span>
+                        Reptiles</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Container 4
+                User settings -->
+
+            <section id="container4" hidden>
+
+                
+                <div>
+            
+                    <!-- Dark mode button -->
+                    <button @click="darkMode = !darkMode" class="btn-indigo w-max btn btn-icon" id="darkMode">
+
+                        <!-- Sun -->
+                        <svg  x-show="darkMode" class="h-6 mr-1 text-yellow-200" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+
+                        <!-- Moon -->
+                        <svg x-show="!darkMode" class="h-6 mr-1 text-indigo-500" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+
+                        <span class="leading-4" x-text="darkMode ? 'Switch to normal mode' : 'Switch to dark mode' "></span>
+                    </button>
+
+                    <div class="p-3 border-b border-gray-500">
+                        <button>
+                            Update details
+                        </button>
+                    </div>
+
+                    <div class="p-3 border-b border-gray-500">
+                        <button>
+                            Logout
+                        </button>
+                    </div>
+
+                    <div class="p-3 border-b border-gray-500">
+                        <button>
+                            Delete account
+                        </button>
+                    </div>
+
+                    <!-- Update reg -->
+                    <!-- <br>Update Registration:
+                    <form method="POST" onsubmit="updateReg(event)" action="ws.php?page=update-reg">
+                        <input type="text" name="first-name" placeholder="First name">
+                        <input type="text" name="last-name" placeholder="Last name">
+                        <input type="email" name="email" placeholder="Email">
+                        <input type="password" name="password" placeholder="Password">
+                        <input type="submit" value="Update" class="btn btn-indigo">
+                    </form> -->
+
+
+
+                    <!-- Delete account -->
+                    <!-- <br>Delete Account:
+                    <form onsubmit="deleteAccount(event)" action="ws.php?page=delete-account">
+                        <input type="submit" value="Delete Account" class="btn btn-indigo">
+                    </form> -->
+
+                </div>
+                
+            </section>
+
+            <!-- Container 5
+                Species list page -->
+            <section id="container5" hidden>
+
+                <div class="w-full max-w-md px-4 pt-4">
+
+                    <!-- Hidden form
+                    View my animals per type -->
+                    <form id="view-my-animals-form" action="ws.php?page=view-animals" onsubmit="viewAnimals(event)" hidden>
+                        <input type="text" name="type_name" id="animal-type">
+                        <input type="submit" id="type-selected" value="Go">
+                    </form>
+
+                    <!-- Search bar -->
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center w-full pl-2">
+                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="p-1 text-gray-500 w-7 h-7"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </span>
+                        <input type="search" class="w-full py-2 pl-10 text-gray-500 bg-white border-gray-300 rounded-full text-m" placeholder="Search..." autocomplete="off">
+                    </div>
+
+                    <!-- Animal type with icon -->
+                    <div class="py-4">
+                        <span class="relative flex justify-center w-full px-4 py-3 mt-2 font-medium text-gray-500 bg-white border border-gray-200 rounded text-m">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                <img id="animal_type_icon2" src="imgs/hermit-crab.png" alt="" class="inline">
+                            </span>
+                            <span id="animal_type_label"></span>
+                        </span>
+                    </div>
+
+                    <!-- List of species -->
+                    <div class="flex items-center ml-4 font-medium text-gray-600 text-m">
+                        <div id="my_animals_list" class="inline"></div>
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+                
+            </section>
+
+            <!-- Container 6
+                View individual animals page -->
+                
+            <section id="container6" hidden>
+                <div id="loading_Page">
+                    <div class="py-32 mt-20 h-72">
+                        <div class="flex items-center justify-center my-auto mb-2 space-x-2 animate-pulse">
+                            <div class="w-4 h-4 bg-green-400 rounded-full"></div>
+                            <div class="w-4 h-4 bg-green-400 rounded-full"></div>
+                            <div class="w-4 h-4 bg-green-400 rounded-full"></div>
+                        </div>
+                        <div>
+                            <h2 class="font-bold text-center text-gray-600 text-1xl">
+                                One moment...
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="min-h-screen pb-24" id="page6" hidden>
+
+                    <!-- Hidden form
+                        Form for long and latitude fetch -->
+                    <form method="POST" action="ws.php?page=get-coordinates" onsubmit="getLocation(event)" hidden>
+                        <input type="text" name="animal_id" class="animal_id">
+                        <input type="submit" id="map_button">
+                    </form>
+
+                    <!-- Heading -->
+                    <div class="grid grid-flow-col grid-rows-3 px-3 mt-6 mb-8">
+                        <img class="inline row-span-3 ml-6 rounded-full w-28 h-28" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
+                        <div class="self-end col-span-2 row-span-1 -ml-10 font-medium justify-self-center" id="animal_nickname_div"></div>
+                        <div class="self-start col-span-2 row-span-1 -ml-10 justify-self-center" id="species_name_div4"></div>
+                        <div class="col-span-2 row-span-1 -ml-10 justify-self-center">
+                            <span onclick="showPage('1'); return false" class="p-2 text-sm text-green-500 border border-green-100 rounded shadow bg-green-50">Log</span>
+                            <span onclick="showPage('8'); return false" class="p-2 text-sm text-green-500 border border-green-100 rounded shadow bg-green-50" id="edit_animal_button">Edit</span>
+                        </div>
+                    </div>
+                    
+                    <!-- All animal info -->
+                    <div>
+
+                        <!-- Map -->
+                        <div id="map" class="mb-8" style="height:250px;"></div>
+
+                        <!-- Other info -->
+                        <div class="bg-white shadow sm:rounded-lg">
+                            <div class="border-t border-gray-200">
+                                <dl>
+                                    <div class="px-4 py-5 bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                        <dt class="text-sm font-medium text-gray-500">
+                                            First seen
+                                        </dt>
+                                        <dd class="mt-1 text-sm text-gray-800 sm:mt-0 sm:col-span-2">
+                                            <span id="first_sighting"></span>                                  
+                                        </dd>
+                                    </div>
+                                    <div class="px-4 py-5 bg-green-50 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                        <dt class="text-sm font-medium text-gray-500">
+                                            Gender
+                                        </dt>
+                                        <dd class="mt-1 text-sm text-gray-800 sm:mt-0 sm:col-span-2">
+                                            <span id="gender"></span>
+                                        </dd>
+                                    </div>
+                                    <div class="px-4 py-5 bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                        <dt class="text-sm font-medium text-gray-500">
+                                            Maturity
+                                        </dt>
+                                        <dd class="mt-1 text-sm text-gray-800 sm:mt-0 sm:col-span-2">
+                                            <span id="maturity"></span>                                 
+                                         </dd>
+                                    </div>
+                                    <div class="px-4 py-5 bg-green-50 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                        <dt class="text-sm font-medium text-gray-500">
+                                            Notes
+                                        </dt>
+                                        <dd class="mt-1 text-sm text-gray-800 sm:mt-0 sm:col-span-2">
+                                            <span id="notes"></span>                                  
+                                        </dd>
+                                    </div>
+                                    <div class="px-4 py-5 bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                        <dt class="text-sm font-medium text-gray-500">
+                                            Logs
+                                        </dt>
+                                        <dd class="mt-1 text-sm text-gray-800 sm:mt-0 sm:col-span-2">
+                                            <span id="logs"></span>                                 
+                                        </dd>
+                                    </div>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Container 7
+                Map of species page -->
+                
+            <section id="container7" hidden>
+                <div class="min-h-screen px-4">
+
+                <!-- Hidden form
+                    View each animal -->
+                <form id="view-one-animal-form" action="ws.php?page=view-one-animal" onsubmit="viewOneAnimal(event)" hidden>
+                    <input type="text" name="animal_id" class="animal_id">
+                    <input type="submit" id="button">
+                </form>
+
+                <!-- Hidden form
+                    Displays count of species -->
+                <form method="POST" action="ws.php?page=species-count" onsubmit="speciesCount(event)" hidden>
+                    <input type="text" name="species" id="species_name_for_count">
+                    <input type="submit" id="species_count_form">
+                </form>
+
+                <!-- Hidden form 
+                View animals per species -->
+                <form method="POST" action="ws.php?page=animals-per-species" onsubmit="viewAnimalsPerSpecies(event)" hidden>
+                    <input type="text" id="species_for_list" name="species">
+                    <input type="submit" id="species_list_form">
+                </form>
+
+                <!-- Heading with image, species, and animal type -->
+                <div class="grid grid-flow-col grid-rows-3 px-3 mt-6 mb-8">
+                    <img class="inline row-span-3 ml-6 rounded-full w-28 h-28" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
+                    <div class="self-end col-span-2 row-span-1 -ml-6 font-medium justify-self-center" id="species_name_div"></div>
+                    <div class="self-start col-span-2 row-span-1 -ml-6 justify-self-center" id="animal_type_div"></div>
+                    <div id="animal_type_icon" class="col-span-2 row-span-1 -ml-6 justify-self-center"></div>
+                </div>
+
+                <!-- Species count -->
+                <div>
+                    <div id="species_entries_div" hidden class="pb-1 text-sm text-gray-800 text-small"></div>
+                </div>
+                
+                <!-- List of animals per species -->
+                <div id="speciesSpinner">
+                    <div style="border-top-color:transparent" class="w-8 h-8 border-4 border-green-500 border-solid rounded-full animate-spin"></div>
+                </div>
+                <div id="list_of_animals_div" hidden class="text-sm text-gray-800 border-b border-gray-300"></div>
+
+            </div>
+            </section>
+
+            <!-- Container 8
+                Edit animal page -->
+
+            <section id="container8" hidden>
+
+                <!-- Hidden form
+                    Animal type for dropdown -->
+                <form method="POST" action="ws.php?page=view-species" onsubmit="AnimalTypeDropdownforEdit(event) & clearAll()" hidden>
+                    <input type="text" name="animal_type_id" id="animal_type_id_3">
+                    <input type="submit" id="animal_type_button_2">
+                </form>
+
+                <!-- Hidden form
+                Species ID for dropdown -->
+                <form method="POST" action="ws.php?page=get-species-id" onsubmit="getSpeciesID_EditAnimal(event)" hidden>
+                    <input type="text" id="species_id_for_db2" name="species">
+                    <input type="submit" id="species_id_button" value="species ID for db" class="btn btn-indigo">
+                </form>
+
+                <!-- Top section image, two dropdowns -->
+                <div class="grid grid-flow-col grid-rows-2 mb-8">
+                    
+                    <!-- Add image -->
+                    <img class="inline row-span-2 ml-6 rounded-full w-28 h-28" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
+                    
+                    <!-- Time -->
+                    <div class="self-end col-span-2">
+                        <button class="ml-8 btn btn-indigo sm:text-sm">Time: Current</button>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="self-start col-span-2">
+                        <button class="ml-8 btn btn-indigo sm:text-sm">Location: Current</button>
+                    </div>
+                    
+                </div>
+
+                <!-- Animal type dropdown -->
+                <form method="POST" onchange="populateSpeciesDropdown_AnimalEdit()">
+                    <select name="animal_type_id" id="selectionSpecies2" class="input">
+                        <option value="" disabled selected>Animal Type</option>
+                        <option value="17">Reptile</option>
+                        <option value="18">Invertebrate</option>
+                        <option value="19">Fish</option>
+                        <option value="20">Amphibian</option>
+                        <option value="21">Bird</option>
+                        <option value="22">Mammal</option>
+                    </select>
+                </form>
+
+                <!-- Species dropdown -->
+                <select id="species_dropdown2" name="species_dropdown" onchange="getSpeciesIDforDropdown_Edit() & clickButton2()" class="input">
+                    <option value="" disabled selected>Species</option>
+                </select>
+
+                <!-- Edit animal -->
+                <form method="POST" action="ws.php?page=edit-animal" id="edit-animal" onsubmit="editAnimal(event)">
+                    <div class="grid">
+                        <input type="text" id="species_id_input2" placeholder="speciesID" name="species_id" hidden>
+                        <input type="text" name="animal_id" class="animal_id" hidden>
+
+                        <label for="name" class="mt-2 text-sm font-medium text-gray-700">Name</label>
+                        <input type="text" name="name" class="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+
+                        <label for="gender" class="mt-2 text-sm font-medium text-gray-700">Gender</label>
+                        <input type="text" name="gender" class="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+
+                        <label for="maturity" class="mt-2 text-sm font-medium text-gray-700">Maturity</label>
+                        <input type="text" name="maturity" class="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+
+                        <label for="notes" class="mt-2 text-sm font-medium text-gray-700">Notes</label>
+                        <textarea rows="3" name="notes" class="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
+                    </div>
+                    <div class="grid mt-5">
+                        <input type="submit" value="Edit" class="btn btn-indigo justify-self-center">
+                    </div>
+                </form>
+
+                <!-- Delete animal -->
+                <form method="POST" action="ws.php?page=delete-animal" id="delete-animal" onsubmit="deleteAnimal(event)">
+                    <input type="text" name="animal_id" placeholder="Animal ID" class="animal_id" hidden>
+                    <input type="submit" value="Delete" class="btn btn-indigo">
+                </form>
+                
+            </section>
+
+        </div>
+    </div>
+  </div>
+</body>
 </html>
