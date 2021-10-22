@@ -247,14 +247,14 @@ function login (evt) {
     const email = document.forms['login-form']['email'].value;
     const password = document.forms['login-form']['password'].value;
     const formData = new FormData();
-    
+
     formData.append(evt.target[0].name, evt.target[0].value);
     formData.append(evt.target[1].name, evt.target[1].value);
-
     fetch(evt.target.action, 
         {
             method: 'POST',
             body: formData,
+            credentials: 'include'
         }
     ) 
     .then (
@@ -268,9 +268,6 @@ function login (evt) {
                 showAlert('success', 'Welcome!');
                 localStorage.setItem('loggedIn', true);
                 getUserID();
-            // } else if (headers.status === 307) {
-            //     document.getElementById('root').removeAttribute('hidden');
-            //     document.getElementById('users').setAttribute('hidden', 'hidden');
             } else if (validateEmail(email) == false) {
                 showAlert('error', 'Please enter a valid email address');
                 return false;
@@ -282,34 +279,6 @@ function login (evt) {
             }
         }
     );
-}
-
-// Add icon if login validation passes, remove if does not pass
-function LoginValidationIcon() {
-
-    // Login form input values
-    const email = document.forms['login-form']['email'].value;
-    const password = document.forms['login-form']['password'].value;
-
-    // Login form icon spots
-    const email_icon = document.getElementById("login_email_icon");
-    const password_icon = document.getElementById("login_password_icon");
-
-    if (validateEmail(email) == true) {
-        email_icon.classList.remove("hidden");
-        email_icon.classList.add("flex");
-    } else {
-        email_icon.classList.add("hidden");
-        email_icon.classList.remove("flex");
-    }
-
-    if (validatePassword(password) == true) {
-        password_icon.classList.remove("hidden");
-        password_icon.classList.add("flex");
-    } else {
-        password_icon.classList.add("hidden");
-        password_icon.classList.remove("flex");
-    }
 }
 
 // Click of "sign in" button clicks submit button for form (can't style submit)
@@ -415,7 +384,7 @@ function getSpeciesID_AddAnimal (evt) {
 
     formData.append(evt.target[0].name, evt.target[0].value);
 
-    fetch(evt.target.action, 
+    fetch('ws.php?page=get-species-id', 
         {
             method: 'POST',
             body: formData,
@@ -444,7 +413,7 @@ function listSpecies_AddAnimal (evt) {
 
     formData.append(evt.target[0].name, evt.target[0].value);
 
-    fetch(evt.target.action, 
+    fetch('ws.php?page=view-species', 
         {
             method: 'POST',
             body: formData,
@@ -526,7 +495,7 @@ function addAnimal (evt) {
     formData.append(evt.target[2].name, evt.target[2].value);
     formData.append(evt.target[3].name, evt.target[3].value);
     formData.append(evt.target[4].name, evt.target[4].value);
-    fetch(evt.target.action, 
+    fetch('ws.php?page=add-animal', 
         {
             method: 'POST',
             body: formData,
@@ -717,6 +686,7 @@ function logout (evt) {
         function(headers) {
             if (headers.status === 200) {
                 localStorage.removeItem('loggedIn');
+                localStorage.removeItem('role');
                 document.getElementById('login-div').removeAttribute('hidden');
                 document.getElementById('after-login-div').setAttribute('hidden', 'hidden');
                 document.getElementById('container4').setAttribute('hidden', 'hidden');
@@ -757,7 +727,7 @@ function viewAnimals (evt) {
 
     formData.append(evt.target[0].name, evt.target[0].value);
 
-    fetch(evt.target.action, 
+    fetch('ws.php?page=view-animals', 
         {
             method: 'POST',
             body: formData,
@@ -848,7 +818,7 @@ function viewOneAnimal (evt) {
     const formData = new FormData();
 
     formData.append(evt.target[0].name, evt.target[0].value);
-    fetch(evt.target.action, 
+    fetch('ws.php?page=view-one-animal', 
         {
             method: 'POST',
             body: formData,
@@ -896,7 +866,7 @@ function speciesCount (evt) {
     const formData = new FormData();
 
     formData.append(evt.target[0].name, evt.target[0].value);
-    fetch(evt.target.action, 
+    fetch('ws.php?page=species-count', 
         {
             method: 'POST',
             body: formData,
@@ -921,7 +891,7 @@ function viewAnimalsPerSpecies (evt) {
     const formData = new FormData();
 
     formData.append(evt.target[0].name, evt.target[0].value);
-    fetch(evt.target.action, 
+    fetch('ws.php?page=animals-per-species', 
         {
             method: 'POST',
             body: formData,
@@ -1027,7 +997,7 @@ function AnimalTypeDropdownforEdit (evt) {
 
     formData.append(evt.target[0].name, evt.target[0].value);
 
-    fetch(evt.target.action, 
+    fetch('ws.php?page=view-species', 
         {
             method: 'POST',
             body: formData,
@@ -1073,7 +1043,7 @@ function getSpeciesID_EditAnimal (evt) {
 
     formData.append(evt.target[0].name, evt.target[0].value);
 
-    fetch(evt.target.action, 
+    fetch('ws.php?page=get-species-id', 
         {
             method: 'POST',
             body: formData,
@@ -1186,7 +1156,7 @@ function deleteAnimal(evt) {
 
 //
 //
-// Map stuff
+// Map
 //
 //
 
@@ -1195,7 +1165,7 @@ function getLocation (evt) {
     evt.preventDefault();
     const formData = new FormData();
     formData.append(evt.target[0].name, evt.target[0].value);
-    fetch(evt.target.action, 
+    fetch('ws.php?page=get-coordinates', 
         {
             method: 'POST',
             body: formData,
@@ -1238,6 +1208,12 @@ function initMap (long, lat) {
         map: map,
     });
 }
+
+//
+//
+// Date calculator
+//
+//
 
 // Date calculator, from https://github.com/QuantumCatgirl/js_humanized_time_span
 function humanized_time_span(date, ref_date, date_formats, time_units) {
@@ -1325,7 +1301,26 @@ function humanized_time_span(date, ref_date, date_formats, time_units) {
     return render_date(get_format());
 }
 
-function toggleDarkMode() {
-    document.getElementById("darkMode").click();
-    
+// Check if admin
+function checkIfAdmin (evt) {
+    evt.preventDefault();
+
+    fetch("ws.php?page=check-if-admin", 
+        {
+            credentials: 'include'
+        }
+    ) 
+    .then (
+        function(headers) {
+            if (headers.status === 200) {
+                localStorage.setItem("role", "admin");
+                showAdminPanel();
+            }
+        }
+    );
+}
+
+// Show admin panel to admin role
+function showAdminPanel() {
+    document.getElementById('root').removeAttribute('hidden');
 }

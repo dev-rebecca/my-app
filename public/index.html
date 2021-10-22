@@ -23,8 +23,9 @@
 
 <body onload="checkForLogin()" class="dark:bg-gray-700 dark:text-gray-100 bg-gray-50">
     
-    <div hidden id="root"></div>
-
+    <!-- Temporary admin panel button -->
+    <button onclick="checkIfAdmin(event) & showPage('9'); return false" id="admin_button">Click here for admin panel</button>
+    
     <!-- Alert box -->
     <div role="alert" id="alertbox" class="absolute inset-x-0 top-0 z-10" hidden>
         <div class="max-w-md px-3 mx-auto py-7">
@@ -36,11 +37,6 @@
 
     <!-- Login -->
     <div id="login-div" hidden>
-                            <!-- Logout -->
-                    <br>Logout:
-                    <form method="GET" onsubmit="logout(event)" action="ws.php?page=logout">
-                        <input type="submit" value="Logout" class="btn btn-indigo">
-                    </form>
         <div class="flex items-center justify-center min-h-screen px-4 py-12 sm:px-6 lg:px-8">
             <div class="w-full max-w-md space-y-8">
                 <div>
@@ -55,7 +51,7 @@
                         </a>
                     </p>
                 </div>
-                <form id="login-form" method="POST" action="ws.php?page=login" onsubmit="login(event)" oninput="LoginValidationIcon()" class="mt-8 space-y-6">
+                <form id="login-form" method="POST" action="ws.php?page=login" onsubmit="login(event) & checkForAdmin(event)" class="mt-8 space-y-6">
                     <div class="space-y-2 rounded-md shadow-sm">
                    
                         <div class="relative flex">
@@ -64,7 +60,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>  
                             </span>
-                            <input name="email" type="text" class="input" autocomplete="email" placeholder="Email address">
+                            <input name="email" type="text" class="w-full placeholder-gray-500 border-gray-300 rounded dark:placeholder-gray-100 dark:bg-gray-500" autocomplete="email" placeholder="Email address">
                         </div>
 
                         <div class="relative flex">
@@ -73,7 +69,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>  
                             </span>
-                            <input name="password" type="password" class="input" autocomplete="current-password" placeholder="Password">
+                            <input name="password" type="password" class="w-full placeholder-gray-500 border-gray-300 rounded dark:placeholder-gray-100 dark:bg-gray-500" autocomplete="current-password" placeholder="Password">
                         </div>
                         
                     </div>
@@ -116,7 +112,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>  
                             </span>
-                            <input name="first-name" type="text" class="input" autocomplete="name" placeholder="First name">
+                            <input name="first-name" type="text" class="w-full placeholder-gray-500 border-gray-300 rounded dark:placeholder-gray-100 dark:bg-gray-500" autocomplete="name" placeholder="First name">
                         </div>
                         
                         <div class="relative flex">
@@ -125,7 +121,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>  
                             </span>
-                            <input name="last-name" type="text" class="input" autocomplete="family-name" placeholder="Last name">
+                            <input name="last-name" type="text" class="w-full placeholder-gray-500 border-gray-300 rounded dark:placeholder-gray-100 dark:bg-gray-500" autocomplete="family-name" placeholder="Last name">
                         </div>
 
                         <div class="relative flex">
@@ -134,7 +130,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>  
                             </span>
-                            <input name="email" type="text" autocomplete="email" class="input" autocomplete="email" placeholder="Email address">
+                            <input name="email" type="text" autocomplete="email" class="w-full placeholder-gray-500 border-gray-300 rounded dark:placeholder-gray-100 dark:bg-gray-500" autocomplete="email" placeholder="Email address">
                         </div>
                         
                         <div class="relative flex">
@@ -143,7 +139,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>  
                             </span>
-                            <input name="password" type="password" autocomplete="email" class="input" autocomplete="new-password" placeholder="Password">
+                            <input name="password" type="password" autocomplete="email" class="w-full placeholder-gray-500 border-gray-300 rounded dark:placeholder-gray-100 dark:bg-gray-500" autocomplete="new-password" placeholder="Password">
                         </div>
                     </div>
 
@@ -166,42 +162,29 @@
     <div id="after-login-div">
 
         <!-- Header on every page: user pic, page title, settings icon -->
-        <div id="container" class="pb-24">
-            <div class="relative z-50 pb-3">
-                <div class="absolute px-8 mx-auto max-w-7xl sm:px-6">
-                    <div class="grid py-6 border-b-2 border-gray-100 md:space-x-10">
-                        <div class="flex-col md:flex md:flex-row md:min-h-screen">
-                            <div @click.away="open = false" class="flex flex-col flex-shrink-0 text-gray-700 md:w-64 dark-mode:text-gray-200 dark-mode:bg-gray-800" x-data="{ open: false }">
-                                <div class="flex flex-row items-center justify-between flex-shrink-0 py-4">
-                                    <img src="imgs/koala.png" alt="" class="mr-2 w-7 h-7">
-                                    <span id="page-title" class="text-2xl font-bold text-gray-600">My Wildlife</span>     
-                                    <button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline" @click="open = !open">
-                                        <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
-                                            <path x-show="!open" fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clip-rule="evenodd"></path>
-                                            <path x-show="open" fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                                        </svg>
-                                    </button>
-
-                                    <button onclick="toggleDarkMode()" class="btn btn-indigo">
-                                         <!-- Sun -->
-                                        <svg class="h-6 mr-1 text-yellow-200" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                                        </svg>
-                                    </button>
-
-                                </div>
-                                <nav :class="{'block': open, 'hidden': !open}" class="flex-grow px-4 pb-4 bg-white md:block md:pb-0 md:overflow-y-auto">
-                                    <p class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Update details</p>
-                                    <p class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Logout</p>
-                                </nav>
-                            </div>
+        <div id="container">
+            <div class="relative pb-3 bg-gray-50">
+                <div class="px-8 mx-auto max-w-7xl sm:px-6">
+                    <div class="grid items-center py-6 border-b-2 border-gray-100 md:space-x-10">
+                        <div class="flex items-center lg:w-0 lg:flex-1">
+                            <!-- <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
+                            </svg> -->
+                            <img src="imgs/koala.png" alt="" class="mr-2 w-7 h-7">
+                            <span id="page-title" class="text-2xl font-bold text-gray-600">My Wildlife</span>
+                            <span class="m-auto">
+                                <!-- <img src="imgs/koala.png" alt="" height="40px" width="40px" class="inline"> -->
+                            </span>
+                            <span class="flex justify-self-end">
+                                <svg onclick="showPage('4'); return false" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                                </svg>
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        
 
         <!-- Buttons for three seperate pages -->
         <div id="page-btns" class="fixed inset-x-0 bottom-0 z-50 grid h-20 grid-cols-2 bg-gray-100 bg-opacity-100 border-t-2 border-gray-100 justify-items-stretch">
@@ -228,7 +211,8 @@
                 Add log page -->
 
             <section id="container1" hidden>
-                <div class="">
+
+                <div>
         
                     <!-- Heading -->
                     <div class="grid grid-flow-col grid-rows-2 px-3 mt-6 mb-8">
@@ -249,7 +233,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>  
                                 </span>
-                                <input type="text" name="title" class="input" autocomplete="off" placeholder="Title">
+                                <input type="text" name="title" class="w-full placeholder-gray-500 border-gray-300 rounded dark:placeholder-gray-100 dark:bg-gray-500" autocomplete="off" placeholder="Title">
                             </div>
                             
                             <div class="relative flex">
@@ -258,7 +242,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>  
                                 </span>
-                                <textarea rows="6" name="text" class="input" autocomplete="off" placeholder="Log information"></textarea>
+                                <textarea rows="6" name="text" class="w-full placeholder-gray-500 border-gray-300 rounded dark:placeholder-gray-100 dark:bg-gray-500" autocomplete="off" placeholder="Log information"></textarea>
                             </div>
                         </div>
 
@@ -275,6 +259,7 @@
                 Add animal page -->
                 
             <section id="container2" hidden>
+
                 <div class="min-h-screen mb-16">
 
                     <!-- Hidden form
@@ -298,7 +283,7 @@
 
                     <!-- Animal type dropdown -->
                     <form id="add-animal-type-dropdown" method="POST" onchange="populateSpeciesDropdown_AnimalAdd()" class="mb-5">
-                        <select name="animal_type_id" id="animal_type_id_2" class="input">
+                        <select name="animal_type_id" id="animal_type_id_2" class="w-full text-gray-500 border-gray-300 rounded dark:text-gray-100 dark:bg-gray-500">
                             <option value="" disabled selected>Animal type</option>
                             <option value="17">Reptile</option>
                             <option value="18">Invertebrate</option>
@@ -310,7 +295,7 @@
                     </form>
 
                     <!-- Species dropwdown -->
-                    <select id="species_dropdown" name="species_dropdown" onchange="getSpeciesIDforDropdown_Add() & clickButton1()" class="mb-5 input">
+                    <select id="species_dropdown" name="species_dropdown" onchange="getSpeciesIDforDropdown_Add() & clickButton1()" class="w-full mb-5 text-gray-500 border-gray-300 rounded dark:text-gray-100 dark:bg-gray-500">
                         <option value="" disabled selected>Species</option>
                     </select>
 
@@ -326,7 +311,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>                                  
                                 </span>
-                                <input type="text" name="name" class="input" autocomplete="off" placeholder="Name">                           
+                                <input type="text" name="name" class="w-full placeholder-gray-500 border-gray-300 rounded dark:placeholder-gray-100 dark:bg-gray-500" autocomplete="off" placeholder="Name">                           
                             </div>
 
                             <div class="relative flex">
@@ -335,7 +320,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>                                    
                                 </span>
-                                <input type="text" name="gender" class="input" autocomplete="off" placeholder="Gender">
+                                <input type="text" name="gender" class="w-full placeholder-gray-500 border-gray-300 rounded dark:placeholder-gray-100 dark:bg-gray-500" autocomplete="off" placeholder="Gender">
                             </div>
 
                             <div class="relative flex">
@@ -344,7 +329,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>                                    
                                 </span>
-                                <input type="text" name="maturity" class="input" autocomplete="off" placeholder="Maturity">
+                                <input type="text" name="maturity" class="w-full placeholder-gray-500 border-gray-300 rounded dark:placeholder-gray-100 dark:bg-gray-500" autocomplete="off" placeholder="Maturity">
                             </div>
                             
                             <div class="relative flex">
@@ -353,7 +338,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>                              
                                 </span>
-                                <textarea rows="3" name="notes" class="input" autocomplete="off" placeholder="Notes"></textarea>
+                                <textarea rows="3" name="notes" class="w-full placeholder-gray-500 border-gray-300 rounded dark:placeholder-gray-100 dark:bg-gray-500" autocomplete="off" placeholder="Notes"></textarea>
                             </div>
                         </div>
 
@@ -369,6 +354,7 @@
                 View animals page -->
                 
             <section id="container3" hidden>
+
                 <div class="w-full max-w-md px-4 pt-4">
 
                     <!-- Search bar -->
@@ -376,7 +362,7 @@
                         <span class="absolute inset-y-0 left-0 flex items-center w-full pl-2">
                             <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="p-1 text-gray-500 w-7 h-7"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         </span>
-                        <input type="search" placeholder="Search..." autocomplete="off">
+                        <input class="w-full py-2 pl-10 text-gray-500 bg-white border-gray-300 rounded-full text-m" type="search" placeholder="Search..." autocomplete="off">
                     </div>
 
                     <!-- Animal types with icons -->
@@ -420,9 +406,7 @@
 
             <section id="container4" hidden>
 
-                
                 <div>
-            
                     <!-- Dark mode button -->
                     <button @click="darkMode = !darkMode" class="btn-indigo w-max btn btn-icon" id="darkMode">
 
@@ -439,41 +423,27 @@
                         <span class="leading-4" x-text="darkMode ? 'Switch to normal mode' : 'Switch to dark mode' "></span>
                     </button>
 
-                    <div class="p-3 border-b border-gray-500">
-                        <button>
-                            Update details
-                        </button>
-                    </div>
-
-                    <div class="p-3 border-b border-gray-500">
-                        <button>
-                            Logout
-                        </button>
-                    </div>
-
-                    <div class="p-3 border-b border-gray-500">
-                        <button>
-                            Delete account
-                        </button>
-                    </div>
-
                     <!-- Update reg -->
-                    <!-- <br>Update Registration:
+                    <br>Update Registration:
                     <form method="POST" onsubmit="updateReg(event)" action="ws.php?page=update-reg">
                         <input type="text" name="first-name" placeholder="First name">
                         <input type="text" name="last-name" placeholder="Last name">
                         <input type="email" name="email" placeholder="Email">
                         <input type="password" name="password" placeholder="Password">
                         <input type="submit" value="Update" class="btn btn-indigo">
-                    </form> -->
+                    </form>
 
-
+                    <!-- Logout -->
+                    <br>Logout:
+                    <form method="GET" onsubmit="logout(event)" action="ws.php?page=logout">
+                        <input type="submit" value="Logout" class="btn btn-indigo">
+                    </form>
 
                     <!-- Delete account -->
-                    <!-- <br>Delete Account:
+                    <br>Delete Account:
                     <form onsubmit="deleteAccount(event)" action="ws.php?page=delete-account">
                         <input type="submit" value="Delete Account" class="btn btn-indigo">
-                    </form> -->
+                    </form>
 
                 </div>
                 
@@ -523,6 +493,7 @@
                 View individual animals page -->
                 
             <section id="container6" hidden>
+                
                 <div id="loading_Page">
                     <div class="py-32 mt-20 h-72">
                         <div class="flex items-center justify-center my-auto mb-2 space-x-2 animate-pulse">
@@ -618,6 +589,7 @@
                 Map of species page -->
                 
             <section id="container7" hidden>
+
                 <div class="min-h-screen px-4">
 
                 <!-- Hidden form
@@ -702,7 +674,7 @@
 
                 <!-- Animal type dropdown -->
                 <form method="POST" onchange="populateSpeciesDropdown_AnimalEdit()">
-                    <select name="animal_type_id" id="selectionSpecies2" class="input">
+                    <select name="animal_type_id" id="selectionSpecies2" class="w-full placeholder-gray-500 border-gray-300 rounded dark:placeholder-gray-100 dark:bg-gray-500">
                         <option value="" disabled selected>Animal Type</option>
                         <option value="17">Reptile</option>
                         <option value="18">Invertebrate</option>
@@ -714,7 +686,7 @@
                 </form>
 
                 <!-- Species dropdown -->
-                <select id="species_dropdown2" name="species_dropdown" onchange="getSpeciesIDforDropdown_Edit() & clickButton2()" class="input">
+                <select id="species_dropdown2" name="species_dropdown" onchange="getSpeciesIDforDropdown_Edit() & clickButton2()" class="w-full placeholder-gray-500 border-gray-300 rounded dark:placeholder-gray-100 dark:bg-gray-500">
                     <option value="" disabled selected>Species</option>
                 </select>
 
@@ -746,9 +718,14 @@
                     <input type="text" name="animal_id" placeholder="Animal ID" class="animal_id" hidden>
                     <input type="submit" value="Delete" class="btn btn-indigo">
                 </form>
-                
+                                
             </section>
 
+             <!-- Container 9
+                Admin panel - view species -->
+            <section id="container9" hidden>
+                <div id="root" hidden></div>
+            </section>
         </div>
     </div>
   </div>

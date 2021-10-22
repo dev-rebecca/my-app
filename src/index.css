@@ -4,7 +4,7 @@
 
 @layer base {
 
-  .btn {
+  /* .btn {
     @apply px-3 py-2 transition rounded shadow-sm hover:shadow-none dark:text-white;
   }  
 
@@ -22,5 +22,5 @@
 
   .search {
     @apply w-full text-gray-500 bg-white border-gray-300 rounded-full dark:placeholder-gray-100 dark:bg-gray-500;
-  }
+  } */
 }

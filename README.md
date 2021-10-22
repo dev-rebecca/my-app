@@ -1,70 +1,48 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Search "COMMENTS FOR JOHN" to see all comments required for PROJ2
 
-## Available Scripts
+---------------------
 
-In the project directory, you can run:
+PROJ3 Answers:
 
-### `npm start`
+Comment on each of the 3rd party frameworks used, why was it chosen
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- I'm using React as my third party framework, because React is very popular in the feild and therefore I would like to learn it.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+What other technologies did you investigate in order to settle on a path
 
-### `npm test`
+- I looked into nextJS, Laravel and Symfony however I decided to stick with React as it was the most popular.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Describe the rules by which your authentication restricts access. Comment in code.
 
-### `npm run build`
+- Search "Question 14" in ws.php to see my answers in code (I wrote this for PROJ 2 also).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Describe why you chose this particular encryption technology
+- Authorisation via $_SESSIONS highly secure, as access to this is restricted and cannot be altered via the front end
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# How to Configure ✨ 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<!-- 
+COMMENTS FOR JOHN
+Question 16
+ -->
 
-### `npm run eject`
+1. Import database
+2. Configure imported database with the following settings, or alter settings in db.php:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+    $dbURI = 'mysql:host=localhost;port=8889;dbname=wildlife-watcher';
+    $dbconn = new PDO($dbURI, 'user1', 'user1');
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. The app should be functional. Either register your own account or use the following to login:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+    email: bob@gmail.com
+    password: Password!1
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+# How to Use Test Script
 
-## Learn More
+1. Install VS Code extension "Thunder Client"
+2. Open Thunder Client (icon ov thunder should be on left sidebar of VS Code)
+3. Click icon on the right of "filter collections"
+4. Import
+5. Import using the test-script.json supplied in file directory
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
