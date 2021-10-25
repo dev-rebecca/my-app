@@ -17,6 +17,28 @@
     <script src="./js.js" defer></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGF1ZrpSQEII3NXkui4e2Sppw0P42irZI&callback=initMap&v=weekly" async></script>
+    <script>// Import the functions you need from the SDKs you need
+        import { initializeApp } from "firebase/app";
+        import { getAnalytics } from "firebase/analytics";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+        
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyDUvGh6JGatyH5wrDX2pRCS71Vz7pPqe9E",
+          authDomain: "my-project2-34cd6.firebaseapp.com",
+          projectId: "my-project2-34cd6",
+          storageBucket: "my-project2-34cd6.appspot.com",
+          messagingSenderId: "168283392757",
+          appId: "1:168283392757:web:a4dfa610c99442e6d293bc",
+          measurementId: "G-2Y2P42NJDN"
+        };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        </script>
     <title>Wildlife Watcher</title>
       
 </head>
@@ -24,7 +46,7 @@
 <body onload="checkForLogin()" class="dark:bg-gray-700 dark:text-gray-100 bg-gray-50">
     
     <!-- Alert box -->
-    <div role="alert" id="alertbox" class="absolute inset-x-0 top-0 z-10" hidden>
+    <div role="alert" id="alertbox" class="absolute inset-x-0 top-0 z-50" hidden>
         <div class="max-w-md px-3 mx-auto py-7">
             <span id="alertmsg"></span>
                 <svg onclick="hideAlert()" class="absolute inset-y-0 w-6 h-6 m-auto fill-current right-3" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" id="alertclose"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
@@ -160,7 +182,7 @@
 
         <!-- Nav bar -->
         <div id="container">
-            <div class="absolute z-50 pt-2">
+            <div class="absolute z-10 pt-2">
                 <div class="relative flex-col w-screen md:flex md:flex-row md:min-h-screen">
                     <div @click.away="open = false" class="flex flex-col flex-shrink-0 w-full text-gray-700 md:w-64 dark-mode:text-gray-200 dark-mode:bg-gray-800" x-data="{ open: false }">
                     <div class="flex flex-row items-center justify-between flex-shrink-0 px-8 py-4">
@@ -173,10 +195,10 @@
                         </svg>
                         </button>
                     </div>
-                    <nav :class="{'block': open, 'hidden': !open}" class="flex-grow px-4 pb-4 bg-white md:block md:pb-0 md:overflow-y-auto">
-                        <p class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-gray-200 rounded-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Dark mode</p>
-                        <p class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Account details</p>
-                        <p class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Logout</p>
+                    <nav id="nav_bar" :class="{'block': open, 'hidden': !open}" class="flex-grow px-4 pb-4 bg-white md:block md:pb-0 md:overflow-y-auto">
+                        <p onclick="clickDarkmodeButton()" class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-gray-200 rounded-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">Dark mode</p>
+                        <p onclick="showPage('4'); return false & hideNav()" class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">Account details</p>
+                        <p onclick="clickLogoutButton()" class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">Logout</p>
                         <div @click.away="open = false" class="relative" x-data="{ open: false }">
                         <button @click="open = !open" class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
                             <span>Admin panel</span>
@@ -416,7 +438,7 @@
 
                 <div>
                     <!-- Dark mode button -->
-                    <button @click="darkMode = !darkMode" class="btn-indigo w-max btn btn-icon" id="darkMode">
+                    <button id="darkmode_button" @click="darkMode = !darkMode" class="btn-indigo w-max btn btn-icon" id="darkMode" hidden>
 
                         <!-- Sun -->
                         <svg  x-show="darkMode" class="h-6 mr-1 text-yellow-200" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -432,27 +454,75 @@
                     </button>
 
                     <!-- Update reg -->
-                    <br>Update Registration:
-                    <form method="POST" onsubmit="updateReg(event)" action="ws.php?page=update-reg">
+                    <form method="POST" onsubmit="updateReg(event)" action="ws.php?page=update-reg" hidden>
                         <input type="text" name="first-name" placeholder="First name">
                         <input type="text" name="last-name" placeholder="Last name">
                         <input type="email" name="email" placeholder="Email">
-                        <input type="password" name="password" placeholder="Password">
                         <input type="submit" value="Update" class="btn btn-indigo">
                     </form>
 
                     <!-- Logout -->
-                    <br>Logout:
-                    <form method="GET" onsubmit="logout(event)" action="ws.php?page=logout">
-                        <input type="submit" value="Logout" class="btn btn-indigo">
+                    <form method="GET" onsubmit="logout(event)" action="ws.php?page=logout" hidden>
+                        <input type="submit" id="logout_button">
                     </form>
 
                     <!-- Delete account -->
-                    <br>Delete Account:
-                    <form onsubmit="deleteAccount(event)" action="ws.php?page=delete-account">
+                    <form onsubmit="deleteAccount(event)" action="ws.php?page=delete-account" hidden>
                         <input type="submit" value="Delete Account" class="btn btn-indigo">
                     </form>
 
+                    <!-- Account details -->
+                    <div class="mt-8 overflow-hidden bg-white shadow sm:rounded-lg">
+                        <div class="px-4 py-5 sm:px-6">
+                            <h3 class="text-lg font-medium leading-6 text-gray-900">
+                                Your information
+                            </h3>
+                        </div>
+                        <div class="border-t border-gray-200">
+                            <dl>
+                                <div class="px-4 py-5 bg-gray-50 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <dt class="text-sm font-medium text-gray-500">
+                                    First name
+                                    </dt>
+                                    <dd class="flex justify-between mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                        <span id="firstNameLabel">Margot</span>
+
+                                        <form method="POST" onsubmit="doEditFistName(event)" action="ws.php?page=edit-first-name" id="editFirstNameForm" hidden>
+                                            <input name="first-name" type="text" id="firstNameInput" value="Margot"></input>
+                                            <input type="submit" value="submit">
+                                        </form>
+                                        
+                                        <span onclick="editFirstName()" id="edit_fn_button">Edit</span>
+                                    </dd>
+                                </div>
+                                <div class="px-4 py-5 bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <dt class="text-sm font-medium text-gray-500">
+                                        Last name
+                                    </dt>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                        Foster
+                                    </dd>
+                                </div>
+                                <div class="px-4 py-5 bg-gray-50 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <dt class="text-sm font-medium text-gray-500">
+                                        Email address
+                                    </dt>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                        margotfoster@example.com
+                                    </dd>
+                                </div>
+                                <div class="px-4 py-5 bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <dt class="text-sm font-medium text-gray-500">
+                                        Password
+                                    </dt>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                        *******
+                                    </dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </div>
+  
                 </div>
                 
             </section>

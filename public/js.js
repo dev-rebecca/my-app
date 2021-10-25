@@ -38,7 +38,7 @@ function showPage(sectionClicked) {
         title.innerText = "My Wildlife";
     }
     if (document.getElementById('container4').style.display === 'block') {
-        title.innerText = "Settings";
+        title.innerText = "User Details";
     }
 }
 
@@ -652,7 +652,6 @@ function updateReg (evt) {
     formData.append(evt.target[0].name, evt.target[0].value);
     formData.append(evt.target[1].name, evt.target[1].value);
     formData.append(evt.target[2].name, evt.target[2].value);
-    formData.append(evt.target[3].name, evt.target[3].value);
     fetch(evt.target.action, 
         {
             method: 'POST',
@@ -1323,4 +1322,44 @@ function checkIfAdmin (evt) {
 // Show admin panel to admin role
 function showAdminPanel() {
     document.getElementById('root').removeAttribute('hidden');
+}
+
+// Click of logout fires logout form
+function clickLogoutButton() {
+    document.getElementById("logout_button").click();
+}
+
+// Click of dark mode fires dark mode button (alpine.js cannot work while nested in nav bar)
+function clickDarkmodeButton() {
+    document.getElementById("darkmode_button").click();
+    document.getElementById("nav_bar").style.display = "block";
+}
+
+// function hideNav() {
+//     document.getElementById("nav_bar").style.display = "none";
+// }
+
+function editFirstName() {
+    // document.getElementById('firstNameInput').removeAttribute('hidden');
+    document.getElementById('firstNameLabel').setAttribute('hidden', 'hidden');
+    document.getElementById('edit_fn_button').setAttribute('hidden', 'hidden');
+    document.getElementById('editFirstNameForm').removeAttribute('hidden');
+}
+
+// Edit first name
+function doEditFistName (evt) {
+    evt.preventDefault();
+    const formData = new FormData();
+
+    formData.append(evt.target[0].name, evt.target[0].value);
+
+    fetch(evt.target.action, 
+        {
+            method: 'POST',
+            body: formData,
+            credentials: 'include'
+        }
+    )
+    document.getElementById('editFirstNameForm').setAttribute('hidden', 'hidden');
+    document.getElementById('firstNameLabel').removeAttribute('hidden');
 }
