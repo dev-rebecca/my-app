@@ -37,6 +37,7 @@
 - Error message for registering when already logged in - needs log out button
 - Make template to hide json information
 - Only log if response code is not 400
+- Dark mode icon in switch so looks better
 
 # To do (FOR ADMIN)
 - Users choose 'animal type', then they start typing a species.
