@@ -38,36 +38,38 @@
 - Make template to hide json information
 - Only log if response code is not 400
 - Dark mode icon in switch so looks better
+- About, contact me
 
 # To do (FOR ADMIN)
+
 - Users choose 'animal type', then they start typing a species.
 - If admin has approved, the species will appear from drop down. If not they can add it.
 - If they add one, that gets status of pending for admin to approve
 - When updating a category, they can't delete one because it may be in use by other user. They can only add a new one
 
-
 # Notes
+
 - Check for same email function
 
-    public function insert_user($pdo){
+  public function insert_user($pdo){
         $query1 = "SELECT COUNT(*) FROM users WHERE username = :u";
         $stmt1 = $pdo->prepare($query1);
-        $stmt1->bindParam(":u", $this->username);
+  $stmt1->bindParam(":u", $this->username);
         $stmt1->execute();
         $ct = $stmt1->fetchColumn();
         if ($ct == 0) {
-            $hashed_password=password_hash($this->password,PASSWORD_DEFAULT);
-            $query="INSERT INTO users (firstName, lastName, username, password, emailAddress, role) VALUES(:fn,:ln,:u,:p,:em,:r)";
+  $hashed_password=password_hash($this->password,PASSWORD_DEFAULT);
+  $query="INSERT INTO users (firstName, lastName, username, password, emailAddress, role) VALUES(:fn,:ln,:u,:p,:em,:r)";
             $stmt=$pdo->prepare($query);
-            $stmt->bindParam(":em", $this->emailAddress);
-            $stmt->bindParam(":fn", $this->firstName);
-            $stmt->bindParam(":ln", $this->lastName);
-            $stmt->bindParam(":p", $hashed_password);
-            $stmt->bindParam(":r", $this->role);
-            $stmt->bindParam(":u", $this->username);
-            $stmt->execute();
-            return ("Saved");
-        } else {
-            return ("Not saved");
-        }
-    }
+  $stmt->bindParam(":em", $this->emailAddress);
+  $stmt->bindParam(":fn", $this->firstName);
+  $stmt->bindParam(":ln", $this->lastName);
+  $stmt->bindParam(":p", $hashed_password);
+  $stmt->bindParam(":r", $this->role);
+  $stmt->bindParam(":u", $this->username);
+  $stmt->execute();
+  return ("Saved");
+  } else {
+  return ("Not saved");
+  }
+  }

@@ -44,7 +44,7 @@
     <title>Wildlife Watcher</title>
 </head>
 
-<body onload="checkForLogin()" class="dark:bg-gray-700 dark:text-gray-100 bg-gray-50">
+<body onload="checkForLogin()" id="body" class="dark:bg-gray-700 dark:text-gray-100 bg-gray-50">
     
     <!-- Alert box -->
     <div role="alert" id="alertbox" class="absolute inset-x-0 top-0 z-50" hidden>
@@ -196,7 +196,7 @@
                                 <!-- <img src="imgs/koala.png" alt="" height="40px" width="40px" class="inline"> -->
                             </span>
                             <span class="flex justify-self-end">
-                                <svg onclick="showPage('4'); return false" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg onclick="showPage('4'); return false & getUserDetails()" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                                 </svg>
                             </span>
@@ -428,7 +428,7 @@
 
                 <div class="text-gray-600">
                    
-                    <div onclick="getUserDetails() & showPage('10'); return false" class="flex items-center justify-between py-4 border-b border-gray-300">
+                    <div onclick="showPage('10'); return false" class="flex items-center justify-between py-4 border-b border-gray-300">
                         <p>Account details</p>
                         <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -456,7 +456,7 @@
                         </svg>
                     </div>
 
-                    <div class="flex items-center justify-between py-4 border-b border-gray-300">
+                    <div onclick="showUnsubscribeModal()" class="flex items-center justify-between py-4 border-b border-gray-300">
                         <p>Unsubscribe</p>
                         <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -483,17 +483,16 @@
                     
                 </div>
                     
+                <!-- Hidden form 
+                    Logout -->
+                <form method="GET" onsubmit="logout(event)" action="ws.php?page=logout" hidden>
+                    <input type="submit" id="logout_button">
+                </form>
 
-                    <!-- Logout -->
-                    <form method="GET" onsubmit="logout(event)" action="ws.php?page=logout" hidden>
-                        <input type="submit" id="logout_button">
-                    </form>
-
-                    <!-- Delete account -->
-                    <!-- <form onsubmit="deleteAccount(event)" action="ws.php?page=delete-account" hidden>
-                        <input type="submit" value="Delete Account" class="btn btn-indigo">
-                    </form> -->
-
+                <!-- Delete account -->
+                <!-- <form onsubmit="deleteAccount(event)" action="ws.php?page=delete-account" hidden>
+                    <input type="submit" value="Delete Account" class="btn btn-indigo">
+                </form> -->
 
             </section>
 
@@ -782,19 +781,19 @@
                 <div>
                     <dl>
                         <div class="px-4 py-5 border-b border-gray-200">
-                            <dt class="text-sm font-medium text-gray-500">
+                            <dt class="font-medium text-gray-500">
                             First name
                             </dt>
-                            <dd class="flex justify-between mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                            <dd class="flex justify-between mt-1 text-gray-900 sm:mt-0 sm:col-span-2">
                                 <span id="firstNameLabel"></span>
 
                                 <form method="POST" onsubmit="doEditFirstName(event)" action="ws.php?page=edit-first-name" id="editFirstNameForm" hidden>
-                                    <input name="first-name" type="text" id="firstNameInput" class="p-0 text-sm border-0 border-b appearance-none bg-gray-50"></input>
+                                    <input name="first-name" type="text" id="firstNameInput" class="p-0 border-0 border-b appearance-none bg-gray-50"></input>
                                     <input type="submit" value="submit" id="editFirstNameSubmit" hidden>
                                 </form>
                                 
-                                <span onclick="editFirstName()" id="editFirstNameButton" class="font-medium text-green-600 underline">Edit</span>
-                                <span onclick="editFirstNameClick() & getUserDetails()" id="clickFirstNameButton" hidden>
+                                <span onclick="editFirstName()" id="editFirstNameButton" class="text-green-600 underline">Edit</span>
+                                <span onclick="editFirstNameClick()" id="clickFirstNameButton" hidden>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
                                       </svg>
@@ -803,19 +802,19 @@
                         </div>
 
                         <div class="px-4 py-5 border-b border-gray-200">
-                            <dt class="text-sm font-medium text-gray-500">
+                            <dt class="font-medium text-gray-500">
                             Last name
                             </dt>
-                            <dd class="flex justify-between mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                            <dd class="flex justify-between mt-1 text-gray-900 sm:mt-0 sm:col-span-2">
                                 <span id="lastNameLabel"></span>
 
                                 <form method="POST" onsubmit="doEditLastName(event)" action="ws.php?page=edit-last-name" id="editLastNameForm" hidden>
-                                    <input name="last-name" type="text" id="lastNameInput" class="p-0 text-sm border-0 border-b appearance-none bg-gray-50"></input>
+                                    <input name="last-name" type="text" id="lastNameInput" class="p-0 border-0 border-b appearance-none bg-gray-50"></input>
                                     <input type="submit" value="submit" id="editLastNameSubmit" hidden>
                                 </form>
                                 
-                                <span onclick="editLastName()" id="editLastNameButton" class="font-medium text-green-600 underline">Edit</span>
-                                <span onclick="editLastNameClick() & getUserDetails()" id="clickLastNameButton" hidden>
+                                <span onclick="editLastName()" id="editLastNameButton" class="text-green-600 underline">Edit</span>
+                                <span onclick="editLastNameClick()" id="clickLastNameButton" hidden>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
                                       </svg>
@@ -824,19 +823,19 @@
                         </div>
                         
                         <div class="px-4 py-5 border-b border-gray-200">
-                            <dt class="text-sm font-medium text-gray-500">
+                            <dt class="font-medium text-gray-500">
                             Email address
                             </dt>
-                            <dd class="flex justify-between mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                            <dd class="flex justify-between mt-1 text-gray-900 sm:mt-0 sm:col-span-2">
                                 <span id="emailLabel"></span>
 
                                 <form method="POST" onsubmit="doEditEmail(event)" action="ws.php?page=edit-email" id="editEmailForm" hidden>
-                                    <input name="email" type="text" id="emailInput" class="p-0 text-sm border-0 border-b appearance-none bg-gray-50"></input>
+                                    <input name="email" type="text" id="emailInput" class="p-0 border-0 border-b appearance-none bg-gray-50"></input>
                                     <input type="submit" value="submit" id="editEmailSubmit" hidden>
                                 </form>
                                 
-                                <span onclick="editEmail()" id="editEmailButton" class="font-medium text-green-600 underline">Edit</span>
-                                <span onclick="editEmailClick() & getUserDetails()" id="clickEmailButton" hidden>
+                                <span onclick="editEmail()" id="editEmailButton" class="text-green-600 underline">Edit</span>
+                                <span onclick="editEmailClick()" id="clickEmailButton" hidden>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
                                       </svg>
@@ -845,19 +844,19 @@
                         </div>
                         
                         <div class="px-4 py-5 border-b border-gray-200">
-                            <dt class="text-sm font-medium text-gray-500">
+                            <dt class="font-medium text-gray-500">
                                 Password
                             </dt>
-                            <dd class="flex justify-between mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                            <dd class="flex justify-between mt-1 text-gray-900 sm:mt-0 sm:col-span-2">
                                 <span id="passwordLabel">*********</span>
 
                                 <form method="POST" onsubmit="doEditPassword(event)" action="ws.php?page=edit-password" id="editPasswordForm" hidden>
-                                    <input name="password" type="text" id="passwordInput" class="p-0 text-sm border-0 border-b appearance-none bg-gray-50"></input>
+                                    <input name="password" type="text" id="passwordInput" class="p-0 border-0 border-b appearance-none bg-gray-50"></input>
                                     <input type="submit" value="submit" id="editPasswordSubmit" hidden>
                                 </form>
                                 
-                                <span onclick="editPassword()" id="editPasswordButton" class="font-medium text-green-600 underline">Edit</span>
-                                <span onclick="editPasswordClick() & getUserDetails()" id="clickPasswordButton" hidden>
+                                <span onclick="editPassword()" id="editPasswordButton" class="text-green-600 underline">Edit</span>
+                                <span onclick="editPasswordClick()" id="clickPasswordButton" hidden>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
                                       </svg>
