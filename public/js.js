@@ -38,7 +38,7 @@ function showPage(sectionClicked) {
         title.innerText = "My Wildlife";
     }
     if (document.getElementById('container4').style.display === 'block') {
-        title.innerText = "User Details";
+        title.innerText = "Settings";
     }
 }
 
