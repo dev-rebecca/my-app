@@ -449,7 +449,7 @@
                         </svg>
                     </div>
 
-                    <div class="flex items-center justify-between py-4 border-b border-gray-300">
+                    <div onclick="logoutClick()" class="flex items-center justify-between py-4 border-b border-gray-300">
                         <p>Logout</p>
                         <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -483,18 +483,11 @@
                     
                 </div>
                     
-                    <!-- Update reg -->
-                    <!-- <form method="POST" onsubmit="updateReg(event)" action="ws.php?page=update-reg" hidden>
-                        <input type="text" name="first-name" placeholder="First name">
-                        <input type="text" name="last-name" placeholder="Last name">
-                        <input type="email" name="email" placeholder="Email">
-                        <input type="submit" value="Update" class="btn btn-indigo">
-                    </form> -->
 
                     <!-- Logout -->
-                    <!-- <form method="GET" onsubmit="logout(event)" action="ws.php?page=logout" hidden>
+                    <form method="GET" onsubmit="logout(event)" action="ws.php?page=logout" hidden>
                         <input type="submit" id="logout_button">
-                    </form> -->
+                    </form>
 
                     <!-- Delete account -->
                     <!-- <form onsubmit="deleteAccount(event)" action="ws.php?page=delete-account" hidden>

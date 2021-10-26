@@ -696,6 +696,10 @@ function logout (evt) {
     );
 }    
 
+function logoutClick() {
+    document.getElementById("logout_button").click();
+}
+
 /* Container 6
 View individual animals page */
 
