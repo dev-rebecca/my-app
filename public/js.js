@@ -531,6 +531,21 @@ function addAnimal (evt) {
     );
 }
 
+function uploadImage (evt) {
+    evt.preventDefault();
+    const formData = new FormData();
+
+    formData.append(evt.target[0].name, evt.target[0].value);
+
+    fetch(evt.target.action, 
+        {
+            method: 'POST',
+            body: formData,
+            credentials: 'include'
+        }
+    )
+}
+
 // Add icon if validation passes, remove if does not pass
 function addAnimalValidationIcon() {
     
@@ -1341,6 +1356,7 @@ function getUserDetails() {
             headers.json().then(function(body) {
                 for (let i = 0; i < body.length; i++) {
 
+                    // Both the value (when clicking 'edit') and the text before/after edit, receives the name of data
                     let firstNameLabel = document.getElementById("firstNameLabel");
                     let firstNameInput = document.getElementById("firstNameInput");
 
@@ -1364,6 +1380,22 @@ function getUserDetails() {
     )
 }
 
+// When clicking 'edit', the necessary items are shown/hidden to make form attractive
+function editData(label, editButton, form, saveButton) {
+    document.getElementById(label).setAttribute('hidden', 'hidden');
+    document.getElementById(editButton).setAttribute('hidden', 'hidden');
+    document.getElementById(form).removeAttribute('hidden');
+    document.getElementById(saveButton).removeAttribute('hidden');
+}
+
+// After clicking 'save', the necessary items are shown/hidden to make form attractive
+function afterEditData(label, editButton, form, saveButton) {
+    document.getElementById(label).removeAttribute('hidden');
+    document.getElementById(editButton).removeAttribute('hidden');
+    document.getElementById(form).setAttribute('hidden', 'hidden');
+    document.getElementById(saveButton).setAttribute('hidden', 'hidden');
+}
+
 // Edit first name
 function doEditFirstName (evt) {
     evt.preventDefault();
@@ -1381,23 +1413,17 @@ function doEditFirstName (evt) {
     afterFirstNameEdit();
 }
 
+function afterFirstNameEdit() {
+    afterEditData('firstNameLabel', 'editFirstNameButton', 'editFirstNameForm', 'clickFirstNameButton');
+}
+
 function editFirstName() {
-    document.getElementById('firstNameLabel').setAttribute('hidden', 'hidden');
-    document.getElementById('editFirstNameButton').setAttribute('hidden', 'hidden');
-    document.getElementById('editFirstNameForm').removeAttribute('hidden');
-    document.getElementById('clickFirstNameButton').removeAttribute('hidden');
+    editData('firstNameLabel', 'editFirstNameButton', 'editFirstNameForm', 'clickFirstNameButton');
 }
 
 function editFirstNameClick() {
     document.getElementById("editFirstNameSubmit").click();
     getUserDetails();
-}
-
-function afterFirstNameEdit() {
-    document.getElementById('editFirstNameForm').setAttribute('hidden', 'hidden');
-    document.getElementById('firstNameLabel').removeAttribute('hidden');
-    document.getElementById('editFirstNameButton').removeAttribute('hidden');
-    document.getElementById('clickFirstNameButton').setAttribute('hidden', 'hidden');
 }
 
 // Edit last name
@@ -1417,23 +1443,17 @@ function doEditLastName (evt) {
     afterLastNameEdit();
 }
 
+function afterLastNameEdit() {
+    afterEditData('lastNameLabel', 'editLastNameButton', 'editLastNameForm', 'clickLastNameButton');
+}
+
 function editLastName() {
-    document.getElementById('lastNameLabel').setAttribute('hidden', 'hidden');
-    document.getElementById('editLastNameButton').setAttribute('hidden', 'hidden');
-    document.getElementById('editLastNameForm').removeAttribute('hidden');
-    document.getElementById('clickLastNameButton').removeAttribute('hidden');
+    editData('lastNameLabel', 'editLastNameButton', 'editLastNameForm', 'clickLastNameButton');
 }
 
 function editLastNameClick() {
     document.getElementById("editLastNameSubmit").click();
     getUserDetails();
-}
-
-function afterLastNameEdit() {
-    document.getElementById('editLastNameForm').setAttribute('hidden', 'hidden');
-    document.getElementById('lastNameLabel').removeAttribute('hidden');
-    document.getElementById('editLastNameButton').removeAttribute('hidden');
-    document.getElementById('clickLastNameButton').setAttribute('hidden', 'hidden');
 }
 
 // Edit email
@@ -1453,25 +1473,18 @@ function doEditEmail (evt) {
     afterEmailEdit();
 }
 
+function afterEmailEdit() {
+    afterEditData('emailLabel', 'editEmailButton', 'editEmailForm', 'clickEmailButton');
+}
+
 function editEmail() {
-    document.getElementById('emailLabel').setAttribute('hidden', 'hidden');
-    document.getElementById('editEmailButton').setAttribute('hidden', 'hidden');
-    document.getElementById('editEmailForm').removeAttribute('hidden');
-    document.getElementById('clickEmailButton').removeAttribute('hidden');
+    editData('emailLabel', 'editEmailButton', 'editEmailForm', 'clickEmailButton');
 }
 
 function editEmailClick() {
     document.getElementById("editEmailSubmit").click();
     getUserDetails();
 }
-
-function afterEmailEdit() {
-    document.getElementById('editEmailForm').setAttribute('hidden', 'hidden');
-    document.getElementById('emailLabel').removeAttribute('hidden');
-    document.getElementById('editEmailButton').removeAttribute('hidden');
-    document.getElementById('clickEmailButton').setAttribute('hidden', 'hidden');
-}
-
 
 // Edit password
 function doEditPassword (evt) {
@@ -1490,23 +1503,17 @@ function doEditPassword (evt) {
     afterPasswordEdit();
 }
 
+function afterPasswordEdit() {
+    afterEditData('passwordLabel', 'editPasswordButton', 'editPasswordForm', 'clickPasswordButton');
+}
+
 function editPassword() {
-    document.getElementById('passwordLabel').setAttribute('hidden', 'hidden');
-    document.getElementById('editPasswordButton').setAttribute('hidden', 'hidden');
-    document.getElementById('editPasswordForm').removeAttribute('hidden');
-    document.getElementById('clickPasswordButton').removeAttribute('hidden');
+    editData('passwordLabel', 'editPasswordButton', 'editPasswordForm', 'clickPasswordButton');
 }
 
 function editPasswordClick() {
     document.getElementById("editPasswordSubmit").click();
     getUserDetails();
-}
-
-function afterPasswordEdit() {
-    document.getElementById('editPasswordForm').setAttribute('hidden', 'hidden');
-    document.getElementById('passwordLabel').removeAttribute('hidden');
-    document.getElementById('editPasswordButton').removeAttribute('hidden');
-    document.getElementById('clickPasswordButton').setAttribute('hidden', 'hidden');
 }
 
 function showUnsubscribeModal() {
