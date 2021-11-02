@@ -692,135 +692,145 @@
                 Edit animal page -->
 
             <section id="container8" hidden>
+                <div class="min-h-screen px-3 mt-5 mb-8">
 
-                <!-- Hidden form
-                    Animal type for dropdown -->
-                <form method="POST" action="ws.php?page=view-species" onsubmit="AnimalTypeDropdownforEdit(event) & clearAll()" hidden>
-                    <input type="text" name="animal_type_id" id="animal_type_id_3">
-                    <input type="submit" id="animal_type_button_2">
-                </form>
+                    <!-- Hidden form
+                        Animal type for dropdown -->
+                    <form method="POST" action="ws.php?page=view-species" onsubmit="AnimalTypeDropdownforEdit(event) & clearAll()" hidden>
+                        <input type="text" name="animal_type_id" id="animal_type_id_3">
+                        <input type="submit" id="animal_type_button_2">
+                    </form>
 
-                <!-- Hidden form
-                Species ID for dropdown -->
-                <form method="POST" action="ws.php?page=get-species-id" onsubmit="getSpeciesID_EditAnimal(event)" hidden>
-                    <input type="text" id="species_id_for_db2" name="species">
-                    <input type="submit" id="species_id_button" value="species ID for db" class="btn btn-indigo">
-                </form>
+                    <!-- Hidden form
+                    Species ID for dropdown -->
+                    <form method="POST" action="ws.php?page=get-species-id" onsubmit="getSpeciesID_EditAnimal(event)" hidden>
+                        <input type="text" id="species_id_for_db2" name="species">
+                        <input type="submit" id="species_id_button" value="species ID for db" class="btn btn-indigo">
+                    </form>
 
-                <!-- Hidden form
-                    Get animal ID to display details -->
-                <form method="POST" onsubmit="getAnimalDetails(event)" hidden>
-                    <input type="text" class="animal_id" name="animal_id">
-                    <input type="submit" id="get_animalID_for_details">
-                </form>
+                    <!-- Hidden form
+                        Get animal ID to display details -->
+                    <form method="POST" onsubmit="getAnimalDetails(event)" hidden>
+                        <input type="text" class="animal_id" name="animal_id">
+                        <input type="submit" id="get_animalID_for_details">
+                    </form>
 
-                <!-- Top section image, two dropdowns -->
-                <!-- <div class="grid grid-flow-col grid-rows-2 mb-8"> -->
-                    
-                    <!-- Add image -->
-                    <!-- <img class="inline row-span-2 ml-6 rounded-full w-28 h-28" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt=""> -->
-                    
-                    <!-- Time -->
-                    <!-- <div class="self-end col-span-2">
-                        <button class="ml-8 btn btn-indigo sm:text-sm">Time: Current</button>
-                    </div> -->
+                    <!-- Edit image -->
+                    <div class="grid justify-items-center">
+                        <img class="inline mb-5 rounded-full w-28 h-28" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
+                    </div>
 
-                    <!-- Location -->
-                    <!-- <div class="self-start col-span-2">
-                        <button class="ml-8 btn btn-indigo sm:text-sm">Location: Current</button>
-                    </div> -->
-                    
-                <!-- </div> -->
+                    <!-- Animal type dropdown -->
+                    <form method="POST" onchange="populateSpeciesDropdown_AnimalEdit()">
+                        <select name="animal_type_id" id="selectionSpecies2" class="w-full mb-3 placeholder-gray-500 border-gray-300 rounded dark:placeholder-gray-100 dark:bg-gray-500">
+                            <option value="" disabled selected>Animal Type</option>
+                            <option value="17">Reptile</option>
+                            <option value="18">Invertebrate</option>
+                            <option value="19">Fish</option>
+                            <option value="20">Amphibian</option>
+                            <option value="21">Bird</option>
+                            <option value="22">Mammal</option>
+                        </select>
+                    </form>
 
-                <!-- Animal type dropdown -->
-                <form method="POST" onchange="populateSpeciesDropdown_AnimalEdit()">
-                    <select name="animal_type_id" id="selectionSpecies2" class="w-full placeholder-gray-500 border-gray-300 rounded dark:placeholder-gray-100 dark:bg-gray-500">
-                        <option value="" disabled selected>Animal Type</option>
-                        <option value="17">Reptile</option>
-                        <option value="18">Invertebrate</option>
-                        <option value="19">Fish</option>
-                        <option value="20">Amphibian</option>
-                        <option value="21">Bird</option>
-                        <option value="22">Mammal</option>
+                    <!-- Species dropdown -->
+                    <select id="species_dropdown2" name="species_dropdown" onchange="getSpeciesIDforDropdown_Edit() & clickButton2()" class="w-full mb-3 placeholder-gray-500 border-gray-300 rounded dark:placeholder-gray-100 dark:bg-gray-500">
+                        <option value="" disabled selected>Species</option>
                     </select>
-                </form>
 
-                <!-- Species dropdown -->
-                <select id="species_dropdown2" name="species_dropdown" onchange="getSpeciesIDforDropdown_Edit() & clickButton2()" class="w-full placeholder-gray-500 border-gray-300 rounded dark:placeholder-gray-100 dark:bg-gray-500">
-                    <option value="" disabled selected>Species</option>
-                </select>
+                    <!-- Edit animal -->
+                    <div>
+                        <dl>
+                            <div class="px-4 py-3 border-b border-gray-200">
+                                <dt class="font-medium text-gray-500">
+                                    Name
+                                </dt>
+                                <dd class="flex justify-between mt-1 text-gray-900 sm:mt-0 sm:col-span-2">
+                                    <span id="animalNameLabel"></span>
 
-                <!-- Edit animal -->
-                <div>
-                    <dl>
-                        <div class="px-4 py-5 border-b border-gray-200">
-                            <dt class="font-medium text-gray-500">
-                            Name
-                            </dt>
-                            <dd class="flex justify-between mt-1 text-gray-900 sm:mt-0 sm:col-span-2">
-                                <span id="animalNameLabel"></span>
+                                    <form method="POST" onsubmit="doEditAnimalName(event) & getAnimalDetails(event)" action="ws.php?page=edit-animal-name" id="editAnimalNameForm" hidden>
+                                        <input type="text" name="animal_id" class="animal_id" hidden>
+                                        <input type="text" name="name" id="animalNameInput" class="p-0 border-0 border-b appearance-none bg-gray-50"></input>
+                                        <input type="submit" value="submit" id="editAnimalNameSubmit" hidden>
+                                    </form>
+                                    
+                                    <span onclick="editAnimalName()" id="editAnimalNameButton" class="text-green-600 underline">Edit</span>
+                                    <span onclick="editAnimalNameClick()" id="clickAnimalNameButton" hidden>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                                        </svg>
+                                    </span>
+                                </dd>
+                            </div>
 
-                                <form method="POST" onsubmit="doEditAnimalName(event) & getAnimalDetails(event)" action="ws.php?page=edit-animal-name" id="editAnimalNameForm" hidden>
-                                    <input type="text" name="animal_id" class="animal_id" hidden>
-                                    <input type="text" name="name" id="animalNameInput" class="p-0 border-0 border-b appearance-none bg-gray-50"></input>
-                                    <input type="submit" value="submit" id="editAnimalNameSubmit" hidden>
-                                </form>
-                                
-                                <span onclick="editAnimalName()" id="editAnimalNameButton" class="text-green-600 underline">Edit</span>
-                                <span onclick="editAnimalNameClick()" id="clickAnimalNameButton" hidden>
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
-                                    </svg>
-                                </span>
-                            </dd>
-                        </div>
+                            <div class="px-4 py-3 border-b border-gray-200">
+                                <dt class="font-medium text-gray-500">
+                                    Gender
+                                </dt>
+                                <dd class="flex justify-between mt-1 text-gray-900 sm:mt-0 sm:col-span-2">
+                                    <span id="animalGenderLabel"></span>
 
-                        <div class="px-4 py-5 border-b border-gray-200">
-                            <dt class="font-medium text-gray-500">
-                            Gender
-                            </dt>
-                            <dd class="flex justify-between mt-1 text-gray-900 sm:mt-0 sm:col-span-2">
-                                <span id="animalGenderLabel"></span>
+                                    <form method="POST" onsubmit="doEditAnimalGender(event) & getAnimalDetails(event)" action="ws.php?page=edit-animal-gender" id="editAnimalGenderForm" hidden>
+                                        <input type="text" name="animal_id" class="animal_id" hidden>
+                                        <input type="text" name="gender" id="animalGenderInput" class="p-0 border-0 border-b appearance-none bg-gray-50"></input>
+                                        <input type="submit" value="submit" id="editAnimalGenderSubmit" hidden>
+                                    </form>
+                                    
+                                    <span onclick="editAnimalGender()" id="editAnimalGenderButton" class="text-green-600 underline">Edit</span>
+                                    <span onclick="editAnimalGenderClick()" id="clickAnimalGenderButton" hidden>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                                        </svg>
+                                    </span>
+                                </dd>
+                            </div>
 
-                                <form method="POST" onsubmit="doEditAnimalGender(event) & getAnimalDetails(event)" action="ws.php?page=edit-animal-gender" id="editAnimalGenderForm" hidden>
-                                    <input type="text" name="animal_id" class="animal_id" hidden>
-                                    <input type="text" name="gender" id="animalGenderInput" class="p-0 border-0 border-b appearance-none bg-gray-50"></input>
-                                    <input type="submit" value="submit" id="editAnimalGenderSubmit" hidden>
-                                </form>
-                                
-                                <span onclick="editAnimalGender()" id="editAnimalGenderButton" class="text-green-600 underline">Edit</span>
-                                <span onclick="editAnimalGenderClick()" id="clickAnimalGenderButton" hidden>
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
-                                    </svg>
-                                </span>
-                            </dd>
-                        </div>
+                            <div class="px-4 py-3 border-b border-gray-200">
+                                <dt class="font-medium text-gray-500">
+                                    Maturity
+                                </dt>
+                                <dd class="flex justify-between mt-1 text-gray-900 sm:mt-0 sm:col-span-2">
+                                    <span id="animalMaturityLabel"></span>
 
-                        <div class="px-4 py-5 border-b border-gray-200">
-                            <dt class="font-medium text-gray-500">
-                            Maturity
-                            </dt>
-                            <dd class="flex justify-between mt-1 text-gray-900 sm:mt-0 sm:col-span-2">
-                                <span id="animalMaturityLabel"></span>
+                                    <form method="POST" onsubmit="doEditAnimalMaturity(event) & getAnimalDetails(event)" action="ws.php?page=edit-animal-maturity" id="editAnimalMaturityForm" hidden>
+                                        <input type="text" name="animal_id" class="animal_id" hidden>
+                                        <input type="text" name="maturity" id="animalMaturityInput" class="p-0 border-0 border-b appearance-none bg-gray-50"></input>
+                                        <input type="submit" value="submit" id="editAnimalMaturitySubmit" hidden>
+                                    </form>
+                                    
+                                    <span onclick="editAnimalMaturity()" id="editAnimalMaturityButton" class="text-green-600 underline">Edit</span>
+                                    <span onclick="editAnimalMaturityClick()" id="clickAnimalMaturityButton" hidden>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                                        </svg>
+                                    </span>
+                                </dd>
+                            </div>
 
-                                <form method="POST" onsubmit="doEditAnimalMaturity(event) & getAnimalDetails(event)" action="ws.php?page=edit-animal-maturity" id="editAnimalMaturityForm" hidden>
-                                    <input type="text" name="animal_id" class="animal_id" hidden>
-                                    <input type="text" name="maturity" id="animalMaturityInput" class="p-0 border-0 border-b appearance-none bg-gray-50"></input>
-                                    <input type="submit" value="submit" id="editAnimalMaturitySubmit" hidden>
-                                </form>
-                                
-                                <span onclick="editAnimalMaturity()" id="editAnimalMaturityButton" class="text-green-600 underline">Edit</span>
-                                <span onclick="editAnimalMaturityClick()" id="clickAnimalMaturityButton" hidden>
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
-                                    </svg>
-                                </span>
-                            </dd>
-                        </div>
-                    </dl>
+                            <div class="px-4 py-3 border-b border-gray-200">
+                                <dt class="font-medium text-gray-500">
+                                    Notes
+                                </dt>
+                                <dd class="flex justify-between mt-1 text-gray-900 sm:mt-0 sm:col-span-2">
+                                    <span id="animalNotesLabel"></span>
+
+                                    <form method="POST" onsubmit="doEditAnimalNotes(event) & getAnimalDetails(event)" action="ws.php?page=edit-animal-notes" id="editAnimalNotesForm" hidden>
+                                        <input type="text" name="animal_id" class="animal_id" hidden>
+                                        <input type="text" name="notes" id="animalNotesInput" class="p-0 border-0 border-b appearance-none bg-gray-50"></input>
+                                        <input type="submit" value="submit" id="editAnimalNotesSubmit" hidden>
+                                    </form>
+                                    
+                                    <span onclick="editAnimalNotes()" id="editAnimalNotesButton" class="text-green-600 underline">Edit</span>
+                                    <span onclick="editAnimalNotesClick()" id="clickAnimalNotesButton" hidden>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                                        </svg>
+                                    </span>
+                                </dd>
+                            </div>
+                        </dl>
+                    </div>
                 </div>
-                    
                     
                 <!-- <form method="POST" action="ws.php?page=edit-animal" id="edit-animal" onsubmit="editAnimal(event)">
                     <div class="grid">

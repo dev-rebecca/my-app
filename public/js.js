@@ -1419,11 +1419,23 @@ function getAnimalDetails(evt) {
                     let animalGenderLabel = document.getElementById("animalGenderLabel");
                     let animalGenderInput = document.getElementById("animalGenderInput");
 
+                    let animalMaturityLabel = document.getElementById("animalMaturityLabel");
+                    let animalMaturityInput = document.getElementById("animalMaturityInput");
+
+                    let animalNotesLabel = document.getElementById("animalNotesLabel");
+                    let animalNotesInput = document.getElementById("animalNotesInput");
+
                     animalNameLabel.innerHTML = body[i].nickname;
                     animalNameInput.value = body[i].nickname;
 
                     animalGenderLabel.innerHTML = body[i].gender;
                     animalGenderInput.value = body[i].gender;
+
+                    animalMaturityLabel.innerHTML = body[i].maturity;
+                    animalMaturityInput.value = body[i].maturity;
+
+                    animalNotesLabel.innerHTML = body[i].notes;
+                    animalNotesInput.value = body[i].notes;
                 }
             })
         }
@@ -1635,7 +1647,67 @@ function editAnimalGenderClick() {
     document.getElementById("editAnimalGenderSubmit").click();
 }
 
+// Edit animal maturity
 
+function doEditAnimalMaturity (evt) {
+    evt.preventDefault();
+    const formData = new FormData();
+
+    formData.append(evt.target[0].name, evt.target[0].value);
+    formData.append(evt.target[1].name, evt.target[1].value);
+
+    fetch(evt.target.action, 
+        {
+            method: 'POST',
+            body: formData,
+            credentials: 'include'
+        }
+    )
+    afterAnimalMaturityEdit();
+}
+
+function afterAnimalMaturityEdit() {
+    afterEditData('animalMaturityLabel', 'editAnimalMaturityButton', 'editAnimalMaturityForm', 'clickAnimalMaturityButton');
+}
+
+function editAnimalMaturity() {
+    editData('animalMaturityLabel', 'editAnimalMaturityButton', 'editAnimalMaturityForm', 'clickAnimalMaturityButton');
+}
+
+function editAnimalMaturityClick() {
+    document.getElementById("editAnimalMaturitySubmit").click();
+}
+
+// Edit animal notes
+
+function doEditAnimalNotes (evt) {
+    evt.preventDefault();
+    const formData = new FormData();
+
+    formData.append(evt.target[0].name, evt.target[0].value);
+    formData.append(evt.target[1].name, evt.target[1].value);
+
+    fetch(evt.target.action, 
+        {
+            method: 'POST',
+            body: formData,
+            credentials: 'include'
+        }
+    )
+    afterAnimalNotesEdit();
+}
+
+function afterAnimalNotesEdit() {
+    afterEditData('animalNotesLabel', 'editAnimalNotesButton', 'editAnimalNotesForm', 'clickAnimalNotesButton');
+}
+
+function editAnimalNotes() {
+    editData('animalNotesLabel', 'editAnimalNotesButton', 'editAnimalNotesForm', 'clickAnimalNotesButton');
+}
+
+function editAnimalNotesClick() {
+    document.getElementById("editAnimalNotesSubmit").click();
+}
 
 
 function showUnsubscribeModal() {
