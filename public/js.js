@@ -848,7 +848,7 @@ function viewOneAnimal (evt) {
             headers.json().then(function(body) {
                 for (let i = 0; i < body.length; i++) {
 
-                // Animal name individual animal page
+                // Animal name on individual animal page
                 document.getElementById('animal_nickname_div').innerHTML = body[i].nickname;
 
                 // Animal name on add log page
@@ -861,7 +861,8 @@ function viewOneAnimal (evt) {
                     const newListItem = document.createElement("li");
                     let dateDiff = humanized_time_span(body[i].date);
 
-                    let result = `<div class="pb-3">
+                    let result =
+                            `<div class="pb-3">
                                 <div class="mb-2">
                                     <span class="text-gray-600 font-bold">${body[i].title}</span>
                                     <span class="float-right inset-y-0 right-0 text-gray-400">${dateDiff}</span>
@@ -872,10 +873,20 @@ function viewOneAnimal (evt) {
                     newListItem.innerHTML = result;
                     newList.appendChild(newListItem);
                     listContainer.appendChild(newList);   
+
+                    passDataForEditAnimalName(body[i].nickname);
                 }
             })
         }
     );
+}
+
+function passDataForEditAnimalName(data) {
+    let animalNameLabel = document.getElementById("animalNameLabel");
+    let animalNameInput = document.getElementById("animalNameInput");
+
+    animalNameLabel.innerHTML = data;
+    animalNameInput.value = data;
 }
 
 // View species count
@@ -931,10 +942,11 @@ function viewAnimalsPerSpecies (evt) {
                     const map_button =  document.getElementById('map_button');
                     let dateDiff = humanized_time_span(body[i].first_seen_date);
 
-                    result = `<div class="grid grid-cols-3 items-center bg-white border-t border-gray-300 py-2">
+                    result = 
+                            `<div class="grid grid-cols-3 items-center bg-white border-t border-gray-300 py-2">
                                 <div class="pl-2 font-bold col-span-2" onclick="getAnimalID(this.id) & button.click() & map_button.click() & showPage('6'); return false & fireLoader()" id="${body[i].animal_id}">
-                                <img class="w-10 h-10 my-1 rounded-full inline mr-4" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
-                                ${body[i].nickname}
+                                    <img class="w-10 h-10 my-1 rounded-full inline mr-4" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
+                                    ${body[i].nickname}
                                 </div>
                                 <div class="justify-self-center">${dateDiff}</div>
                             </div>`;   
@@ -982,10 +994,11 @@ function viewAnimalsPerSpecies (evt) {
                     const map_button =  document.getElementById('map_button');
                     let dateDiff = humanized_time_span(body[i].first_seen_date);
 
-                    result = `<div class="grid grid-cols-3 items-center bg-white border-t border-gray-300 py-2">
+                    result = 
+                            `<div class="grid grid-cols-3 items-center bg-white border-t border-gray-300 py-2">
                                 <div class="pl-2 font-bold col-span-2" onclick="getAnimalID(this.id) & button.click() & map_button.click() & animalSpinnerRemove() & showPage('6'); return false" id="${body[i].animal_id}">
-                                <img class="h-10 w-10 rounded-full inline mr-2" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
-                                ${body[i].nickname}
+                                    <img class="h-10 w-10 rounded-full inline mr-2" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
+                                    ${body[i].nickname}
                                 </div>
                                 <div class="justify-self-center">${dateDiff}</div>
                             </div>`;   
@@ -1031,11 +1044,10 @@ function AnimalTypeDropdownforEdit (evt) {
                     const listContainer = document.getElementById("species_dropdown2");
                     const newListItem = document.createElement("option");
                     let result_test = "";
-                    result_test += `
-                    <option value='${body[i].species_id}'>
-                    ${body[i].name}
-                    </option>
-                    `;
+                    result_test +=
+                                `<option value='${body[i].species_id}'>
+                                    ${body[i].name}
+                                </option>`;
 
                     newListItem.innerHTML = result_test;
                     listContainer.appendChild(newListItem);
@@ -1380,6 +1392,44 @@ function getUserDetails() {
     )
 }
 
+// Get animal details
+function getAnimalDetails(evt) {
+
+    evt.preventDefault();
+    const formData = new FormData();
+
+    formData.append(evt.target[0].name, evt.target[0].value);
+
+    fetch('ws.php?page=view-animal-details', 
+        {
+            method: 'POST',
+            body: formData,
+            credentials: 'include'
+        }
+    ) 
+    .then (
+        function (headers) {
+            headers.json().then(function(body) {
+                for (let i = 0; i < body.length; i++) {
+
+                    // Both the value (when clicking 'edit') and the text before/after edit, receives the name of data
+                    let animalNameLabel = document.getElementById("animalNameLabel");
+                    let animalNameInput = document.getElementById("animalNameInput");
+
+                    let animalGenderLabel = document.getElementById("animalGenderLabel");
+                    let animalGenderInput = document.getElementById("animalGenderInput");
+
+                    animalNameLabel.innerHTML = body[i].nickname;
+                    animalNameInput.value = body[i].nickname;
+
+                    animalGenderLabel.innerHTML = body[i].gender;
+                    animalGenderInput.value = body[i].gender;
+                }
+            })
+        }
+    )
+}
+
 // When clicking 'edit', the necessary items are shown/hidden to make form attractive
 function editData(label, editButton, form, saveButton) {
     document.getElementById(label).setAttribute('hidden', 'hidden');
@@ -1515,6 +1565,78 @@ function editPasswordClick() {
     document.getElementById("editPasswordSubmit").click();
     getUserDetails();
 }
+
+
+
+// Get animal ID for editing
+function getAnimalIDForDetails() {
+    document.getElementById("get_animalID_for_details").click();
+}
+
+// Edit animal name
+
+function doEditAnimalName (evt) {
+    evt.preventDefault();
+    const formData = new FormData();
+
+    formData.append(evt.target[0].name, evt.target[0].value);
+    formData.append(evt.target[1].name, evt.target[1].value);
+
+    fetch(evt.target.action, 
+        {
+            method: 'POST',
+            body: formData,
+            credentials: 'include'
+        }
+    )
+    afterAnimalNameEdit();
+}
+
+function afterAnimalNameEdit() {
+    afterEditData('animalNameLabel', 'editAnimalNameButton', 'editAnimalNameForm', 'clickAnimalNameButton');
+}
+
+function editAnimalName() {
+    editData('animalNameLabel', 'editAnimalNameButton', 'editAnimalNameForm', 'clickAnimalNameButton');
+}
+
+function editAnimalNameClick() {
+    document.getElementById("editAnimalNameSubmit").click();
+}
+
+// Edit animal gender
+
+function doEditAnimalGender (evt) {
+    evt.preventDefault();
+    const formData = new FormData();
+
+    formData.append(evt.target[0].name, evt.target[0].value);
+    formData.append(evt.target[1].name, evt.target[1].value);
+
+    fetch(evt.target.action, 
+        {
+            method: 'POST',
+            body: formData,
+            credentials: 'include'
+        }
+    )
+    afterAnimalGenderEdit();
+}
+
+function afterAnimalGenderEdit() {
+    afterEditData('animalGenderLabel', 'editAnimalGenderButton', 'editAnimalGenderForm', 'clickAnimalGenderButton');
+}
+
+function editAnimalGender() {
+    editData('animalGenderLabel', 'editAnimalGenderButton', 'editAnimalGenderForm', 'clickAnimalGenderButton');
+}
+
+function editAnimalGenderClick() {
+    document.getElementById("editAnimalGenderSubmit").click();
+}
+
+
+
 
 function showUnsubscribeModal() {
 
