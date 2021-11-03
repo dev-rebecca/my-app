@@ -692,7 +692,7 @@
                 Edit animal page -->
 
             <section id="container8" hidden>
-                <div class="min-h-screen px-3 mt-5 mb-8">
+                <div class="min-h-screen mt-5 mb-8">
 
                     <!-- Hidden form
                         Animal type for dropdown -->
@@ -715,32 +715,67 @@
                         <input type="submit" id="get_animalID_for_details">
                     </form>
 
-                    <!-- Edit image -->
-                    <div class="grid justify-items-center">
-                        <img class="inline mb-5 rounded-full w-28 h-28" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
-                    </div>
-
-                    <!-- Animal type dropdown -->
-                    <form method="POST" onchange="populateSpeciesDropdown_AnimalEdit()">
-                        <select name="animal_type_id" id="selectionSpecies2" class="w-full mb-3 placeholder-gray-500 border-gray-300 rounded dark:placeholder-gray-100 dark:bg-gray-500">
-                            <option value="" disabled selected>Animal Type</option>
-                            <option value="17">Reptile</option>
-                            <option value="18">Invertebrate</option>
-                            <option value="19">Fish</option>
-                            <option value="20">Amphibian</option>
-                            <option value="21">Bird</option>
-                            <option value="22">Mammal</option>
-                        </select>
+                     <!-- Hidden form
+                        Submit edit of species -->
+                    <form method="POST" action="ws.php?page=edit-animal" id="edit-animal" onsubmit="editAnimal(event)" hidden>
+                        <input type="text" id="species_id_input2" placeholder="speciesID" name="species_id">
+                        <input type="text" name="animal_id" class="animal_id">
+                        <input type="submit" id="selectSpeciesButton">
                     </form>
 
-                    <!-- Species dropdown -->
-                    <select id="species_dropdown2" name="species_dropdown" onchange="getSpeciesIDforDropdown_Edit() & clickButton2()" class="w-full mb-3 placeholder-gray-500 border-gray-300 rounded dark:placeholder-gray-100 dark:bg-gray-500">
-                        <option value="" disabled selected>Species</option>
-                    </select>
+                    <!-- Edit image -->
+                    <div class="grid justify-items-center">
+                        <img class="inline rounded-full w-28 h-28" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
+                    </div>
 
-                    <!-- Edit animal -->
+                    <!-- Edit animal -->                
                     <div>
                         <dl>
+                            <div class="px-4 pt-5 pb-3 border-b border-gray-200">
+                                <dt class="font-medium text-gray-500">
+                                    Animal type
+                                </dt>
+                                <dd class="flex justify-between mt-1 text-gray-900 sm:mt-0 sm:col-span-2">
+                                    <span id="animalTypeLabel"></span>
+
+                                    <!-- Animal type dropdown -->
+                                    <form method="POST" onchange="populateSpeciesDropdown_AnimalEdit() & openSpeciesDropdown()" id="editAnimalTypeForm" class="w-3/4" hidden>
+                                        <select name="animal_type_id" id="selectionSpecies2" class="w-full mb-3 placeholder-gray-500 border-gray-300 rounded dark:placeholder-gray-100 dark:bg-gray-500">
+                                            <option value="" disabled selected>Animal Type</option>
+                                            <option value="17">Reptile</option>
+                                            <option value="18">Invertebrate</option>
+                                            <option value="19">Fish</option>
+                                            <option value="20">Amphibian</option>
+                                            <option value="21">Bird</option>
+                                            <option value="22">Mammal</option>
+                                        </select>
+                                    </form>
+                                    
+                                    <span onclick="editAnimalType()" id="editAnimalTypeButton" class="text-green-600 underline">Edit</span>
+                                </dd>
+                            </div>
+
+                            <div class="px-4 py-3 border-b border-gray-200">
+                                <dt class="font-medium text-gray-500">
+                                    Species
+                                </dt>
+                                <dd class="flex justify-between mt-1 text-gray-900 sm:mt-0 sm:col-span-2">
+                                    <span id="animalSpeciesLabel"></span>
+
+                                     <!-- Species dropdown -->
+                                    <select id="species_dropdown2" name="species_dropdown" onchange="getSpeciesIDforDropdown_Edit() & clickButton2()" class="w-3/4 mb-3 placeholder-gray-500 border-gray-300 rounded dark:placeholder-gray-100 dark:bg-gray-500" hidden>
+                                        <option value="" disabled selected>Species</option>
+                                    </select>
+                                    
+                                    <span onclick="editAnimalSpecies()" id="editAnimalSpeciesButton" class="text-green-600 underline">Edit</span>
+                                    <span onclick="editAnimalSpeciesClick()" id="clickAnimalSpeciesButton" hidden>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                                        </svg>
+                                    </span>
+                                </dd>
+                            </div>
+
                             <div class="px-4 py-3 border-b border-gray-200">
                                 <dt class="font-medium text-gray-500">
                                     Name
@@ -831,28 +866,6 @@
                         </dl>
                     </div>
                 </div>
-                    
-                <!-- <form method="POST" action="ws.php?page=edit-animal" id="edit-animal" onsubmit="editAnimal(event)">
-                    <div class="grid">
-                        <input type="text" id="species_id_input2" placeholder="speciesID" name="species_id" hidden>
-                        <input type="text" name="animal_id" class="animal_id" hidden>
-
-                        <label for="name" class="mt-2 text-sm font-medium text-gray-700">Name</label>
-                        <input type="text" name="name" class="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-
-                        <label for="gender" class="mt-2 text-sm font-medium text-gray-700">Gender</label>
-                        <input type="text" name="gender" class="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-
-                        <label for="maturity" class="mt-2 text-sm font-medium text-gray-700">Maturity</label>
-                        <input type="text" name="maturity" class="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-
-                        <label for="notes" class="mt-2 text-sm font-medium text-gray-700">Notes</label>
-                        <textarea rows="3" name="notes" class="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
-                    </div>
-                    <div class="grid mt-5">
-                        <input type="submit" value="Edit" class="btn btn-indigo justify-self-center">
-                    </div>
-                </form> -->
 
                 <!-- Delete animal -->
                 <!-- <form method="POST" action="ws.php?page=delete-animal" id="delete-animal" onsubmit="deleteAnimal(event)">

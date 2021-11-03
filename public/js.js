@@ -626,6 +626,10 @@ function selectType (clicked) {
     label.innerHTML = clicked;
     animal_type.innerHTML = clicked;
 
+    //
+    let animal_type2 = document.getElementById('animalTypeLabel');
+    animal_type2.innerHTML = clicked;
+
     // Puts pic of animal type that was clicked, onto container3 and container5
     let iconDiv =  document.getElementById("animal_type_icon");
     let iconDiv2 =  document.getElementById("animal_type_icon2");
@@ -776,15 +780,16 @@ function viewAnimals (evt) {
                     newList.appendChild(newListItem);
                     listContainer.appendChild(newList);
 
-                    // Outputs species to species page, individual animal page, add log page
+                    // Outputs species to species page, individual animal page, add log page, edit animal page
                     const species_name = document.getElementById('species_name_div');
                     const species_name4 = document.getElementById('species_name_div4');
                     const species_name5 = document.getElementById('species_name_div5');
-
+                    const species_name6 = document.getElementById('animalSpeciesLabel');
 
                     species_name.innerHTML = `${body[i].name}`;
                     species_name4.innerHTML = `${body[i].name}`;
                     species_name5.innerHTML = `${body[i].name}`;
+                    species_name6.innerHTML = `${body[i].name}`;
 
                     // Outputs species to species count hidden HTML form
                     const species_name2 = document.getElementById('species_name_for_count');
@@ -1115,7 +1120,6 @@ function getSpeciesIDforDropdown_Edit () {
 // Click button for hidden form
 function clickButton2() {
     let button = document.getElementById("species_id_button");
-
     button.click();
 }
 
@@ -1123,19 +1127,10 @@ function clickButton2() {
 function editAnimal(evt) {
 
     evt.preventDefault();
-
-    const name = document.forms['edit-animal']['name'].value;
-    const gender = document.forms['edit-animal']['gender'].value;
-    const maturity = document.forms['edit-animal']['maturity'].value;
-    const notes = document.forms['edit-animal']['notes'].value;
     const formData = new FormData();
 
     formData.append(evt.target[0].name, evt.target[0].value);
     formData.append(evt.target[1].name, evt.target[1].value);
-    formData.append(evt.target[2].name, evt.target[2].value);
-    formData.append(evt.target[3].name, evt.target[3].value);
-    formData.append(evt.target[4].name, evt.target[4].value);
-    formData.append(evt.target[5].name, evt.target[5].value);
 
     fetch(evt.target.action, 
         {
@@ -1148,18 +1143,6 @@ function editAnimal(evt) {
         function(headers) {
             if (headers.status === 200) {
                 showAlert('success', 'Changes saved successfully');
-            } else if (validateText(name) == false) {
-                showAlert('error', 'Please enter a name');
-                return false;
-            } else if (validateText(gender) == false) {
-                showAlert('error', 'Please enter a gender');
-                return false;
-            } else if (validateText(maturity) == false) {
-                showAlert('error', 'Please enter animal maturity');
-                return false;
-            } else if (validateText(notes) == false) {
-                showAlert('error', 'Please enter a note');
-                return false;
             } else {
             showAlert('error', 'Error');
             }
@@ -1425,6 +1408,8 @@ function getAnimalDetails(evt) {
                     let animalNotesLabel = document.getElementById("animalNotesLabel");
                     let animalNotesInput = document.getElementById("animalNotesInput");
 
+                    // let animalTypeLabel = document.getElementById("animalTypeLabel");
+
                     animalNameLabel.innerHTML = body[i].nickname;
                     animalNameInput.value = body[i].nickname;
 
@@ -1436,6 +1421,13 @@ function getAnimalDetails(evt) {
 
                     animalNotesLabel.innerHTML = body[i].notes;
                     animalNotesInput.value = body[i].notes;
+
+                    // animalTypeLabel.innerHTML = body[i].type_name;
+                    console.log(body[i].type_name);
+                    console.log(body[i].name);
+
+                    let selection = selectionSpecies2.options[selectionSpecies2.selectedIndex].value
+                    console.log(selection);
                 }
             })
         }
@@ -1709,6 +1701,35 @@ function editAnimalNotesClick() {
     document.getElementById("editAnimalNotesSubmit").click();
 }
 
+// Edit animal type
+
+function afterAnimalTypeEdit() {
+    afterEditData('animalTypeLabel', 'editAnimalTypeButton', 'editAnimalTypeForm', 'clickAnimalTypeButton');
+}
+
+function editAnimalType() {
+    editData('animalTypeLabel', 'editAnimalTypeButton', 'editAnimalTypeForm', 'clickAnimalTypeButton');
+}
+
+// Edit animal species
+
+function afterAnimalSpeciesEdit() {
+    afterEditData('animalSpeciesLabel', 'editAnimalSpeciesButton', 'species_dropdown2', 'clickAnimalSpeciesButton');
+}
+
+function editAnimalSpecies() {
+    editData('animalSpeciesLabel', 'editAnimalSpeciesButton', 'species_dropdown2', 'clickAnimalSpeciesButton');
+}
+
+function editAnimalSpeciesClick() {
+    document.getElementById("selectSpeciesButton").click();
+    afterAnimalSpeciesEdit();
+    afterAnimalTypeEdit();
+}
+
+function openSpeciesDropdown() {
+    document.getElementById("editAnimalSpeciesButton").click();
+}
 
 function showUnsubscribeModal() {
 
