@@ -4,13 +4,15 @@
 - ✅ JS validation
 - Google maps & distance between integration
 - ✅ My animals, aesthetic fix
-- Edit animals, based on my animals with onclick for each edit
+- ✅ Edit animals, based on my animals with onclick for each edit
 - ✅ Add logs page aesthetic fix and feilds added
 - ✅ Login/registration aestethic fix
 - Upload images
-- User settings aesthetic fix
+- ✅ User settings aesthetic fix
 - Thorough aesthetic fix based on all wireframes - colors, sizing, etc
 - Alerts
+- Add animal species
+- Admin panel
 
 # To do (LATER)
 
@@ -18,7 +20,6 @@
 - UserID function done once only instead of every page click
 - Check for same email, see code below
 - Change name of this to Wildlife Watcher
-- Santitise/strip slashes. Add to assignment sheet for validation
 - setTimeout getUserID so rate limiting works
 - Alerts
 - headers.json().then(function(body)) only needed if returning data or an error etc. Make it an else?
@@ -35,7 +36,6 @@
 - Structure PHP to have classes and models
 - Error message for registering with email that already exists
 - Error message for registering when already logged in - needs log out button
-- Make template to hide json information
 - Only log if response code is not 400
 - Dark mode icon in switch so looks better
 - About, contact me

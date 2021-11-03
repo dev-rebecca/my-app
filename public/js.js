@@ -626,7 +626,7 @@ function selectType (clicked) {
     label.innerHTML = clicked;
     animal_type.innerHTML = clicked;
 
-    //
+    // Animal type in edit animal page
     let animal_type2 = document.getElementById('animalTypeLabel');
     animal_type2.innerHTML = clicked;
 
@@ -1408,7 +1408,11 @@ function getAnimalDetails(evt) {
                     let animalNotesLabel = document.getElementById("animalNotesLabel");
                     let animalNotesInput = document.getElementById("animalNotesInput");
 
-                    // let animalTypeLabel = document.getElementById("animalTypeLabel");
+                    let animalTypeLabel = document.getElementById("animalTypeLabel");
+                    animalTypeLabel.innerHTML = body[i].type_name;
+
+                    let animalSpeciesLabel = document.getElementById("animalSpeciesLabel");
+                    animalSpeciesLabel.innerHTML = body[i].name;
 
                     animalNameLabel.innerHTML = body[i].nickname;
                     animalNameInput.value = body[i].nickname;
@@ -1421,13 +1425,6 @@ function getAnimalDetails(evt) {
 
                     animalNotesLabel.innerHTML = body[i].notes;
                     animalNotesInput.value = body[i].notes;
-
-                    // animalTypeLabel.innerHTML = body[i].type_name;
-                    console.log(body[i].type_name);
-                    console.log(body[i].name);
-
-                    let selection = selectionSpecies2.options[selectionSpecies2.selectedIndex].value
-                    console.log(selection);
                 }
             })
         }
@@ -1704,17 +1701,22 @@ function editAnimalNotesClick() {
 // Edit animal type
 
 function afterAnimalTypeEdit() {
-    afterEditData('animalTypeLabel', 'editAnimalTypeButton', 'editAnimalTypeForm', 'clickAnimalTypeButton');
+    document.getElementById('animalTypeLabel').removeAttribute('hidden');
+    document.getElementById('editAnimalTypeButton').removeAttribute('hidden');
+    document.getElementById('editAnimalTypeForm').setAttribute('hidden', 'hidden');
 }
 
 function editAnimalType() {
-    editData('animalTypeLabel', 'editAnimalTypeButton', 'editAnimalTypeForm', 'clickAnimalTypeButton');
+    document.getElementById('animalTypeLabel').setAttribute('hidden', 'hidden');
+    document.getElementById('editAnimalTypeButton').setAttribute('hidden', 'hidden');
+    document.getElementById('editAnimalTypeForm').removeAttribute('hidden');
 }
 
 // Edit animal species
 
 function afterAnimalSpeciesEdit() {
     afterEditData('animalSpeciesLabel', 'editAnimalSpeciesButton', 'species_dropdown2', 'clickAnimalSpeciesButton');
+    document.getElementById("get_animalID_for_details").click();
 }
 
 function editAnimalSpecies() {
