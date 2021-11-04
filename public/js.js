@@ -40,6 +40,9 @@ function showPage(sectionClicked) {
     if (document.getElementById('container4').style.display === 'block') {
         title.innerText = "Settings";
     }
+    if (document.getElementById('container9').style.display === 'block') {
+        title.innerText = "Admin Panel";
+    }
 }
 
 // Alerts
