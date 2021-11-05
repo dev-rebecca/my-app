@@ -464,6 +464,17 @@ function populateSpeciesDropdown_AnimalAdd() {
     button.click();
 }
 
+// Populate species input for species add
+function populateSpeciesInput_SpeciesAdd() {
+    let selection = animal_type_id_2.options[animal_type_id_2.selectedIndex].value;
+    let input = document.getElementById("animal_type_id_4");
+
+    input.value = selection;
+
+    // Show "add species" option button
+    document.getElementById("add_species_option").removeAttribute('hidden');
+}
+
 // Get species ID for dropdown
 function getSpeciesIDforDropdown_Add () {
 
@@ -1799,4 +1810,45 @@ function showUnsubscribeModal() {
             </div>
         </div>
     </div>`      
+}
+
+function addNewSpecies() {
+    console.log("yep");
+    document.getElementById('add_species_modal').removeAttribute('hidden');
+}
+
+// Add species
+
+function addSpecies (evt) {
+    evt.preventDefault();
+
+    const formData = new FormData();
+
+    formData.append(evt.target[0].name, evt.target[0].value);
+    formData.append(evt.target[1].name, evt.target[1].value);
+
+    fetch(evt.target.action, 
+        {
+            method: 'POST',
+            body: formData,
+            credentials: 'include'
+        }
+    )
+    .then (
+        function(headers) {
+            if (headers.status === 201) {
+                closeAddSpeciesModal();
+            }
+        }
+    );
+}
+
+// Close 'add species' modal
+function closeAddSpeciesModal() {
+    document.getElementById('add_species_modal').setAttribute('hidden', 'hidden');
+}
+
+// Submit 'add species' form after click of button
+function clickAddSpeciesSubmit() {
+    document.getElementById("add_species_button").click();
 }
