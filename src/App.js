@@ -1,4 +1,5 @@
 import Species from "./components/Species/Species";
+import NewSpecies from "./components/NewSpecies/NewSpecies";
 
 const App = () => {
   const species = [
@@ -28,8 +29,13 @@ const App = () => {
     },
   ];
 
+  const addSpeciesHandler = species => {
+    console.log(species);
+  }
+
   return (
     <div>
+      <NewSpecies onAddSpecies={addSpeciesHandler}/>
       <Species animals={species} />
     </div>
   );
