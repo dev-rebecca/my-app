@@ -47,7 +47,7 @@
 <body onload="checkForLogin()" id="body" class="dark:bg-gray-700 dark:text-gray-100 bg-gray-50">
 
     <!-- Alert box -->
-    <div role="alert" id="alertbox" class="absolute inset-x-0 top-0 z-50" hidden>
+    <div role="alert" id="alertbox" class="fixed inset-x-0 top-0 z-50" hidden>
         <div class="max-w-md px-3 mx-auto py-7">
             <span id="alertmsg"></span>
                 <svg onclick="hideAlert()" class="absolute inset-y-0 w-6 h-6 m-auto fill-current right-3" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" id="alertclose"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
@@ -280,7 +280,7 @@
                 
             <section id="container2" hidden>
 
-                <div class="min-h-screen pb-44">
+                <div class="min-h-screen pb-24">
 
                     <!-- Hidden form
                         Get species ID for animal add -->
@@ -314,7 +314,7 @@
                                     </div>
                                     <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                                         <h3 class="text-lg font-medium leading-6 text-gray-900" id="modal-title">
-                                        New species
+                                        Name
                                         </h3>
                                         <div class="mt-2">
                                             <form method="POST" action="ws.php?page=add-species" onsubmit="addSpecies(event)">
@@ -350,8 +350,13 @@
                     </div>
 
                     <!-- Add image -->
-                    <div class="grid px-3 mt-3 mb-5 justify-items-center">
+                    <div class="grid px-3 my-3 justify-items-center">
                         <img class="inline row-span-2 rounded-full w-28 h-28" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
+                    </div>
+
+                    <!-- Add new species button -->
+                    <div class="grid h-5 mb-1">
+                        <p onclick="addNewSpecies()" id="add_species_option" class="text-sm text-green-500 justify-self-end" hidden>+ Add new species</p>
                     </div>
 
                     <!-- Animal type dropdown -->
@@ -368,14 +373,9 @@
                     </form>
 
                     <!-- Species dropwdown -->
-                    <select id="species_dropdown" name="species_dropdown" onchange="getSpeciesIDforDropdown_Add() & clickButton1()" class="w-full text-gray-500 border-gray-300 rounded dark:text-gray-100 dark:bg-gray-500">
+                    <select id="species_dropdown" name="species_dropdown" onchange="getSpeciesIDforDropdown_Add() & clickButton1()" class="w-full mb-5 text-gray-500 border-gray-300 rounded dark:text-gray-100 dark:bg-gray-500">
                         <option value="" disabled selected>Species</option>
                     </select>
-
-                    <!-- Add new species button -->
-                    <div class="grid h-5 mb-3">
-                        <p onclick="addNewSpecies()" id="add_species_option" class="text-sm text-green-500 justify-self-end" hidden>+ Add new species</p>
-                    </div>
 
                     <!-- Add animal -->
                     <form id="add-animal-form" method="POST" action="ws.php?page=add-animal" onsubmit="addAnimal(event)" oninput="addAnimalValidationIcon()" action="">
@@ -421,16 +421,16 @@
                         </div>
 
                         <div class="grid mt-5">
-                            <input type="submit" value="Add animal" class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-green-500 border border-transparent rounded-md">
+                            <input type="submit" value="Add animal" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">
                         </div>
 
                     </form>
 
-                    <form action="ws.php?page=upload-image" onsubmit="uploadImage(event)" method="POST" enctype="multipart/form-data">
+                    <!-- <form action="ws.php?page=upload-image" onsubmit="uploadImage(event)" method="POST" enctype="multipart/form-data">
                         Select image to upload:
                         <input type="file" name="fileToUpload" id="fileToUpload">
                         <input type="submit" value="Upload Image" name="submit">
-                    </form>
+                    </form> -->
                 </div>
             </section>
 
@@ -451,7 +451,7 @@
 
                     <!-- Animal types with icons -->
                     <div class="py-4">
-                        <button onclick="showSpinner() & selectType(this.id) & showPage('5'); return false" id="Invertebrates" class="relative flex justify-center w-full px-4 py-3 mt-2 font-medium text-gray-500 bg-white border border-gray-200 rounded dark:text-white dark:bg-gray-400 text-m">
+                        <button onclick="showSpinner() & selectType(this.id) & showPage('5'); return false" id="Invertebrates" class="relative flex justify-center w-full px-4 py-3 font-medium text-gray-500 bg-white border border-gray-200 rounded dark:text-white dark:bg-gray-400 text-m">
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                                 <img src="imgs/hermit-crab.png" alt="" class="inline">
                             </span>
@@ -590,7 +590,7 @@
 
                     <!-- Animal type with icon -->
                     <div class="py-4">
-                        <span class="relative flex justify-center w-full px-4 py-3 mt-2 font-medium text-gray-500 bg-white border border-gray-200 rounded text-m">
+                        <span class="relative flex justify-center w-full px-4 py-3 font-medium text-gray-500 bg-white border border-gray-200 rounded text-m">
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                                 <img id="animal_type_icon2" src="imgs/hermit-crab.png" alt="" class="inline">
                             </span>

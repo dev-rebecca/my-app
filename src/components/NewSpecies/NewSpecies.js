@@ -8,6 +8,7 @@ const NewSpecies = (props) => {
       ...enteredSpeciesData,
       id: Math.random().toString()
     };
+    props.onAddSpecies(speciesData);
   }
 
   return (

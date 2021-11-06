@@ -2,17 +2,18 @@
 
 - ✅ Clean up all code
 - ✅ JS validation
-- Google maps & distance between integration
 - ✅ My animals, aesthetic fix
 - ✅ Edit animals, based on my animals with onclick for each edit
 - ✅ Add logs page aesthetic fix and feilds added
 - ✅ Login/registration aestethic fix
-- Upload images
 - ✅ User settings aesthetic fix
+- Upload images
+- Google maps & distance between integration
+- Alerts & icon for validation
+- Add animal species for edit animal
 - Thorough aesthetic fix based on all wireframes - colors, sizing, etc
-- Alerts
-- Add animal species
 - Admin panel
+- Search bar functionality
 
 # To do (LATER)
 

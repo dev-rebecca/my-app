@@ -772,6 +772,9 @@ function viewAnimals (evt) {
     )
     .then (
         function(headers) {
+            if (headers.status === 400) {
+                showAlert('error', 'No entries found of this animal type');
+            }
             headers.json().then(function(body) {
                 for (let i = 0; i < body.length; i++) {
 

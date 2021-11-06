@@ -27,7 +27,7 @@ const SpeciesForm = (props) => {
       date: new Date(enteredDate),
     };
 
-    props.onSaveSpeciesData();
+    props.onSaveSpeciesData(speciesData);
     setEnteredName('');
     setEnteredStatus('');
     setEnteredDate('');
