@@ -7,6 +7,7 @@ const Species = (props) => {
     <Card className="expenses">
       {props.animals.map((animal) => (
         <IndividualSpecies
+          key={animal.id}
           name={animal.name}
           status={animal.status}
           date={animal.date}

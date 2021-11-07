@@ -28,9 +28,9 @@ const SpeciesForm = (props) => {
     };
 
     props.onSaveSpeciesData(speciesData);
-    setEnteredName('');
-    setEnteredStatus('');
-    setEnteredDate('');
+    setEnteredName("");
+    setEnteredStatus("");
+    setEnteredDate("");
   };
 
   return (
@@ -58,7 +58,12 @@ const SpeciesForm = (props) => {
           />
         </div>
         <div className="new-expense__actions">
-          <button type="submit" onClick={submitHandler}>Add Species</button>
+          <button type="submit" onClick={submitHandler}>
+            Add Species
+          </button>
+          <button type="button" onClick={props.onCancel}>
+            Cancel
+          </button>
         </div>
       </div>
     </form>

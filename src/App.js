@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import Species from "./components/Species/Species";
 import NewSpecies from "./components/NewSpecies/NewSpecies";
 
@@ -33,9 +33,11 @@ const App = () => {
 
   const [species, setSpecies] = useState(DUMMY_DATA);
 
-  const addSpeciesHandler = species => {
-    setSpecies([species, ...species]);
-  }
+  const addSpeciesHandler = (species) => {
+    setSpecies((prevSpecies) => {
+      return [species, ...prevSpecies];
+    });
+  };
 
   return (
     <div>
@@ -43,6 +45,6 @@ const App = () => {
       <Species animals={species} />
     </div>
   );
-}
+};
 
 export default App;
