@@ -13,6 +13,7 @@
     <meta name="theme-color" content="#42f584"/>
     <link rel="manifest" href="./manifest.json" crossorigin="use-credentials">
     <link rel="apple-touch-icon" href="./imgs/koala.png">
+    <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <script src="./js.js" defer></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
@@ -43,7 +44,6 @@
 
     <title>Wildlife Watcher</title>
 </head>
-
 <body onload="checkForLogin()" id="body" class="dark:bg-gray-700 dark:text-gray-100 bg-gray-50">
 
     <!-- Alert box -->
@@ -351,7 +351,15 @@
 
                     <!-- Add image -->
                     <div class="grid px-3 my-3 justify-items-center">
-                        <img class="inline row-span-2 rounded-full w-28 h-28" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
+                        <!-- Image appears here after upload selected -->
+                        <div id="uploaded_image"></div>
+                        <!--Button to upload image -->
+                        <div class="image-upload">
+                            <label for="file-input">
+                                <img src="https://icons.iconarchive.com/icons/dtafalonso/android-lollipop/128/Downloads-icon.png" class="w-28 h-28" id="placeholder_image"/>
+                            </label>
+                            <input type="file" name="sample_image" id="file-input" />
+                        </div>
                     </div>
 
                     <!-- Add new species button -->
@@ -650,6 +658,13 @@
                     
                     <!-- All animal info -->
                     <div>
+                        <p>View image</p>
+                        <form method="POST" action="ws.php?page=view-image" onsubmit="viewPhoto(event)">
+                            View image
+                            <input type="text" name="image_id">
+                            <input type="submit" value="view">
+                          </form>
+                        <p>Add image</p>
 
                         <!-- Map -->
                         <div id="map" class="mb-8" style="height:250px;"></div>

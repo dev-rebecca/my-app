@@ -14,6 +14,7 @@
 - Thorough aesthetic fix based on all wireframes - colors, sizing, etc
 - Admin panel
 - Search bar functionality
+- information ? button for some UI
 
 # To do (LATER)
 
