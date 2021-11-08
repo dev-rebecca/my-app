@@ -788,8 +788,7 @@ function viewAnimals (evt) {
                     // Animal names become buttons, animal IDs are hidden inside for hidden form
                     let result = "";
 
-                    result += `<img class="w-14 h-14 my-1 rounded-full inline mr-4" src="${body[i].image}" alt="">
-                    <p onclick='showSpinner() & getAnimalID(this.id) & speciesSpinnerRemove() & showPage("7"); return false'
+                    result += `<p onclick='showSpinner() & getAnimalID(this.id) & speciesSpinnerRemove() & showPage("7"); return false'
                     id='${body[i].animal_id}'
                     class='inline'
                     >${body[i].name}</p>
@@ -878,27 +877,31 @@ function viewOneAnimal (evt) {
                 // Animal name on add log page
                 document.getElementById('animal_nickname_div2').innerHTML = body[i].nickname;
 
+                // Creates list of logs
+                const listContainer = document.getElementById("logs");
+                const newList = document.createElement("ul");
+                const newListItem = document.createElement("li");
+                let dateDiff = humanized_time_span(body[i].date);
 
-                    // Creates list
-                    const listContainer = document.getElementById("logs");
-                    const newList = document.createElement("ul");
-                    const newListItem = document.createElement("li");
-                    let dateDiff = humanized_time_span(body[i].date);
+                let result =
+                        `<div class="pb-3">
+                            <div class="mb-2">
+                                <span class="text-gray-600 font-bold">${body[i].title}</span>
+                                <span class="float-right inset-y-0 right-0 text-gray-400">${dateDiff}</span>
+                            </div>
+                            <div class="text-gray-800 border-b border-green-200 pb-3">${body[i].text}</div>
+                        </div>`;
+                                    
+                newListItem.innerHTML = result;
+                newList.appendChild(newListItem);
+                listContainer.appendChild(newList);   
 
-                    let result =
-                            `<div class="pb-3">
-                                <div class="mb-2">
-                                    <span class="text-gray-600 font-bold">${body[i].title}</span>
-                                    <span class="float-right inset-y-0 right-0 text-gray-400">${dateDiff}</span>
-                                </div>
-                                <div class="text-gray-800 border-b border-green-200 pb-3">${body[i].text}</div>
-                            </div>`;
-                                        
-                    newListItem.innerHTML = result;
-                    newList.appendChild(newListItem);
-                    listContainer.appendChild(newList);   
+                // Passes nickname to edit animal page
+                passDataForEditAnimalName(body[i].nickname);
 
-                    passDataForEditAnimalName(body[i].nickname);
+                // Puts animal image onto individual animal page
+                const imagePath = "http://localhost:8080/ws/uploads/";
+                document.getElementById("animal_image").src = imagePath + body[i].image;
                 }
             })
         }
@@ -966,15 +969,19 @@ function viewAnimalsPerSpecies (evt) {
                     const map_button =  document.getElementById('map_button');
                     let dateDiff = humanized_time_span(body[i].first_seen_date);
 
+                    const imagePath = "http://localhost:8080/ws/uploads/";
+
                     result = 
                             `<div class="grid grid-cols-3 items-center bg-white border-t border-gray-300 py-2">
                                 <div class="pl-2 font-bold col-span-2" onclick="getAnimalID(this.id) & button.click() & map_button.click() & showPage('6'); return false & fireLoader()" id="${body[i].animal_id}">
-                                    <img class="w-10 h-10 my-1 rounded-full inline mr-4" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
+                                    <img class="w-10 h-10 my-1 rounded-full inline mr-4" src="${imagePath}${body[i].image}" alt="">
                                     ${body[i].nickname}
                                 </div>
                                 <div class="justify-self-center">${dateDiff}</div>
                             </div>`;   
                             
+                    console.log(body[i].image)
+
                     newListItem.innerHTML = result;
                     newList.appendChild(newListItem);
                     listContainer.appendChild(newList);
@@ -1018,10 +1025,12 @@ function viewAnimalsPerSpecies (evt) {
                     const map_button =  document.getElementById('map_button');
                     let dateDiff = humanized_time_span(body[i].first_seen_date);
 
+                    const imagePath = "http://localhost:8080/ws/uploads/";
+
                     result = 
                             `<div class="grid grid-cols-3 items-center bg-white border-t border-gray-300 py-2">
                                 <div class="pl-2 font-bold col-span-2" onclick="getAnimalID(this.id) & button.click() & map_button.click() & animalSpinnerRemove() & showPage('6'); return false" id="${body[i].animal_id}">
-                                    <img class="h-10 w-10 rounded-full inline mr-2" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
+                                    <img class="h-10 w-10 rounded-full inline mr-2" src="${imagePath}${body[i].image}" alt="">
                                     ${body[i].nickname}
                                 </div>
                                 <div class="justify-self-center">${dateDiff}</div>

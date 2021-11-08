@@ -638,6 +638,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="min-h-screen pb-24" id="page6" hidden>
 
                     <!-- Hidden form
@@ -649,7 +650,7 @@
 
                     <!-- Heading -->
                     <div class="grid grid-flow-col grid-rows-3 px-3 mt-6 mb-8">
-                        <img class="inline row-span-3 ml-6 rounded-full w-28 h-28" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
+                        <img class="inline row-span-3 ml-6 rounded-full w-28 h-28" id="animal_image" src="" alt="">
                         <div class="self-end col-span-2 row-span-1 -ml-10 font-medium justify-self-center" id="animal_nickname_div"></div>
                         <div class="self-start col-span-2 row-span-1 -ml-10 justify-self-center" id="species_name_div4"></div>
                         <div class="col-span-2 row-span-1 -ml-10 justify-self-center">
@@ -660,13 +661,13 @@
                     
                     <!-- All animal info -->
                     <div>
-                        <p>View image</p>
+                        <!-- <p>View image</p>
                         <form method="POST" action="ws.php?page=view-image" onsubmit="viewPhoto(event)">
                             View image
                             <input type="text" name="image_id">
                             <input type="submit" value="view">
                           </form>
-                        <p>Add image</p>
+                        <p>Add image</p> -->
 
                         <!-- Map -->
                         <div id="map" class="mb-8" style="height:250px;"></div>
@@ -752,7 +753,6 @@
 
                 <!-- Heading with image, species, and animal type -->
                 <div class="grid grid-flow-col grid-rows-3 px-3 mt-6 mb-8">
-                    <img class="inline row-span-3 ml-6 rounded-full w-28 h-28" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
                     <div class="self-end col-span-2 row-span-1 -ml-6 font-medium justify-self-center" id="species_name_div"></div>
                     <div class="self-start col-span-2 row-span-1 -ml-6 justify-self-center" id="animal_type_div"></div>
                     <div id="animal_type_icon" class="col-span-2 row-span-1 -ml-6 justify-self-center"></div>
