@@ -509,6 +509,8 @@ function addAnimal (evt) {
     formData.append(evt.target[2].name, evt.target[2].value);
     formData.append(evt.target[3].name, evt.target[3].value);
     formData.append(evt.target[4].name, evt.target[4].value);
+    formData.append(evt.target[5].name, evt.target[5].value);
+
     fetch('ws.php?page=add-animal', 
         {
             method: 'POST',
@@ -786,7 +788,7 @@ function viewAnimals (evt) {
                     // Animal names become buttons, animal IDs are hidden inside for hidden form
                     let result = "";
 
-                    result += `<img class="w-14 h-14 my-1 rounded-full inline mr-4" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
+                    result += `<img class="w-14 h-14 my-1 rounded-full inline mr-4" src="${body[i].image}" alt="">
                     <p onclick='showSpinner() & getAnimalID(this.id) & speciesSpinnerRemove() & showPage("7"); return false'
                     id='${body[i].animal_id}'
                     class='inline'
@@ -1925,12 +1927,22 @@ const upload_image = (file) => {
     	return response.json();
     }).then(function(responseData){
 
+        // Hide placeholder image
         hidePlaceholder();
-    	document.getElementById('uploaded_image').innerHTML = '<img class="inline row-span-2 rounded-full w-28 h-28" alt="" src="'+responseData.image_source+'" />';
 
+        // Show uploaded image
+    	document.getElementById('uploaded_image').innerHTML = '<img class="inline row-span-2 rounded-full w-28 h-28" alt="" src="'+responseData.image_source+'" />';
     	document.getElementsByName('sample_image')[0].value = '';
+
+        // Change 'add image' button to 'change image'
         document.getElementById("addImageLabel").innerHTML = "Change image";
 
+        // Remove /uploads file path for form to find image ID, to add image ID to new animal
+        let text = responseData["image_source"];
+        let newValue = text.replace("uploads/", "");
+
+        document.getElementById("image_path").value = newValue;
+        document.getElementById("get_image_id_button").click();
     });
 }
 
@@ -1941,4 +1953,30 @@ function hidePlaceholder() {
 
 function addImageClick() {
     document.getElementById("file-input").click();
+}
+
+function getImageId (evt) {
+    evt.preventDefault();
+    const formData = new FormData();
+
+    formData.append(evt.target[0].name, evt.target[0].value);
+
+    fetch(evt.target.action, 
+        {
+            method: 'POST',
+            body: formData,
+            credentials: 'include'
+        }
+    )
+    .then (
+        function (headers) {
+            headers.json().then(function(body) {
+                for (let i = 0; i < body.length; i++) {
+                    console.log(body[i].image_id);
+                    let input = document.getElementById("image_id");
+                    input.value = body[i].image_id;
+                }
+            });
+        }
+    );
 }

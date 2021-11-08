@@ -296,6 +296,13 @@
                         <input type="submit" id="animal_type_button_1">
                     </form>
 
+                    <!-- Hidden form
+                        Gets image path and return image ID to add animal -->
+                    <form method="POST" onsubmit="getImageId(event)" action="ws.php?page=get-image-id" hidden>
+                        <input type="text" name="image" id="image_path">
+                        <input type="submit" id="get_image_id_button">
+                    </form>
+
                     <!-- Hidden modal
                         Add species -->
                     <div id="add_species_modal" hidden>
@@ -391,7 +398,8 @@
                         <div class="space-y-5">
 
                             <input type="text" name="species_id" id="species_id_input" hidden>
-
+                            <input type="text" name="image_id" id="image_id" hidden>
+                            
                             <div class="relative flex">
                                 <span id="name_icon" class="absolute inset-y-0 right-0 items-center hidden pr-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -432,14 +440,7 @@
                         <div class="grid mt-5">
                             <input type="submit" value="Add animal" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">
                         </div>
-
                     </form>
-
-                    <!-- <form action="ws.php?page=upload-image" onsubmit="uploadImage(event)" method="POST" enctype="multipart/form-data">
-                        Select image to upload:
-                        <input type="file" name="fileToUpload" id="fileToUpload">
-                        <input type="submit" value="Upload Image" name="submit">
-                    </form> -->
                 </div>
             </section>
 
