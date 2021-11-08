@@ -1929,6 +1929,7 @@ const upload_image = (file) => {
     	document.getElementById('uploaded_image').innerHTML = '<img class="inline row-span-2 rounded-full w-28 h-28" alt="" src="'+responseData.image_source+'" />';
 
     	document.getElementsByName('sample_image')[0].value = '';
+        document.getElementById("addImageLabel").innerHTML = "Change image";
 
     });
 }
@@ -1936,4 +1937,8 @@ const upload_image = (file) => {
 function hidePlaceholder() {
     let image = document.getElementById('placeholder_image');
     image.style.display = "none";
+}
+
+function addImageClick() {
+    document.getElementById("file-input").click();
 }
