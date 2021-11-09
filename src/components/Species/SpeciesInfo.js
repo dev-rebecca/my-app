@@ -1,5 +1,5 @@
-import "./App.css";
 import React from "react";
+import SpeciesForm from "../NewSpecies/SpeciesForm";
 
 export default class SpeciesInfo extends React.Component {
   state = {
@@ -23,8 +23,12 @@ export default class SpeciesInfo extends React.Component {
       return <div>Didn't get any species info</div>;
     }
 
+    function test() {
+      console.log("yooo");
+    }
+
     return (
-      <div>
+      <div>                   
         <table class="table-auto">
           <thead>
             <tr>
@@ -34,11 +38,12 @@ export default class SpeciesInfo extends React.Component {
           </thead>
           <tbody>
             <tr>
-              <td>{this.state.species.map((item, i) => <p key={i}>{item.name}</p>)}</td>
+              <td>{this.state.species.map((item, i) => <p onClick={test} key={i}>{item.name}</p>)}</td>
               <td>{this.state.species.map((item, i) => <p key={i}>{item.status}</p>)}</td>
             </tr>
           </tbody>
         </table>
+        <SpeciesForm />
       </div>
     );
   }

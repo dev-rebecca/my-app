@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import SpeciesInfo from "./practice";
+import SpeciesInfo from "./components/Species/SpeciesInfo";
 // import Species from "./components/Species/Species";
 // import NewSpecies from "./components/NewSpecies/NewSpecies";
 

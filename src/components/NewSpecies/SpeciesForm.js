@@ -33,13 +33,40 @@ const SpeciesForm = (props) => {
     setEnteredDate("");
   };
 
+  // Validation regexes
+  const validateText = (text) => {
+    const nameRegex = /^[a-zA-Z ]{5,30}$/; // Letters only, min 2, max 30
+    return nameRegex.test(text);
+  }
+
+  const validate = () => {
+    const text = document.getElementById("my-input").value;
+    const div = document.getElementById("my-div");
+
+    if (text.length === 0) {
+      div.innerHTML = "";
+    }
+    else if (validateText(text) == false) {
+      div.innerHTML = enteredName + " requires more characters";
+    } else {
+      div.innerHTML = enteredName + " is valid!";
+    }
+  }
+
   return (
-    <form>
+    <form id="my-form">
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>Name</label>
-          <input type="text" value={enteredName} onChange={nameChangeHandler} />
+          <input 
+            id="my-input"
+            type="text"
+            value={enteredName}
+            onChange={nameChangeHandler}
+            onKeyUp={validate}
+          />
         </div>
+        <div id="my-div"></div>
         <div className="new-expense__control">
           <label>Status</label>
           <input
