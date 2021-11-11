@@ -14,6 +14,7 @@
 - Thorough aesthetic fix based on all wireframes - colors, sizing, etc
 - Admin panel
 - Search bar functionality
+- Change colours of upload button and animal icons with Photoshop
 - information ? button for some UI
 
 # To do (LATER)

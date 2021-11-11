@@ -24,18 +24,16 @@ Describe why you chose this particular encryption technology
 
 # How to Configure ✨ 
 
-1. Import database
-2. Configure imported database with the following settings, or alter settings in db.php:
-
-    $dbURI = 'mysql:host=localhost;port=8889;dbname=wildlife-watcher';
-    $dbconn = new PDO($dbURI, 'user1', 'user1');
-
-3. In your terminal: "npm update" to install packages 
-
-4. The app should be functional. Either register your own account or use the following to login:
+1. Pull both the "wildlife-watcher" and "ws" repositories onto your device. The "wildlife-watcher" folder needs to sit in your localhost directory.
+2. Import the "wildlife-watcher.sql" database into MySQL. Set up access with your own username and password.
+3. Configure the "db.php" file in the "ws" folder; with your own desired port, username and password.
+4. In your terminal within "wildlife-watcher", run "npm update" to install all required packages. 
+5. The app should be functional! Either register your own account or use the following to login for some preset information:
 
     email: bob@gmail.com
     password: Password!1
+
+Happy wildlife watching!
 
 # Technologies Used ✨
 
