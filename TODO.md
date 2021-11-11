@@ -7,7 +7,7 @@
 - ✅ Add logs page aesthetic fix and feilds added
 - ✅ Login/registration aestethic fix
 - ✅ User settings aesthetic fix
-- Upload images
+- ✅ Upload images
 - Google maps & distance between integration
 - Alerts & icon for validation
 - Add animal species for edit animal

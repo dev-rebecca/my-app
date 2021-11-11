@@ -41,12 +41,12 @@ Describe why you chose this particular encryption technology
 
 Front-end:
 
-- HTML
-- Javascript
-- TailwindCSS for all CSS
-- React for admin panel
+- HTML5
+- Javascript ES2015
+- TailwindCSS v2.0 for all CSS
+- React v17.0.2 for admin panel
 
 Back-end:
 
-- PHP for API
-- MySQL as database management system
+- PHP v7.4.12 for API
+- MySQL v7.4.12 as database management system
