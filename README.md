@@ -1,4 +1,6 @@
 
+# Answers for PROJ2 & PROJ3 ✨ 
+
 Search "COMMENTS FOR JOHN" to see all comments required for PROJ2
 
 ---------------------
@@ -22,27 +24,29 @@ Describe why you chose this particular encryption technology
 
 # How to Configure ✨ 
 
-<!-- 
-COMMENTS FOR JOHN
-Question 16
- -->
-
 1. Import database
 2. Configure imported database with the following settings, or alter settings in db.php:
 
     $dbURI = 'mysql:host=localhost;port=8889;dbname=wildlife-watcher';
     $dbconn = new PDO($dbURI, 'user1', 'user1');
 
-3. The app should be functional. Either register your own account or use the following to login:
+3. In your terminal: "npm update" to install packages 
+
+4. The app should be functional. Either register your own account or use the following to login:
 
     email: bob@gmail.com
     password: Password!1
 
-# How to Use Test Script
+# Technologies Used ✨
 
-1. Install VS Code extension "Thunder Client"
-2. Open Thunder Client (icon ov thunder should be on left sidebar of VS Code)
-3. Click icon on the right of "filter collections"
-4. Import
-5. Import using the test-script.json supplied in file directory
+Front-end:
 
+- HTML
+- Javascript
+- TailwindCSS for all CSS
+- React for admin panel
+
+Back-end:
+
+- PHP for API
+- MySQL as database management system
