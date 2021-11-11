@@ -26,7 +26,7 @@ Describe why you chose this particular encryption technology
 
 1. Pull both the "wildlife-watcher" and "ws" repositories onto your device. The "wildlife-watcher" folder needs to sit in your localhost directory.
 2. Import the "wildlife-watcher.sql" database into MySQL. Set up access with your own username and password.
-3. Configure the "db.php" file in the "ws" folder; with your own desired port, username and password.
+3. Configure the "connection.php" file in the "ws" folder; with your own desired port, username and password.
 4. In your terminal within "wildlife-watcher", run "npm update" to install all required packages. 
 5. The app should be functional! Either register your own account or use the following to login for some preset information:
 
