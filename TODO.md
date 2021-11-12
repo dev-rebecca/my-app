@@ -19,6 +19,7 @@
 
 # To do (LATER)
 
+- user logs working, with rate limiter
 - .env added
 - UserID function done once only instead of every page click
 - Check for same email, see code below
