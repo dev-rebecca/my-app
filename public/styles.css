@@ -5,3 +5,7 @@ input[type='file'] {
 .image-upload>input {
   display: none;
 }
+
+.image-upload_edit>input {
+  display: none;
+}

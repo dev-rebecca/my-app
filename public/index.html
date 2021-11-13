@@ -235,7 +235,7 @@
                 <div>        
                     <!-- Heading -->
                     <div class="grid grid-flow-col grid-rows-2 px-3 mt-6 mb-8">
-                        <img class="inline row-span-3 ml-6 rounded-full w-28 h-28" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
+                        <div id="animal_log_image" class="row-span-3 ml-6 bg-cover rounded-full w-28 h-28"></div>
                         <div class="self-end col-span-2 row-span-1 -ml-10 font-medium justify-self-center" id="animal_nickname_div2"></div>
                         <div class="self-start col-span-2 row-span-1 -ml-10 justify-self-center" id="species_name_div5"></div>
                     </div>
@@ -649,25 +649,17 @@
 
                     <!-- Heading -->
                     <div class="grid grid-flow-col grid-rows-3 px-3 mt-6 mb-8">
-                        <img class="inline row-span-3 ml-6 rounded-full w-28 h-28" id="animal_image" src="" alt="">
+                        <div class="row-span-3 ml-6 bg-cover rounded-full w-28 h-28" id="animal_image"></div>
                         <div class="self-end col-span-2 row-span-1 -ml-10 font-medium justify-self-center" id="animal_nickname_div"></div>
                         <div class="self-start col-span-2 row-span-1 -ml-10 justify-self-center" id="species_name_div4"></div>
                         <div class="col-span-2 row-span-1 -ml-10 justify-self-center">
                             <span onclick="showPage('1'); return false" class="p-2 text-sm text-green-500 border border-green-100 rounded shadow bg-green-50">Log</span>
-                            <span onclick="showPage('8'); return false & getAnimalIDForDetails()" class="p-2 text-sm text-green-500 border border-green-100 rounded shadow bg-green-50" id="edit_animal_button">Edit</span>
+                            <span onclick="showPage('8'); return false & getAnimalIDForDetails() & clearImage()" class="p-2 text-sm text-green-500 border border-green-100 rounded shadow bg-green-50" id="edit_animal_button">Edit</span>
                         </div>
                     </div>
                     
                     <!-- All animal info -->
                     <div>
-                        <!-- <p>View image</p>
-                        <form method="POST" action="ws.php?page=view-image" onsubmit="viewPhoto(event)">
-                            View image
-                            <input type="text" name="image_id">
-                            <input type="submit" value="view">
-                          </form>
-                        <p>Add image</p> -->
-
                         <!-- Map -->
                         <div id="map" class="mb-8" style="height:250px;"></div>
 
@@ -806,9 +798,34 @@
                         <input type="submit" id="selectSpeciesButton">
                     </form>
 
+                    <!-- Hidden form
+                        Gets image path and return image ID to add animal -->
+                    <form method="POST" onsubmit="editGetImageId(event)" action="ws.php?page=get-image-id" hidden>
+                        <input type="text" name="image" id="image_path_edit">
+                        <input type="submit" id="edit_get_image_id_button">
+                    </form>
+
+                    <!-- Hidden form
+                        Changes image ID for animal in database -->
+                    <form method="POST" onsubmit="doEditAnimalImage(event)" action="ws.php?page=edit-animal-image" hidden>
+                        <input type="text" name="animal_id" class="animal_id">
+                        <input type="text" name="image_id" id="image_id_edit">
+                        <input type="submit" id="edit_image_button">
+                    </form>
+
                     <!-- Edit image -->
-                    <div class="grid justify-items-center">
-                        <img class="inline rounded-full w-28 h-28" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
+                    <div class="grid px-3 my-3 justify-items-center">
+                        <!-- Image appears here after upload selected -->
+                        <div id="uploaded_image_edit"></div>
+                        <!--Button to upload image -->
+                        <div class="image-upload_edit">
+                            <label for="file-input_edit">
+                                <div class="my-1 mr-4 bg-cover border-none rounded-full shadow w-28 h-28" id="placeholder_image_edit"></div>
+                                <!-- <img src="imgs/upload.png" class="w-28 h-28"/> -->
+                            </label>
+                            <input type="file" name="sample_image_edit" id="file-input_edit" />
+                        </div>
+                        <p id="editImageLabel" class="text-sm text-green-500" onclick="editImageClick()">Edit image</p>
                     </div>
                     
                     <!-- Edit animal -->                

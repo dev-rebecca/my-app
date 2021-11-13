@@ -43,6 +43,7 @@
 - Only log if response code is not 400
 - Dark mode icon in switch so looks better
 - About, contact me
+- Text fields should have ' allowed for plurals
 
 # To do (FOR ADMIN)
 
