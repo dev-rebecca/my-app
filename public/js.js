@@ -141,12 +141,12 @@ function checkForLogin() {
 
 // Validation regexes
 function validateText(text) {
-  const nameRegex = /^[a-zA-Z ]{2,30}$/; // Letters only, min 2, max 30
+  const nameRegex = /^[a-zA-Z#$%^&*()+=\-';,.{}|":<>?~/ ]{2,30}$/; // Letters only, min 2, max 30
   return nameRegex.test(text);
 }
 
 function validateLongText(text) {
-  const nameRegex = /^[a-zA-Z ]{2,600}$/; // Letters only, min 2, max 600
+  const nameRegex = /^[a-zA-Z#$%^&*()+=\-';,.{}|":<>?~/ ]{2,250}$/; // Letters only, min 2, max 250
   return nameRegex.test(text);
 }
 
@@ -535,7 +535,7 @@ function addAnimal(evt) {
     } else if (validateText(maturity) == false) {
       showAlert("error", "Please enter maturity level or select 'unknown'");
       return false;
-    } else if (validateText(notes) == false) {
+    } else if (validateLongText(notes) == false) {
       showAlert("error", "Please enter a note");
       return false;
     } else {
@@ -801,13 +801,12 @@ function viewAnimals(evt) {
 
         species_name3.value = `${body[i].name}`;
         document.getElementById("species_list_form").click();
-
-        let spinner = document.getElementsByClassName("spinner");
+      }
+      let spinner = document.getElementsByClassName("spinner");
 
         for (i = 0; i < spinner.length; i++) {
           spinner[i].innerHTML = "";
         }
-      }
     });
   });
 }
