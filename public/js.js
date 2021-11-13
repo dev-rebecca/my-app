@@ -761,6 +761,7 @@ function viewAnimals(evt) {
     }
     headers.json().then(function (body) {
       for (let i = 0; i < body.length; i++) {
+
         // Creates list
         const listContainer = document.getElementById("my_animals_list");
         const newList = document.createElement("ul");
@@ -769,38 +770,14 @@ function viewAnimals(evt) {
         // Animal names become buttons, animal IDs are hidden inside for hidden form
         let result = "";
 
-        result += `<p onclick='showSpinner() & getAnimalID(this.id) & speciesSpinnerRemove() & showPage("7"); return false'
-                    id='${body[i].animal_id}'
-                    class='inline'
+        result += `<p onclick='showSpinner() & getSpeciesID(this.id) & speciesSpinnerRemove() & showPage("7"); return false'
+                    id=${body[i].species_id}
                     >${body[i].name}</p>
                     `;
 
         newListItem.innerHTML = result;
         newList.appendChild(newListItem);
         listContainer.appendChild(newList);
-
-        // Outputs species to species page, individual animal page, add log page, edit animal page
-        const species_name = document.getElementById("species_name_div");
-        const species_name4 = document.getElementById("species_name_div4");
-        const species_name5 = document.getElementById("species_name_div5");
-        const species_name6 = document.getElementById("animalSpeciesLabel");
-
-        species_name.innerHTML = `${body[i].name}`;
-        species_name4.innerHTML = `${body[i].name}`;
-        species_name5.innerHTML = `${body[i].name}`;
-        species_name6.innerHTML = `${body[i].name}`;
-
-        // Outputs species to species count hidden HTML form
-        const species_name2 = document.getElementById("species_name_for_count");
-
-        species_name2.value = `${body[i].name}`;
-        document.getElementById("species_count_form").click();
-
-        // Outputs species to species per animal hidden HTML form
-        const species_name3 = document.getElementById("species_for_list");
-
-        species_name3.value = `${body[i].name}`;
-        document.getElementById("species_list_form").click();
       }
       let spinner = document.getElementsByClassName("spinner");
 
@@ -809,6 +786,17 @@ function viewAnimals(evt) {
         }
     });
   });
+}
+
+// Get species ID from clicked species
+function getSpeciesID(clicked_id) {
+   console.log(clicked_id);
+
+   let input = document.getElementById("species_id_for_form");
+   input.value = clicked_id;
+   document.getElementById("submit_speciesID_for_form").click();
+
+   setTimeout(function(){  document.getElementById("species_list_form").click(); }, 1000);
 }
 
 // Species list loading spinner on setTimout
@@ -939,6 +927,7 @@ function viewAnimalsPerSpecies(evt) {
   }).then(function (headers) {
     headers.json().then(function (body) {
       for (let i = 0; i < body.length; i++) {
+
         // Creates list
         const listContainer = document.getElementById("list_of_animals_div");
         const newList = document.createElement("ul");
@@ -1012,7 +1001,7 @@ function clearAll() {
   document.getElementById("list_of_animals_div").innerHTML = "";
   document.getElementById(
     "species_id_1"
-  ).innerHTML = `<option value="" disabled selected>Species</option>`; // FOr add animal
+  ).innerHTML = `<option value="" disabled selected>Species</option>`; // For add animal
   document.getElementById(
     "species_dropdown2"
   ).innerHTML = `<option value="" disabled selected>Species</option>`; // For edit animal
@@ -2056,4 +2045,42 @@ function doEditImage() {
 
 function clearImage() {
     document.getElementById("uploaded_image_edit").innerHTML = "";
+}
+
+// Get species name from species ID
+function getSpeciesFromID(evt) {
+    evt.preventDefault();
+    const formData = new FormData();
+  
+    formData.append(evt.target[0].name, evt.target[0].value);
+  
+    fetch(evt.target.action, {
+      method: "POST",
+      body: formData,
+      credentials: "include",
+    }).then(function (headers) {
+        headers.json().then(function (body) {
+            for (let i = 0; i < body.length; i++) {
+
+                let input = document.getElementById("species_for_list");
+                input.value = body[i].name;
+
+                let input2 = document.getElementById("species_name_for_count");
+                input2.value = body[i].name;
+
+                // Outputs species to species page, individual animal page, add log page, edit animal page
+                const species_name = document.getElementById("species_name_div");
+                const species_name4 = document.getElementById("species_name_div4");
+                const species_name5 = document.getElementById("species_name_div5");
+                const species_name6 = document.getElementById("animalSpeciesLabel");
+
+                species_name.innerHTML = `${body[i].name}`;
+                species_name4.innerHTML = `${body[i].name}`;
+                species_name5.innerHTML = `${body[i].name}`;
+                species_name6.innerHTML = `${body[i].name}`;
+                
+                setTimeout(function(){  document.getElementById("species_count_form").click(); }, 1000);
+            }
+        });
+    });
 }

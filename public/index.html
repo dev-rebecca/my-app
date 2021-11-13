@@ -736,10 +736,17 @@
                 </form>
 
                 <!-- Hidden form 
-                View animals per species -->
+                    View animals per species -->
                 <form method="POST" action="ws.php?page=animals-per-species" onsubmit="viewAnimalsPerSpecies(event)" hidden>
                     <input type="text" id="species_for_list" name="species">
                     <input type="submit" id="species_list_form">
+                </form>
+
+                <!-- Hidden form 
+                    Gets species name from species ID -->
+                <form method="POST" action="ws.php?page=get-species-from-id" onsubmit="getSpeciesFromID(event)" hidden>
+                    <input type="text" name="species" id="species_id_for_form">
+                    <input type="submit" id="submit_speciesID_for_form">
                 </form>
 
                 <!-- Heading with image, species, and animal type -->
