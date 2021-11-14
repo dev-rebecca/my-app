@@ -141,12 +141,12 @@ function checkForLogin() {
 
 // Validation regexes
 function validateText(text) {
-  const nameRegex = /^[a-zA-Z#$%^&*()+=\-';,.{}|":<>?~/ ]{2,30}$/; // Letters only, min 2, max 30
+  const nameRegex = /^[a-zA-Z !#$%^&*()+=\-';,.{}|":<>?~/]{2,30}$/; // Letters only, min 2, max 30
   return nameRegex.test(text);
 }
 
 function validateLongText(text) {
-  const nameRegex = /^[a-zA-Z#$%^&*()+=\-';,.{}|":<>?~/ ]{2,250}$/; // Letters only, min 2, max 250
+  const nameRegex = /^[a-zA-Z !#$%^&*()+=\-';,.{}|":<>?~/]{2,250}$/; // Letters only, min 2, max 250
   return nameRegex.test(text);
 }
 
@@ -487,7 +487,7 @@ function getSpeciesIDforDropdown_Add() {
 }
 
 // Click button to send form
-function clickButton1() {
+function clickButtonTest() {
   let button = document.getElementById("species_id_button_1");
 
   button.click();
@@ -512,6 +512,8 @@ function addAnimal(evt) {
   formData.append(evt.target[3].name, evt.target[3].value);
   formData.append(evt.target[4].name, evt.target[4].value);
   formData.append(evt.target[5].name, evt.target[5].value);
+  formData.append(evt.target[6].name, evt.target[6].value);
+  formData.append(evt.target[7].name, evt.target[7].value);
 
   fetch("ws.php?page=add-animal", {
     method: "POST",
@@ -595,7 +597,7 @@ function addAnimalValidationIcon() {
     maturity_icon.classList.remove("flex");
   }
 
-  if (validateText(notes) == true) {
+  if (validateLongText(notes) == true) {
     notes_icon.classList.remove("hidden");
     notes_icon.classList.add("flex");
   } else {
@@ -790,7 +792,6 @@ function viewAnimals(evt) {
 
 // Get species ID from clicked species
 function getSpeciesID(clicked_id) {
-   console.log(clicked_id);
 
    let input = document.getElementById("species_id_for_form");
    input.value = clicked_id;
@@ -852,18 +853,35 @@ function viewOneAnimal(evt) {
         const newList = document.createElement("ul");
         const newListItem = document.createElement("li");
         let dateDiff = humanized_time_span(body[i].date);
+        
+        // If no logs exist, insert button to add log. Otherwise, show all logs
+        if (body[i].title === null) {
+          let result = `<p>No logs have been added for this animal</p><br>
+          <span onclick="showPage('1'); return false" class="p-2 text-sm text-green-500 border border-green-100 rounded shadow bg-green-50">Add log</span>
+          `;
 
-        let result = `<div class="pb-3">
-                            <div class="mb-2">
-                                <span class="text-gray-600 font-bold">${body[i].title}</span>
-                                <span class="float-right inset-y-0 right-0 text-gray-400">${dateDiff}</span>
-                            </div>
-                            <div class="text-gray-800 border-b border-green-200 pb-3">${body[i].text}</div>
-                        </div>`;
+          newListItem.innerHTML = result;
+          newList.appendChild(newListItem);
+          listContainer.appendChild(newList);
 
-        newListItem.innerHTML = result;
-        newList.appendChild(newListItem);
-        listContainer.appendChild(newList);
+        } else {
+
+          let result = `<div class="pb-3">
+          <div class="mb-2">
+              <span class="text-gray-600 font-bold">${body[i].title}</span>
+              <span class="float-right inset-y-0 right-0 text-gray-400">${dateDiff}</span>
+          </div>
+          <div class="text-gray-800 border-b border-green-200 pb-3">${body[i].text}</div>
+      </div>`;
+
+      newListItem.innerHTML = result;
+      newList.appendChild(newListItem);
+      listContainer.appendChild(newList);
+        }
+
+        // newListItem.innerHTML = result;
+        // newList.appendChild(newListItem);
+        // listContainer.appendChild(newList);
 
         // Passes nickname to edit animal page
         passDataForEditAnimalName(body[i].nickname);
@@ -1124,18 +1142,118 @@ function displayMap() {
 }
 
 // Put markers on map from fetch
+// function initMap(long, lat) {
+//   let data = { lat: parseFloat(lat), lng: parseFloat(long) };
+
+//   const map = new google.maps.Map(document.getElementById("map"), {
+//     zoom: 13,
+//     center: data,
+//   });
+
+//   const marker = new google.maps.Marker({
+//     position: data,
+//     map: map,
+//   });
+// }
+
+// Note: This example requires that you consent to location sharing when
+// prompted by your browser. If you see the error "The Geolocation service
+// failed.", it means you probably did not give permission for the browser to
+// locate you.
+let map, infoWindow;
+
 function initMap(long, lat) {
+
   let data = { lat: parseFloat(lat), lng: parseFloat(long) };
 
-  const map = new google.maps.Map(document.getElementById("map"), {
+  map = new google.maps.Map(document.getElementById("map"), {
     zoom: 13,
     center: data,
+    zoomControl: false,
+    mapTypeControl: false,
+    scaleControl: false,
+    streetViewControl: false,
+    rotateControl: false,
+    fullscreenControl: true
   });
 
   const marker = new google.maps.Marker({
     position: data,
-    map: map,
+    map: map
   });
+  
+  infoWindow = new google.maps.InfoWindow();
+
+  const locationButton = document.createElement("button");
+
+  map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+  locationButton.addEventListener("click", () => {
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+
+          sendCoords(pos["lat"], pos["lng"]);
+        },
+        () => {
+          handleLocationError(true, infoWindow, map.getCenter());
+        }
+      );
+    } else {
+      // Browser doesn't support Geolocation
+      handleLocationError(false, infoWindow, map.getCenter());
+    }
+  });
+  clickButton1(locationButton);
+}
+
+function clickButton1(button) {
+  button.click();
+}
+
+function sendCoords(lng, lat) {
+  let long_input = document.getElementById("long_input");
+  let lat_input = document.getElementById("lat_input");
+
+  long_input.value = lng;
+  lat_input.value = lat;
+}
+
+function fetchSendCoords(evt) {
+
+//  console.log(lat);
+//  console.log(lng);
+
+evt.preventDefault();
+  const formData = new FormData();
+
+  formData.append(evt.target[0].name, evt.target[0].value);
+  formData.append(evt.target[1].name, evt.target[1].value);
+  formData.append(evt.target[2].name, evt.target[2].value);
+
+  fetch(evt.target.action, {
+    method: "POST",
+    body: formData,
+    credentials: "include",
+  }).then(function (headers) {
+    headers.json().then(function (body) {
+      console.log(body);
+    });
+  });
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(
+    browserHasGeolocation
+      ? "Error: The Geolocation service failed."
+      : "Error: Your browser doesn't support geolocation."
+  );
+  infoWindow.open(map);
 }
 
 //
@@ -1993,7 +2111,6 @@ function getImageId(evt) {
   }).then(function (headers) {
     headers.json().then(function (body) {
       for (let i = 0; i < body.length; i++) {
-        console.log(body[i].image_id);
         let input = document.getElementById("image_id");
         input.value = body[i].image_id;
       }
