@@ -734,7 +734,7 @@ function animalSpinnerAdd() {
 function animalSpinnerRemove() {
   window.setTimeout(function () {
     animalSpinnerAdd();
-  }, 3000);
+  }, 1500);
   resetAnimalSpinner();
 }
 
@@ -773,6 +773,7 @@ function viewAnimals(evt) {
         let result = "";
 
         result += `<p onclick='showSpinner() & getSpeciesID(this.id) & speciesSpinnerRemove() & showPage("7"); return false'
+                    class="border-t border-green-100 mb-2 border-l rounded shadow bg-white dark:bg-gray-400 dark:text-gray-600 border-b border-r px-3 py-4 text-green-500 font-medium w-full"
                     id=${body[i].species_id}
                     >${body[i].name}</p>
                     `;
@@ -842,11 +843,11 @@ function viewOneAnimal(evt) {
       for (let i = 0; i < body.length; i++) {
         // Animal name on individual animal page
         document.getElementById("animal_nickname_div").innerHTML =
-          body[i].nickname;
+          `<span class="font-semibold text-xl">${body[i].nickname}</span>`;
 
         // Animal name on add log page
         document.getElementById("animal_nickname_div2").innerHTML =
-          body[i].nickname;
+          `<span class="text-xl font-semibold mr-7">${body[i].nickname}</span>`;
 
         // Creates list of logs
         const listContainer = document.getElementById("logs");
@@ -857,7 +858,7 @@ function viewOneAnimal(evt) {
         // If no logs exist, insert button to add log. Otherwise, show all logs
         if (body[i].title === null) {
           let result = `<p>No logs have been added for this animal</p><br>
-          <span onclick="showPage('1'); return false" class="p-2 text-sm text-green-500 border border-green-100 rounded shadow bg-green-50">Add log</span>
+          <span onclick="showPage('1'); return false" class="px-4 py-2 text-white dark:bg-green-600 bg-green-400 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">Add log</span>
           `;
 
           newListItem.innerHTML = result;
@@ -866,7 +867,7 @@ function viewOneAnimal(evt) {
 
         } else {
 
-          let result = `<div class="pb-3">
+          let result = `<div class="pt-4">
           <div class="mb-2">
               <span class="text-gray-600 font-bold">${body[i].title}</span>
               <span class="float-right inset-y-0 right-0 text-gray-400">${dateDiff}</span>
@@ -958,12 +959,14 @@ function viewAnimalsPerSpecies(evt) {
 
         const imagePath = "http://localhost:8080/ws/uploads/";
 
-        result = `<div class="grid grid-cols-3 items-center bg-white border-t border-gray-300 py-2">
-                                <div class="pl-2 font-bold col-span-2" onclick="getAnimalID(this.id) & button.click() & map_button.click() & animalSpinnerRemove() & showPage('6'); return false" id="${body[i].animal_id}">
-                                    <div class="w-10 h-10 my-1 rounded-full mr-4 shadow bg-cover border-none" style="background-image: url(${imagePath}${body[i].image})"></div>
-                                    ${body[i].nickname}
+        result = `<div class="grid grid-cols-3 items-center border-r rounded shadow border-l dark:bg-gray-300 bg-white border-t border-gray-300 py-2">
+                                <div class="px-3 font-bold col-span-2" onclick="getAnimalID(this.id) & button.click() & map_button.click() & animalSpinnerRemove() & showPage('6'); return false" id="${body[i].animal_id}">
+                                    <div class="grid justify-items-center w-20 dark:text-gray-600">
+                                      <div class="w-20 h-20 my-1 justify-self-center rounded-full shadow bg-cover border-none" style="background-image: url(${imagePath}${body[i].image})"></div>
+                                      <p>${body[i].nickname}</p>
+                                    </div>
                                 </div>
-                                <div class="justify-self-center">${dateDiff}</div>
+                                <div class="justify-self-end pr-3 dark:text-gray-600 text-gray-500">${dateDiff}</div>
                             </div>`;
 
         newListItem.innerHTML = result;
@@ -2193,7 +2196,7 @@ function getSpeciesFromID(evt) {
 
                 species_name.innerHTML = `${body[i].name}`;
                 species_name4.innerHTML = `${body[i].name}`;
-                species_name5.innerHTML = `${body[i].name}`;
+                species_name5.innerHTML = `<span class="mr-7">${body[i].name}</span>`;
                 species_name6.innerHTML = `${body[i].name}`;
                 
                 setTimeout(function(){  document.getElementById("species_count_form").click(); }, 1000);

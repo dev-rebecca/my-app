@@ -43,6 +43,7 @@
 - Only log if response code is not 400
 - Dark mode icon in switch so looks better
 - About, contact me
+- Adding animal type/species changes colour of text to match rest of forms. Add animal and edit animal
 
 # To do (FOR ADMIN)
 
