@@ -1,5 +1,5 @@
 {
-  "proxy": "http://localhost:8080/ws/",
+  "proxy": "https://rebeccamansell.dev/",
   "name": "my-app",
   "version": "0.1.0",
   "private": true,

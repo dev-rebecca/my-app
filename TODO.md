@@ -10,15 +10,23 @@
 - ✅ Upload images
 - Google maps & distance between integration
 - Alerts & icon for validation
-- Add animal species for edit animal
-- Thorough aesthetic fix based on all wireframes - colors, sizing, etc
-- Admin panel
+- Add animal species for edit animal - add species button in dropdown, and dropdown updates after
+- ✅ Thorough aesthetic fix based on all wireframes - colors, sizing, etc
 - Search bar functionality
 - Change colours of upload button and animal icons with Photoshop
-- information ? button for some UI
+- ✅ information ? button for some UI
+- Back button
+- Hide WS so not accessible by user
+- Code cleanup!
 
 # To do (LATER)
 
+- Margins need work?
+- App timing out after period of not using? Why?
+- Clicking on image enlarges image, cross in corner to exit out
+- Adding image or log has cancel option
+- Edit animal/edit user more easy to understand of where to click and click save after
+- Getting longitude and latitude only fired when you click "add animal" to ensure the longitude and latitude is not stale
 - user logs working, with rate limiter
 - .env added
 - UserID function done once only instead of every page click
@@ -44,13 +52,6 @@
 - Dark mode icon in switch so looks better
 - About, contact me
 - Adding animal type/species changes colour of text to match rest of forms. Add animal and edit animal
-
-# To do (FOR ADMIN)
-
-- Users choose 'animal type', then they start typing a species.
-- If admin has approved, the species will appear from drop down. If not they can add it.
-- If they add one, that gets status of pending for admin to approve
-- When updating a category, they can't delete one because it may be in use by other user. They can only add a new one
 
 # Notes
 

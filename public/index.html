@@ -14,36 +14,14 @@
     <link rel="manifest" href="./manifest.json" crossorigin="use-credentials">
     <link rel="apple-touch-icon" href="./imgs/koala.png">
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="imgs/koala.png">
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <script src="./js.js" defer></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGF1ZrpSQEII3NXkui4e2Sppw0P42irZI&callback=initMap&v=weekly" async></script>
-    
-    <script>// Import the functions you need from the SDKs you need
-        import { initializeApp } from "firebase/app";
-        import { getAnalytics } from "firebase/analytics";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-        
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
-          apiKey: "AIzaSyDUvGh6JGatyH5wrDX2pRCS71Vz7pPqe9E",
-          authDomain: "my-project2-34cd6.firebaseapp.com",
-          projectId: "my-project2-34cd6",
-          storageBucket: "my-project2-34cd6.appspot.com",
-          messagingSenderId: "168283392757",
-          appId: "1:168283392757:web:a4dfa610c99442e6d293bc",
-          measurementId: "G-2Y2P42NJDN"
-        };
-        
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        </script>
-
     <title>Wildlife Watcher</title>
 </head>
+
 <body onload="checkForLogin()" id="body" class="dark:bg-gray-700 dark:text-gray-100 bg-gray-50">
 
     <!-- Alert box -->
@@ -71,7 +49,7 @@
                         </a>
                     </p>
                 </div>
-                <form id="login-form" method="POST" action="ws.php?page=login" onsubmit="login(event) & checkIfAdmin(event)" class="mt-8 space-y-6">
+                <form id="login-form" method="POST" action="ws/ws.php?page=login" onsubmit="login(event) & checkIfAdmin(event)" class="mt-8 space-y-6">
                     <div class="space-y-2 rounded-md shadow-sm">
                    
                         <div class="relative flex">
@@ -80,7 +58,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>  
                             </span>
-                            <input name="email" type="text" class="w-full placeholder-gray-500 border-gray-300 rounded dark:placeholder-gray-100 dark:bg-gray-500" autocomplete="email" placeholder="Email address">
+                            <input id="attribute1" name="email" type="text" class="w-full placeholder-gray-500 border-gray-300 rounded dark:placeholder-gray-100 dark:bg-gray-500" autocomplete="email" placeholder="Email address">
                         </div>
 
                         <div class="relative flex">
@@ -123,7 +101,7 @@
                     </a>
                     </p>
                 </div>
-                <form id="register-form" method="POST" onsubmit="register(event)" oninput="RegisterValidationIcon()" action="ws.php?page=register" class="mt-8 space-y-6">
+                <form id="register-form" method="POST" onsubmit="register(event)" oninput="RegisterValidationIcon()" action="ws/ws.php?page=register" class="mt-8 space-y-6">
                     <div class="space-y-2 rounded-md shadow-sm">
 
                         <div class="relative flex">
@@ -190,12 +168,30 @@
                             <!-- <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
                             </svg> -->
-                            <img src="imgs/koala.png" alt="" class="mr-2 w-7 h-7">
-                            <span id="page-title" class="text-2xl font-bold text-gray-600 dark:text-gray-50">My Wildlife</span>
-                            <span class="m-auto">
-                                <!-- <img src="imgs/koala.png" alt="" height="40px" width="40px" class="inline"> -->
-                            </span>
+
                             <span class="flex justify-self-end">
+                                <!-- Back button -->
+                                <span id="backButtonSpot" class="w-6 mr-1">
+                                   
+                                </span>
+
+                                <!-- Koala icon -->
+                                <span class="items-end">
+                                    <img src="imgs/koala.png" alt="" class="inline w-7 h-7">
+                                </span>
+                            </span>
+                    
+                            <span class="m-auto">
+                                <span id="page-title" class="text-2xl font-bold text-gray-600 dark:text-gray-50">My Wildlife</span>
+                            </span>
+
+                            <span class="flex justify-self-end">
+                                <!-- Help icon -->
+                                <svg onclick="showPage('11'); return false" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-1 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                  </svg>
+
+                                <!-- Settings icon -->
                                 <svg onclick="showPage('4'); return false & getUserDetails()" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                                 </svg>
@@ -226,7 +222,7 @@
     
         <!-- Div for seperate pages -->
         <div id="pages" class="px-4 sm:px-6 lg:px-8">
-
+            
             <!-- Container 1
                 Add log page -->
 
@@ -241,7 +237,7 @@
                     </div>
 
                     <!-- Add log -->
-                    <form id="log-form" method="POST" onsubmit="addLog(event)" oninput="LogValidationIcon()" action="ws.php?page=add-log">                    
+                    <form id="log-form" method="POST" onsubmit="addLog(event)" oninput="LogValidationIcon()" action="ws/ws.php?page=add-log">                    
                         <div class="space-y-2 rounded-md shadow-sm">
                             
                             <input type="text" name="animal_id" class="animal_id" hidden>
@@ -279,25 +275,27 @@
                 
             <section id="container2" hidden>
 
+                <!-- <button onclick="hideBack()">Hide back button</button> -->
+
                 <div class="min-h-screen pb-24">
 
                     <!-- Hidden form
                         Get species ID for animal add -->
-                        <form method="POST" action="ws.php?page=get-species-id" onsubmit="getSpeciesID_AddAnimal(event)" hidden>
+                        <form method="POST" action="ws/ws.php?page=get-species-id" onsubmit="getSpeciesID_AddAnimal(event)" hidden>
                             <input type="text" name="species" id="species_id_1">
                             <input type="submit" id="species_id_button_1">
                         </form>
 
                     <!-- Hidden form
                         List species for animal add -->
-                    <form method="POST" action="ws.php?page=view-species" onsubmit="listSpecies_AddAnimal(event) & clearSpeciesList()" hidden>
+                    <form method="POST" action="ws/ws.php?page=view-species" onsubmit="listSpecies_AddAnimal(event) & clearSpeciesList()" hidden>
                         <input type="text" name="animal_type_id" id="animal_type_id_1">
                         <input type="submit" id="animal_type_button_1">
                     </form>
 
                     <!-- Hidden form
                         Gets image path and return image ID to add animal -->
-                    <form method="POST" onsubmit="getImageId(event)" action="ws.php?page=get-image-id" hidden>
+                    <form method="POST" onsubmit="getImageId(event)" action="ws/ws.php?page=get-image-id" hidden>
                         <input type="text" name="image" id="image_path">
                         <input type="submit" id="get_image_id_button">
                     </form>
@@ -323,7 +321,7 @@
                                         Name
                                         </h3>
                                         <div class="mt-2">
-                                            <form method="POST" action="ws.php?page=add-species" onsubmit="addSpecies(event)">
+                                            <form method="POST" action="ws/ws.php?page=add-species" onsubmit="addSpecies(event)">
                                                 <input type="text" name="animal_type_id" id="animal_type_id_4" hidden>
 
                                                 <div class="relative flex my-2">
@@ -369,6 +367,8 @@
                         <p id="addImageLabel" class="text-sm text-green-500 underline" onclick="addImageClick()">Add image</p>
                     </div>
 
+                   
+
                     <!-- Add new species button -->
                     <div class="grid h-5 mb-1">
                         <p onclick="addNewSpecies()" id="add_species_option" class="text-sm text-green-500 justify-self-end" hidden>+ Add new species</p>
@@ -395,7 +395,7 @@
                     <!-- <button onclick=clickButton1()>Click me</button> -->
                     
                     <!-- Add animal -->
-                    <form id="add-animal-form" method="POST" action="ws.php?page=add-animal" onsubmit="addAnimal(event)" oninput="addAnimalValidationIcon()" action="">
+                    <form id="add-animal-form" method="POST" action="ws/ws.php?page=add-animal" onsubmit="addAnimal(event)" oninput="addAnimalValidationIcon()" action="">
                         <div class="space-y-5">
 
 
@@ -536,6 +536,13 @@
                         </svg>
                     </div>
 
+                    <div onclick="showPage('11'); return false" class="flex items-center justify-between py-4 border-b border-gray-300 dark:text-gray-50">
+                        <p>About</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600 dark:text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                    </div>
+
                     <!-- <div onclick="showUnsubscribeModal()" class="flex items-center justify-between py-4 border-b border-gray-300">
                         <p>Unsubscribe</p>
                         <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -572,12 +579,12 @@
                     
                 <!-- Hidden form 
                     Logout -->
-                <form method="GET" onsubmit="logout(event)" action="ws.php?page=logout" hidden>
+                <form method="GET" onsubmit="logout(event)" action="ws/ws.php?page=logout" hidden>
                     <input type="submit" id="logout_button">
                 </form>
 
                 <!-- Delete account -->
-                <!-- <form onsubmit="deleteAccount(event)" action="ws.php?page=delete-account" hidden>
+                <!-- <form onsubmit="deleteAccount(event)" action="ws/ws.php?page=delete-account" hidden>
                     <input type="submit" value="Delete Account" class="btn btn-indigo">
                 </form> -->
 
@@ -591,7 +598,7 @@
 
                     <!-- Hidden form
                     View my animals per type -->
-                    <form id="view-my-animals-form" action="ws.php?page=view-animals" onsubmit="viewAnimals(event)" hidden>
+                    <form id="view-my-animals-form" action="ws/ws.php?page=view-animals" onsubmit="viewAnimals(event)" hidden>
                         <input type="text" name="type_name" id="animal-type">
                         <input type="submit" id="type-selected" value="Go">
                     </form>
@@ -619,7 +626,7 @@
                     <div class="w-full">
                         <div class="items-center w-full border-gray-300">
                             <div class="" id="my_animals_list"></div>
-                            <div class="spinner"></div>
+                            <!-- <div class="spinner"></div> -->
                         </div>
                     </div>
                 </div>
@@ -650,7 +657,7 @@
 
                     <!-- Hidden form
                         Form for long and latitude fetch -->
-                    <form method="POST" action="ws.php?page=get-coordinates" onsubmit="getLocation(event)" hidden>
+                    <form method="POST" action="ws/ws.php?page=get-coordinates" onsubmit="getLocation(event)" hidden>
                         <input type="text" name="animal_id" class="animal_id">
                         <input type="submit" id="map_button">
                     </form>
@@ -672,7 +679,7 @@
                     <div>
                     
                         <!-- TEST -->
-                        <!-- <form method="POST" action="ws.php?page=add-coords" onsubmit="fetchSendCoords(event)">
+                        <!-- <form method="POST" action="ws/ws.php?page=add-coords" onsubmit="fetchSendCoords(event)">
                             <input type="text" name="animal_id" class="animal_id">
                             <input type="text" name="lng" id="long_input">
                             <input type="text" name="lat" id="lat_input">
@@ -742,28 +749,28 @@
 
                 <!-- Hidden form
                     View each animal -->
-                <form id="view-one-animal-form" action="ws.php?page=view-one-animal" onsubmit="viewOneAnimal(event)" hidden>
+                <form id="view-one-animal-form" action="ws/ws.php?page=view-one-animal" onsubmit="viewOneAnimal(event)" hidden>
                     <input type="text" name="animal_id" class="animal_id">
                     <input type="submit" id="button">
                 </form>
 
                 <!-- Hidden form
                     Displays count of species -->
-                <form method="POST" action="ws.php?page=species-count" onsubmit="speciesCount(event)" hidden>
+                <form method="POST" action="ws/ws.php?page=species-count" onsubmit="speciesCount(event)" hidden>
                     <input type="text" name="species" id="species_name_for_count">
                     <input type="submit" id="species_count_form">
                 </form>
 
                 <!-- Hidden form 
                     View animals per species -->
-                <form method="POST" action="ws.php?page=animals-per-species" onsubmit="viewAnimalsPerSpecies(event)" hidden>
+                <form method="POST" action="ws/ws.php?page=animals-per-species" onsubmit="viewAnimalsPerSpecies(event)" hidden>
                     <input type="text" id="species_for_list" name="species">
                     <input type="submit" id="species_list_form">
                 </form>
 
                 <!-- Hidden form 
                     Gets species name from species ID -->
-                <form method="POST" action="ws.php?page=get-species-from-id" onsubmit="getSpeciesFromID(event)" hidden>
+                <form method="POST" action="ws/ws.php?page=get-species-from-id" onsubmit="getSpeciesFromID(event)" hidden>
                     <input type="text" name="species" id="species_id_for_form">
                     <input type="submit" id="submit_speciesID_for_form">
                 </form>
@@ -797,14 +804,14 @@
 
                     <!-- Hidden form
                         Animal type for dropdown -->
-                    <form method="POST" action="ws.php?page=view-species" onsubmit="AnimalTypeDropdownforEdit(event) & clearAll()" hidden>
+                    <form method="POST" action="ws/ws.php?page=view-species" onsubmit="AnimalTypeDropdownforEdit(event) & clearAll()" hidden>
                         <input type="text" name="animal_type_id" id="animal_type_id_3">
                         <input type="submit" id="animal_type_button_2">
                     </form>
 
                     <!-- Hidden form
                     Species ID for dropdown -->
-                    <form method="POST" action="ws.php?page=get-species-id" onsubmit="getSpeciesID_EditAnimal(event)" hidden>
+                    <form method="POST" action="ws/ws.php?page=get-species-id" onsubmit="getSpeciesID_EditAnimal(event)" hidden>
                         <input type="text" id="species_id_for_db2" name="species">
                         <input type="submit" id="species_id_button" value="species ID for db" class="btn btn-indigo">
                     </form>
@@ -818,7 +825,7 @@
 
                      <!-- Hidden form
                         Submit edit of species -->
-                    <form method="POST" action="ws.php?page=edit-animal" id="edit-animal" onsubmit="editAnimal(event)" hidden>
+                    <form method="POST" action="ws/ws.php?page=edit-animal" id="edit-animal" onsubmit="editAnimal(event)" hidden>
                         <input type="text" id="species_id_input2" placeholder="speciesID" name="species_id">
                         <input type="text" name="animal_id" class="animal_id">
                         <input type="submit" id="selectSpeciesButton">
@@ -826,14 +833,14 @@
 
                     <!-- Hidden form
                         Gets image path and return image ID to add animal -->
-                    <form method="POST" onsubmit="editGetImageId(event)" action="ws.php?page=get-image-id" hidden>
+                    <form method="POST" onsubmit="editGetImageId(event)" action="ws/ws.php?page=get-image-id" hidden>
                         <input type="text" name="image" id="image_path_edit">
                         <input type="submit" id="edit_get_image_id_button">
                     </form>
 
                     <!-- Hidden form
                         Changes image ID for animal in database -->
-                    <form method="POST" onsubmit="doEditAnimalImage(event)" action="ws.php?page=edit-animal-image" hidden>
+                    <form method="POST" onsubmit="doEditAnimalImage(event)" action="ws/ws.php?page=edit-animal-image" hidden>
                         <input type="text" name="animal_id" class="animal_id">
                         <input type="text" name="image_id" id="image_id_edit">
                         <input type="submit" id="edit_image_button">
@@ -909,7 +916,7 @@
                                 <dd class="flex justify-between mt-1 text-gray-900 dark:text-gray-200 sm:mt-0 sm:col-span-2">
                                     <span id="animalNameLabel"></span>
 
-                                    <form method="POST" onsubmit="doEditAnimalName(event) & getAnimalDetails(event)" action="ws.php?page=edit-animal-name" id="editAnimalNameForm" hidden>
+                                    <form method="POST" onsubmit="doEditAnimalName(event) & getAnimalDetails(event)" action="ws/ws.php?page=edit-animal-name" id="editAnimalNameForm" hidden>
                                         <input type="text" name="animal_id" class="animal_id" hidden>
                                         <input type="text" name="name" id="animalNameInput" class="p-0 border-0 border-b appearance-none dark:bg-gray-700 bg-gray-50"></input>
                                         <input type="submit" value="submit" id="editAnimalNameSubmit" hidden>
@@ -931,7 +938,7 @@
                                 <dd class="flex justify-between mt-1 text-gray-900 dark:text-gray-200 sm:mt-0 sm:col-span-2">
                                     <span id="animalGenderLabel"></span>
 
-                                    <form method="POST" onsubmit="doEditAnimalGender(event) & getAnimalDetails(event)" action="ws.php?page=edit-animal-gender" id="editAnimalGenderForm" hidden>
+                                    <form method="POST" onsubmit="doEditAnimalGender(event) & getAnimalDetails(event)" action="ws/ws.php?page=edit-animal-gender" id="editAnimalGenderForm" hidden>
                                         <input type="text" name="animal_id" class="animal_id" hidden>
                                         <input type="text" name="gender" id="animalGenderInput" class="p-0 border-0 border-b appearance-none dark:bg-gray-700 bg-gray-50"></input>
                                         <input type="submit" value="submit" id="editAnimalGenderSubmit" hidden>
@@ -953,7 +960,7 @@
                                 <dd class="flex justify-between mt-1 text-gray-900 dark:text-gray-200 sm:mt-0 sm:col-span-2">
                                     <span id="animalMaturityLabel"></span>
 
-                                    <form method="POST" onsubmit="doEditAnimalMaturity(event) & getAnimalDetails(event)" action="ws.php?page=edit-animal-maturity" id="editAnimalMaturityForm" hidden>
+                                    <form method="POST" onsubmit="doEditAnimalMaturity(event) & getAnimalDetails(event)" action="ws/ws.php?page=edit-animal-maturity" id="editAnimalMaturityForm" hidden>
                                         <input type="text" name="animal_id" class="animal_id" hidden>
                                         <input type="text" name="maturity" id="animalMaturityInput" class="p-0 border-0 border-b appearance-none dark:bg-gray-700 bg-gray-50"></input>
                                         <input type="submit" value="submit" id="editAnimalMaturitySubmit" hidden>
@@ -975,7 +982,7 @@
                                 <dd class="flex justify-between mt-1 text-gray-900 dark:text-gray-200 sm:mt-0 sm:col-span-2">
                                     <span id="animalNotesLabel"></span>
 
-                                    <form method="POST" onsubmit="doEditAnimalNotes(event) & getAnimalDetails(event)" action="ws.php?page=edit-animal-notes" id="editAnimalNotesForm" hidden>
+                                    <form method="POST" onsubmit="doEditAnimalNotes(event) & getAnimalDetails(event)" action="ws/ws.php?page=edit-animal-notes" id="editAnimalNotesForm" hidden>
                                         <input type="text" name="animal_id" class="animal_id" hidden>
                                         <input type="text" name="notes" id="animalNotesInput" class="p-0 border-0 border-b appearance-none dark:bg-gray-700 bg-gray-50"></input>
                                         <input type="submit" value="submit" id="editAnimalNotesSubmit" hidden>
@@ -994,7 +1001,7 @@
                 </div>
 
                 <!-- Delete animal -->
-                <!-- <form method="POST" action="ws.php?page=delete-animal" id="delete-animal" onsubmit="deleteAnimal(event)">
+                <!-- <form method="POST" action="ws/ws.php?page=delete-animal" id="delete-animal" onsubmit="deleteAnimal(event)">
                     <input type="text" name="animal_id" placeholder="Animal ID" class="animal_id" hidden>
                     <input type="submit" value="Delete" class="btn btn-indigo">
                 </form> -->
@@ -1020,7 +1027,7 @@
                             <dd class="flex justify-between mt-1 text-gray-900 dark:text-gray-200 sm:mt-0 sm:col-span-2">
                                 <span id="firstNameLabel"></span>
 
-                                <form method="POST" onsubmit="doEditFirstName(event)" action="ws.php?page=edit-first-name" id="editFirstNameForm" hidden>
+                                <form method="POST" onsubmit="doEditFirstName(event)" action="ws/ws.php?page=edit-first-name" id="editFirstNameForm" hidden>
                                     <input name="first-name" type="text" id="firstNameInput" class="p-0 border-0 border-b appearance-none dark:bg-gray-700 dark:text-white bg-gray-50"></input>
                                     <input type="submit" value="submit" id="editFirstNameSubmit" hidden>
                                 </form>
@@ -1041,7 +1048,7 @@
                             <dd class="flex justify-between mt-1 text-gray-900 dark:text-gray-200 sm:mt-0 sm:col-span-2">
                                 <span id="lastNameLabel"></span>
 
-                                <form method="POST" onsubmit="doEditLastName(event)" action="ws.php?page=edit-last-name" id="editLastNameForm" hidden>
+                                <form method="POST" onsubmit="doEditLastName(event)" action="ws/ws.php?page=edit-last-name" id="editLastNameForm" hidden>
                                     <input name="last-name" type="text" id="lastNameInput" class="p-0 border-0 border-b appearance-none dark:bg-gray-700 bg-gray-50"></input>
                                     <input type="submit" value="submit" id="editLastNameSubmit" hidden>
                                 </form>
@@ -1062,7 +1069,7 @@
                             <dd class="flex justify-between mt-1 text-gray-900 dark:text-gray-200 sm:mt-0 sm:col-span-2">
                                 <span id="emailLabel"></span>
 
-                                <form method="POST" onsubmit="doEditEmail(event)" action="ws.php?page=edit-email" id="editEmailForm" hidden>
+                                <form method="POST" onsubmit="doEditEmail(event)" action="ws/ws.php?page=edit-email" id="editEmailForm" hidden>
                                     <input name="email" type="text" id="emailInput" class="p-0 border-0 border-b appearance-none dark:bg-gray-700 bg-gray-50"></input>
                                     <input type="submit" value="submit" id="editEmailSubmit" hidden>
                                 </form>
@@ -1083,7 +1090,7 @@
                             <dd class="flex justify-between mt-1 text-gray-900 dark:text-gray-200 sm:mt-0 sm:col-span-2">
                                 <span id="passwordLabel">*********</span>
 
-                                <form method="POST" onsubmit="doEditPassword(event)" action="ws.php?page=edit-password" id="editPasswordForm" hidden>
+                                <form method="POST" onsubmit="doEditPassword(event)" action="ws/ws.php?page=edit-password" id="editPasswordForm" hidden>
                                     <input name="password" type="text" id="passwordInput" class="p-0 border-0 border-b appearance-none dark:bg-gray-700 bg-gray-50"></input>
                                     <input type="submit" value="submit" id="editPasswordSubmit" hidden>
                                 </form>
@@ -1099,7 +1106,26 @@
                         
                     </dl>
                 </div>
-                
+            </section>
+
+            <!-- Container 11
+                About page -->
+            <section id="container11" hidden>
+
+                <div class="px-5 pt-4 leading-relaxed">
+                    <h1 class="mb-4 text-xl font-semibold text-gray-800 dark:text-gray-100">Hello, friend!</h1>
+                    <div class="space-y-4 text-gray-700 dark:text-gray-50">
+                        <p class="inline font-bold">Wildlife Watcher </p><p class="inline">was created to help wildlife enthusiasts like me keep track of animal encounters.</p>
+                        <p>Animals can be added to your account, and each encounter with the animal can be logged - like your own personal scientific journal
+                            <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                        </p>
+                        <p>Note: To use the GPS feature while adding an animal to your account, please ensure you have location services turned on for your device.</p>
+                        <p class="font-bold">Happy wildlife watching!!</p>
+                    </div>
+                </div>
+
             </section>
             
         </div>

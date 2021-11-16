@@ -8,7 +8,7 @@ export default class SpeciesInfo extends React.Component {
   };
 
   async componentDidMount() {
-    const url = "ws.php?page=view-all-species";
+    const url = "ws/ws.php?page=view-all-species";
     const response = await fetch(url);
     const data = await response.json();
     this.setState({ species: data, loading: false });

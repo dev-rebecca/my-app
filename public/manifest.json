@@ -5,7 +5,7 @@
     "theme_color": "#42f584",
     "start_url": "http://localhost/dev-rebecca/",
     "scope": "http://localhost/dev-rebecca/",
-    "display": "fullscreen",
+    "display": "standalone",
     "description": "Keep track of your animal friends",
     "icons": [{
       "src": "imgs/koala.png",
