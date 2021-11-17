@@ -40,8 +40,16 @@ function showPage(sectionClicked) {
                             </svg>`
 
   const container6BackBtn = `<svg onclick="goBackFromAnimalPage() & showPage('7'); return false" id="backButton" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                          </svg>`
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                            </svg>`
+
+  const container8BackBtn = `<svg onclick="goBackFromEditAnimalPage() & showPage('6'); return false" id="backButton" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                            </svg>`
+
+  const container1BackBtn = `<svg onclick="goBackFromAddLogPage() & showPage('6'); return false" id="backButton" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                            </svg>`
 
   for (var i = 0; i < selection.length; i++) {
     selection[i].style.display = "none";
@@ -50,6 +58,7 @@ function showPage(sectionClicked) {
 
   if (document.getElementById("container1").style.display === "block") {
     title.innerText = "Add Log";
+    buttonSpot.innerHTML = container1BackBtn;
   }
   if (document.getElementById("container2").style.display === "block") {
     title.innerText = "Add Wildlife";
@@ -70,11 +79,29 @@ function showPage(sectionClicked) {
   if (document.getElementById("container7").style.display === "block") {
     buttonSpot.innerHTML = container7BackBtn;
   }
+  if (document.getElementById("container8").style.display === "block") {
+    buttonSpot.innerHTML = container8BackBtn;
+  }
   if (document.getElementById("container9").style.display === "block") {
     title.innerText = "Admin Panel";
   }
   if (document.getElementById("container11").style.display === "block") {
     title.innerText = "About";
+  }
+}
+
+function showAboutPage() {
+
+  const about = document.getElementById("container11");
+  const pages = document.getElementById("pages");
+
+
+  if (about.style.display === "block") {
+    about.style.display = "none";
+    pages.style.display = "block";
+  } else {
+    about.style.display = "block";
+    pages.style.display = "none";
   }
 }
 
@@ -862,6 +889,9 @@ Map of species page */
 // View one animal
 function viewOneAnimal(evt) {
   evt.preventDefault();
+
+  clearLogs();
+
   const formData = new FormData();
 
   formData.append(evt.target[0].name, evt.target[0].value);
@@ -872,6 +902,8 @@ function viewOneAnimal(evt) {
   }).then(function (headers) {
     headers.json().then(function (body) {
       for (let i = 0; i < body.length; i++) {
+
+
         // Animal name on individual animal page
         document.getElementById("animal_nickname_div").innerHTML =
           `<span class="font-semibold text-xl">${body[i].nickname}</span>`;
@@ -884,14 +916,16 @@ function viewOneAnimal(evt) {
         const listContainer = document.getElementById("logs");
         const newList = document.createElement("ul");
         const newListItem = document.createElement("li");
+
         let dateDiff = humanized_time_span(body[i].date);
+        let addLogText = `<p>No logs have been added for this animal</p><br>
+        <span onclick="showPage('1'); return false" class="px-4 py-2 text-white dark:bg-green-600 bg-green-400 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">Add log</span>
+        `;
         
         // If no logs exist, insert button to add log. Otherwise, show all logs
         if (body[i].title === null) {
-          let result = `<p>No logs have been added for this animal</p><br>
-          <span onclick="showPage('1'); return false" class="px-4 py-2 text-white dark:bg-green-600 bg-green-400 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">Add log</span>
-          `;
 
+          let result = addLogText;
           newListItem.innerHTML = result;
           newList.appendChild(newListItem);
           listContainer.appendChild(newList);
@@ -933,6 +967,10 @@ function viewOneAnimal(evt) {
       }
     });
   });
+}
+
+function clearLogs() {
+  document.getElementById("logs").innerHTML = "";
 }
 
 function passDataForEditAnimalName(data) {
@@ -2242,13 +2280,13 @@ function getSpeciesFromID(evt) {
 
 function goBack(current, prev, pageTitle, state) {
 
-  let previousPage = document.getElementById(prev);
   let currentPage = document.getElementById(current);
+  let previousPage = document.getElementById(prev);
   let title = document.getElementById("page-title");
   let backButton = document.getElementById("backButton");
 
-  previousPage.style.display = "block";
   currentPage.style.display = "none";
+  previousPage.style.display = "block";
   title.innerText = pageTitle;
   backButton.style.display = state;
 }
@@ -2267,4 +2305,12 @@ function goBackFromAnimalList() {
 
 function goBackFromAnimalPage() {
   goBack("container6", "container7", "My Wildlife", "none");
+}
+
+function goBackFromEditAnimalPage() {
+  goBack("container8", "container6", "My Wildlife", "none");
+}
+
+function goBackFromAddLogPage() {
+  goBack("container1", "container6", "My Wildlife", "none");
 }

@@ -21,6 +21,7 @@
 
 # To do (LATER)
 
+- Change gender
 - Margins need work?
 - App timing out after period of not using? Why?
 - Clicking on image enlarges image, cross in corner to exit out
