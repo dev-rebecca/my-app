@@ -51,6 +51,11 @@ function showPage(sectionClicked) {
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                             </svg>`
 
+  const container10BackBtn = `<svg onclick="goBackFromEditUser() & showMainPages()" id="backButton" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                            </svg>`
+
+
   for (var i = 0; i < selection.length; i++) {
     selection[i].style.display = "none";
   }
@@ -67,9 +72,9 @@ function showPage(sectionClicked) {
   if (document.getElementById("container3").style.display === "block") {
     title.innerText = "My Wildlife";
   }
-  if (document.getElementById("container4").style.display === "block") {
-    title.innerText = "Settings";
-  }
+  // if (document.getElementById("container4").style.display === "block") {
+  //   title.innerText = "Settings";
+  // }
   if (document.getElementById("container5").style.display === "block") {
     buttonSpot.innerHTML = container5BackBtn;
   }
@@ -85,25 +90,99 @@ function showPage(sectionClicked) {
   if (document.getElementById("container9").style.display === "block") {
     title.innerText = "Admin Panel";
   }
-  if (document.getElementById("container11").style.display === "block") {
-    title.innerText = "About";
+  if (document.getElementById("container10").style.display === "block") {
+    buttonSpot.innerHTML = container10BackBtn;
+    title.innerText = "Settings";
   }
 }
 
-function showAboutPage() {
+function hideSettingsHeader() {
+  const header = document.getElementById("settingsHeader");
+  header.style.display = "none";
+}
+
+function showHideAboutPage() {
 
   const about = document.getElementById("container11");
   const pages = document.getElementById("pages");
+  const container = document.getElementById("container");
 
 
   if (about.style.display === "block") {
     about.style.display = "none";
+    container.style.display = "block";
     pages.style.display = "block";
   } else {
     about.style.display = "block";
+    container.style.display = "none";
     pages.style.display = "none";
   }
 }
+
+function hideAboutPage() {
+
+  const about = document.getElementById("container11");
+  const pages = document.getElementById("pages");
+  const container = document.getElementById("container");
+
+    about.style.display = "none";
+    // container.style.display = "block";
+    // pages.style.display = "block";
+
+}
+
+function showMainPages() {
+  const pages = document.getElementById("pages");
+  const container = document.getElementById("container");
+  const header = document.getElementById("settingsHeader");
+
+  container.style.display = "block";
+  pages.style.display = "block";   
+  header.style.display = "none";
+}
+
+function showHideSettingsPage() {
+  const settings = document.getElementById("container4");
+  const pages = document.getElementById("pages");
+  const container = document.getElementById("container");
+  const header = document.getElementById("settingsHeader");
+
+  if (settings.style.display === "block") {
+    settings.style.display = "none";
+    container.style.display = "block";
+    pages.style.display = "block";
+    header.style.display = "none";
+  } else {
+    settings.style.display = "block";
+    container.style.display = "none";
+    pages.style.display = "none";  
+    header.style.display = "block";
+  }
+}
+
+function hideSettingsPage() {
+  const settings = document.getElementById("container4");
+  const pages = document.getElementById("pages");
+  const container = document.getElementById("container");
+  
+    settings.style.display = "none";
+    // container.style.display = "block";
+    // pages.style.display = "block";
+}
+
+// function checkAboutPage() {
+
+//   let about_page = document.getElementById("container11");
+//   let title = document.getElementById("page-title");
+
+//   if (about_page.style.display == "block") {
+//     console.log("it's block");
+//     title.innerText = "About";
+//   } else {
+//     console.log("its not");
+
+//   }
+// }
 
 // Alerts
 function showAlert(msgtype, msg) {
@@ -2313,4 +2392,8 @@ function goBackFromEditAnimalPage() {
 
 function goBackFromAddLogPage() {
   goBack("container1", "container6", "My Wildlife", "none");
+}
+
+function goBackFromEditUser() {
+  goBack("container10", "container4", "Settings", "none");
 }

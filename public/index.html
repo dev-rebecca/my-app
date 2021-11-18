@@ -187,12 +187,12 @@
 
                             <span class="flex justify-self-end">
                                 <!-- Help icon -->
-                                <svg onclick="showAboutPage()" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-1 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg onclick="showHideAboutPage()" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-1 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                   </svg>
 
                                 <!-- Settings icon -->
-                                <svg onclick="showPage('4'); return false & getUserDetails()" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg onclick="showHideSettingsPage() & getUserDetails()" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                                 </svg>
                             </span>
@@ -204,14 +204,14 @@
 
         <!-- Buttons for three seperate pages -->
         <div id="page-btns" class="fixed inset-x-0 bottom-0 z-50 grid h-20 grid-cols-2 bg-opacity-100 border-t-2 border-gray-200 bg-green-50 dark:bg-gray-600 justify-items-stretch">
-            <button onclick="showPage('2'); return false" class="px-3 text-sm text-gray-500 dark:text-gray-50 focus:text-green-500 dark:focus:text-green-300">
+            <button onclick="showPage('2'); return false & hideAboutPage() & hideSettingsPage() & showMainPages()" class="px-3 text-sm text-gray-500 dark:text-gray-50 focus:text-green-500 dark:focus:text-green-300">
                 <span class="grid justify-items-center">
                     <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                 </span>
                 Add Wildlife</button>
-            <button onclick="showPage('3'); return false" class="px-3 text-sm text-gray-500 outline-none dark:text-gray-50 dark:bg-gray-600 dark:focus:text-green-300 focus:text-green-500" id="home">
+            <button onclick="showPage('3'); return false & hideAboutPage() & hideSettingsPage() & showMainPages()" class="px-3 text-sm text-gray-500 outline-none dark:text-gray-50 dark:bg-gray-600 dark:focus:text-green-300 focus:text-green-500" id="home">
                 <span class="grid justify-items-center">
                     <svg  class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
@@ -501,94 +501,7 @@
                 </div>
             </section>
 
-            <!-- Container 4
-                Settings -->
-
-            <section id="container4" hidden>
-
-                <div class="text-gray-600">
-                   
-                    <div onclick="showPage('10'); return false" class="flex items-center justify-between py-4 border-b border-gray-300 dark:text-gray-50">
-                        <p>Account details</p>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600 dark:text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                    </div>
-
-                    <!-- <div class="flex items-center justify-between py-4 border-b border-gray-300">
-                        <p>About</p>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                    </div> -->
-
-                    <!-- <div class="flex items-center justify-between py-4 border-b border-gray-300">
-                        <p>Contact me</p>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                    </div> -->
-
-                    <div onclick="logoutClick()" class="flex items-center justify-between py-4 border-b border-gray-300 dark:text-gray-50">
-                        <p>Logout</p>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600 dark:text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                    </div>
-
-                    <div onclick="showPage('11'); return false" class="flex items-center justify-between py-4 border-b border-gray-300 dark:text-gray-50">
-                        <p>About</p>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600 dark:text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                    </div>
-
-                    <!-- <div onclick="showUnsubscribeModal()" class="flex items-center justify-between py-4 border-b border-gray-300">
-                        <p>Unsubscribe</p>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                    </div> -->
-
-                    <div class="py-4 border-b border-gray-300" @click="darkMode = !darkMode">
-                        <button id="darkmode_button" class="inline-flex items-center">
-
-                            <span class="mr-2 dark:text-gray-50" x-text="darkMode ? 'Light mode' : 'Dark mode' "></span>
-
-                            <!-- Sun -->
-                            <svg  x-show="darkMode" class="h-6 mr-1 text-yellow-200" xmlns="http://www.w3.org/2000/svg" class="inline-block w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                            </svg>
-    
-                            <!-- Moon -->
-                            <svg x-show="!darkMode" class="h-6 mr-1 text-indigo-500" xmlns="http://www.w3.org/2000/svg" class="inline-block w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                            </svg>
-    
-                        </button>
-                    </div>
-
-                    <!-- <div onclick="showPage('9'); return false" class="flex items-center justify-between py-4 border-b border-gray-300">
-                        <p>Admin panel</p>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                    </div> -->
-                    
-                </div>
-                    
-                <!-- Hidden form 
-                    Logout -->
-                <form method="GET" onsubmit="logout(event)" action="ws/ws.php?page=logout" hidden>
-                    <input type="submit" id="logout_button">
-                </form>
-
-                <!-- Delete account -->
-                <!-- <form onsubmit="deleteAccount(event)" action="ws/ws.php?page=delete-account" hidden>
-                    <input type="submit" value="Delete Account" class="btn btn-indigo">
-                </form> -->
-
-            </section>
+       
 
             <!-- Container 5
                 Species list page -->
@@ -1110,33 +1023,208 @@
 
         </div>
     </div>
-  </div>
 
-          <!-- Container 11
+             <!-- Container 11
                 About page -->
-                <div id="container11" hidden>
-                    
+            <section id="container11" hidden>
+                
+                       <!-- Header on every page: user pic, page title, settings icon -->
+       <div>
+        <div class="relative bg-gray-50 dark:bg-gray-700">
+            <div class="px-8 mx-auto max-w-7xl sm:px-6">
+                <div class="grid items-center py-6 border-b-2 border-gray-100 md:space-x-10">
+                    <div class="flex items-center lg:w-0 lg:flex-1">
+                        <!-- <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
+                        </svg> -->
 
-                    <div class="px-5 pt-4 leading-relaxed">
-                        <span class="grid mt-1 mr-7">
-                            <svg onclick="showAboutPage()" xmlns="http://www.w3.org/2000/svg" class="absolute inline w-6 h-6text-gray-800 justify-self-end dark:text-gray-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        <span class="flex justify-self-end">
+                            <!-- Back button -->
+                            <span class="w-6 mr-1">
+                               
+                            </span>
+
+                            <!-- Koala icon -->
+                            <span class="items-end">
+                                <img src="imgs/koala.png" alt="" class="inline w-7 h-7">
+                            </span>
+                        </span>
+                
+                        <span class="m-auto">
+                            <span class="text-2xl font-bold text-gray-600 dark:text-gray-50">About</span>
+                        </span>
+
+                        <span class="flex justify-self-end">
+                            <!-- Help icon -->
+                            <svg onclick="showHideAboutPage() & hideSettingsPage()" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-1 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+
+                            <!-- Settings icon -->
+                            <svg onclick="showHideSettingsPage() & hideAboutPage() & getUserDetails()" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                             </svg>
                         </span>
-                        <h1 class="mb-4 text-xl font-semibold text-gray-800 dark:text-gray-100">Hello, friend!</h1>
-                        <div class="space-y-4 text-gray-700 dark:text-gray-50">
-                            <p class="inline font-bold">Wildlife Watcher </p><p class="inline">was created to help wildlife enthusiasts like me keep track of animal encounters.</p>
-                            <p>Animals can be added to your account, and each encounter with the animal can be logged - like your own personal scientific journal
-                                <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                                </svg>
-                            </p>
-                            <p>Note: To use the GPS feature while adding an animal to your account, please ensure you have location services turned on for your device.</p>
-                            <p class="font-bold">Happy wildlife watching!!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                <div class="px-5 pt-4 leading-relaxed">
+                    <span class="grid mt-1 mr-7">
+                        <svg onclick="showHideAboutPage()" xmlns="http://www.w3.org/2000/svg" class="absolute inline w-6 h-6text-gray-800 justify-self-end dark:text-gray-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </span>
+                    <h1 class="mb-4 text-xl font-semibold text-gray-800 dark:text-gray-100">Hello, friend!</h1>
+                    <div class="space-y-4 text-gray-700 dark:text-gray-50">
+                        <p class="inline font-bold">Wildlife Watcher </p><p class="inline">was created to help wildlife enthusiasts like me keep track of animal encounters.</p>
+                        <p>Animals can be added to your account, and each encounter with the animal can be logged - like your own personal scientific journal
+                            <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                        </p>
+                        <p>Note: To use the GPS feature while adding an animal to your account, please ensure you have location services turned on for your device.</p>
+                        <p class="font-bold">Happy wildlife watching!!</p>
+                    </div>
+                </div>
+
+            </section>
+
+                 <!-- Container 4
+                Settings -->
+
+                <section id="container4" hidden>
+
+                    <div id="settingsHeader">
+                        <div class="relative bg-gray-50 dark:bg-gray-700">
+                            <div class="px-8 mx-auto max-w-7xl sm:px-6">
+                                <div class="grid items-center py-6 border-b-2 border-gray-100 md:space-x-10">
+                                    <div class="flex items-center lg:w-0 lg:flex-1">
+                                        <!-- <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
+                                        </svg> -->
+            
+                                        <span class="flex justify-self-end">
+                                            <!-- Back button -->
+                                            <span class="w-6 mr-1">
+                                               
+                                            </span>
+            
+                                            <!-- Koala icon -->
+                                            <span class="items-end">
+                                                <img src="imgs/koala.png" alt="" class="inline w-7 h-7">
+                                            </span>
+                                        </span>
+                                
+                                        <span class="m-auto">
+                                            <span class="text-2xl font-bold text-gray-600 dark:text-gray-50">Settings</span>
+                                        </span>
+            
+                                        <span class="flex justify-self-end">
+                                            <!-- Help icon -->
+                                            <svg onclick="showHideAboutPage() & hideSettingsPage()" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-1 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                              </svg>
+            
+                                            <!-- Settings icon -->
+                                            <svg onclick="hideAboutPage() & showHideSettingsPage() & getUserDetails()" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                                            </svg>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+
+                    <div class="px-5 text-gray-600">
+                       
+                        <div onclick="showPage('10'); return false & hideSettingsPage() & showMainPages()" class="flex items-center justify-between py-4 border-b border-gray-300 dark:text-gray-50">
+                            <p>Account details</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600 dark:text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </div>
     
-                </div>
+                        <!-- <div class="flex items-center justify-between py-4 border-b border-gray-300">
+                            <p>About</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </div> -->
+    
+                        <!-- <div class="flex items-center justify-between py-4 border-b border-gray-300">
+                            <p>Contact me</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </div> -->
+    
+                        <div onclick="logoutClick()" class="flex items-center justify-between py-4 border-b border-gray-300 dark:text-gray-50">
+                            <p>Logout</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600 dark:text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </div>
+    
+                        <div onclick="checkAboutPage() & showPage('11'); return false" class="flex items-center justify-between py-4 border-b border-gray-300 dark:text-gray-50">
+                            <p>About</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600 dark:text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </div>
+    
+                        <!-- <div onclick="showUnsubscribeModal()" class="flex items-center justify-between py-4 border-b border-gray-300">
+                            <p>Unsubscribe</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </div> -->
+    
+                        <div class="py-4 border-b border-gray-300" @click="darkMode = !darkMode">
+                            <button id="darkmode_button" class="inline-flex items-center">
+    
+                                <span class="mr-2 dark:text-gray-50" x-text="darkMode ? 'Light mode' : 'Dark mode' "></span>
+    
+                                <!-- Sun -->
+                                <svg  x-show="darkMode" class="h-6 mr-1 text-yellow-200" xmlns="http://www.w3.org/2000/svg" class="inline-block w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                                </svg>
+        
+                                <!-- Moon -->
+                                <svg x-show="!darkMode" class="h-6 mr-1 text-indigo-500" xmlns="http://www.w3.org/2000/svg" class="inline-block w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                                </svg>
+        
+                            </button>
+                        </div>
+    
+                        <!-- <div onclick="showPage('9'); return false" class="flex items-center justify-between py-4 border-b border-gray-300">
+                            <p>Admin panel</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </div> -->
+                        
+                    </div>
+                        
+                    <!-- Hidden form 
+                        Logout -->
+                    <form method="GET" onsubmit="logout(event)" action="ws/ws.php?page=logout" hidden>
+                        <input type="submit" id="logout_button">
+                    </form>
+    
+                    <!-- Delete account -->
+                    <!-- <form onsubmit="deleteAccount(event)" action="ws/ws.php?page=delete-account" hidden>
+                        <input type="submit" value="Delete Account" class="btn btn-indigo">
+                    </form> -->
+    
+                </section>
+            
+  </div>
 
 </body>
 </html>
