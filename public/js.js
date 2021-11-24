@@ -51,7 +51,7 @@ function showPage(sectionClicked) {
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                             </svg>`
 
-  const container10BackBtn = `<svg onclick="goBackFromEditUser() & showMainPages()" id="backButton" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  const container10BackBtn = `<svg onclick="goBackFromEditUser()" id="backButton" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                             </svg>`
 
@@ -91,14 +91,24 @@ function showPage(sectionClicked) {
     title.innerText = "Admin Panel";
   }
   if (document.getElementById("container10").style.display === "block") {
-    buttonSpot.innerHTML = container10BackBtn;
     title.innerText = "Settings";
+    document.getElementById('container4').style.display = "none";
+    showMainPages();
   }
 }
 
 function hideSettingsHeader() {
   const header = document.getElementById("settingsHeader");
   header.style.display = "none";
+}
+
+function showEditUserPage() {
+
+  const container = document.getElementById("pages");
+  const page = document.getElementById("container10");
+  page.style.display = "block";
+  container.style.display = "none";
+
 }
 
 function showHideAboutPage() {
