@@ -1,7 +1,0 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-.hi {
-  @apply px-3 py-2 text-white transition bg-indigo-400 rounded shadow-sm hover:shadow-none;
-}
