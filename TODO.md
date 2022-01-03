@@ -80,3 +80,21 @@
   return ("Not saved");
   }
   }
+
+
+
+
+// Connect to database
+function db_connect() {
+    $dbURI = 'mysql:host=localhost;port=3306;dbname=rebecca2_wildlife_watcher';
+    return new PDO($dbURI, 'rebecca2_rebecca', 'fwg8HuI316');
+}
+
+WHEN SWITCHING FROM HOSTED TO LOCALHOST:
+
+- "proxy": "http://localhost:8080/",
+
+WHEN SWITCHING FROM LOCALHOST TO HOSTED:
+
+- "proxy": "http://rebeccamansell.dev/",
+- Fix all input type="text" in index.html in CPanel file

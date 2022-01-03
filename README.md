@@ -48,3 +48,4 @@ Back-end:
 
 - PHP v7.4.12 for API
 - MySQL v7.4.12 as database management system
+
