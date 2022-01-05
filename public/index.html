@@ -13,7 +13,6 @@
     <meta name="theme-color" content="#f8fafc"/>
     <link rel="manifest" href="./manifest.json" crossorigin="use-credentials">
     <link rel="apple-touch-icon" href="./imgs/koala.png">
-    <link rel="stylesheet" href="tailwind.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/png" href="imgs/koala.png">
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
@@ -24,7 +23,7 @@
 </head>
 
 <body onload="checkForLogin()" id="body" class="dark:bg-gray-700 dark:text-gray-100 bg-gray-50">
-
+    
     <!-- Alert box -->
     <div role="alert" id="alertbox" class="fixed inset-x-0 top-0 z-50" hidden>
         <div class="max-w-md px-3 mx-auto py-7">
@@ -159,8 +158,6 @@
 
     <!-- Everything shown after login/register -->
     <div id="after-login-div">
-
-        <div class="btn-primary">Hello</div>
 
        <!-- Header on every page: user pic, page title, settings icon -->
        <div id="container">
