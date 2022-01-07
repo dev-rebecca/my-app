@@ -159,28 +159,22 @@
     <!-- Everything shown after login/register -->
     <div id="after-login-div">
 
-       <!-- Header on every page: user pic, page title, settings icon -->
+       <!-- Header on every page: logo, page title, settings icon -->
        <div id="container">
             <div class="relative bg-gray-50 dark:bg-gray-700">
                 <div class="px-8 mx-auto max-w-7xl sm:px-6">
                     <div class="grid items-center py-6 border-b-2 border-gray-100 md:space-x-10">
                         <div class="flex items-center lg:w-0 lg:flex-1">
-                            <!-- <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
-                            </svg> -->
-
                             <span class="flex justify-self-end">
                                 <!-- Back button -->
-                                <span id="backButtonSpot" class="w-6 mr-1">
-                                   
-                                </span>
-
+                                <span id="backButtonSpot" class="w-6 mr-1"></span>
                                 <!-- Koala icon -->
                                 <span class="items-end">
                                     <img src="imgs/koala.png" alt="" class="inline w-7 h-7">
                                 </span>
                             </span>
                     
+                            <!-- Page title -->
                             <span class="m-auto">
                                 <span id="page-title" class="text-2xl font-bold text-gray-600 dark:text-gray-50">My Wildlife</span>
                             </span>
@@ -189,7 +183,7 @@
                                 <!-- Help icon -->
                                 <svg onclick="showHideAboutPage()" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-1 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                  </svg>
+                                </svg>
 
                                 <!-- Settings icon -->
                                 <svg onclick="showHideSettingsPage() & getUserDetails()" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -202,7 +196,7 @@
             </div>
         </div>
 
-        <!-- Buttons for three seperate pages -->
+        <!-- Buttons for Add Wildlife / My Wildlife -->
         <div id="page-btns" class="fixed inset-x-0 bottom-0 z-50 grid h-20 grid-cols-2 bg-opacity-100 border-t-2 border-gray-200 bg-green-50 dark:bg-gray-600 justify-items-stretch">
             <button onclick="showPage('2'); return false & hideAboutPage() & hideSettingsPage() & showMainPages()" class="px-3 text-sm text-gray-500 dark:text-gray-50 focus:text-green-500 dark:focus:text-green-300">
                 <span class="grid justify-items-center">
@@ -274,8 +268,6 @@
                 Add animal page -->
                 
             <section id="container2" hidden>
-
-                <!-- <button onclick="hideBack()">Hide back button</button> -->
 
                 <div class="min-h-screen pb-24">
 
@@ -367,8 +359,6 @@
                         <p id="addImageLabel" class="text-sm text-green-500 underline" onclick="addImageClick()">Add image</p>
                     </div>
 
-                   
-
                     <!-- Add new species button -->
                     <div class="grid h-5 mb-1">
                         <p onclick="addNewSpecies()" id="add_species_option" class="text-sm text-green-500 justify-self-end" hidden>+ Add new species</p>
@@ -391,8 +381,6 @@
                     <select id="species_dropdown" name="species_dropdown" onchange="getSpeciesIDforDropdown_Add() & clickButtonTest()" class="w-full mb-5 text-gray-500 border-gray-300 rounded dark:text-gray-100 dark:bg-gray-500">
                         <option value="" disabled selected>Species</option>
                     </select>
-
-                    <!-- <button onclick=clickButton1()>Click me</button> -->
                     
                     <!-- Add animal -->
                     <form id="add-animal-form" method="POST" action="ws/ws.php?page=add-animal" onsubmit="addAnimal(event)" oninput="addAnimalValidationIcon()" action="">
@@ -457,13 +445,13 @@
                 <div class="px-4 pt-4">
 
                     <!-- Search bar -->
-                    <div class="relative text-gray-600 focus-within:text-gray-400">
+                    <!-- <div class="relative text-gray-600 focus-within:text-gray-400">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-2">
                           <button type="submit" class="p-1 focus:outline-none focus:shadow-outline">
                             <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="p-1 text-gray-500 w-7 h-7"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>                          </button>
                         </span>
                         <input type="search" name="q" class="w-full py-2 pl-10 text-gray-500 bg-white border-gray-300 rounded-full dark:bg-gray-50 text-m" placeholder="Search..." autocomplete="off">
-                    </div>
+                    </div> -->
 
                     <!-- Animal types with icons -->
                     <div class="py-4">
@@ -501,8 +489,6 @@
                 </div>
             </section>
 
-       
-
             <!-- Container 5
                 Species list page -->
             <section id="container5" hidden>
@@ -517,13 +503,13 @@
                     </form>
 
                      <!-- Search bar -->
-                    <div class="relative text-gray-600 focus-within:text-gray-400">
+                    <!-- <div class="relative text-gray-600 focus-within:text-gray-400">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-2">
                           <button type="submit" class="p-1 focus:outline-none focus:shadow-outline">
                             <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="p-1 text-gray-500 w-7 h-7"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>                          </button>
                         </span>
                         <input type="search" name="q" class="w-full py-2 pl-10 text-gray-500 bg-white border-gray-300 rounded-full text-m dark:bg-gray-100" placeholder="Search..." autocomplete="off">
-                    </div>
+                    </div> -->
 
                     <!-- Animal type with icon -->
                     <div class="py-4">
@@ -539,7 +525,7 @@
                     <div class="w-full">
                         <div class="items-center w-full border-gray-300">
                             <div class="" id="my_animals_list"></div>
-                            <!-- <div class="spinner"></div> -->
+                            <div class="spinner"></div>
                         </div>
                     </div>
                 </div>
@@ -551,6 +537,7 @@
                 
             <section id="container6" hidden>
                 
+                <!-- Loading page -->
                 <div id="loading_Page">
                     <div class="py-32 mt-20 h-72">
                         <div class="flex items-center justify-center my-auto mb-2 space-x-2 animate-pulse">
@@ -585,19 +572,9 @@
                             <span onclick="showPage('8'); return false & getAnimalIDForDetails() & clearImage()" class="px-4 py-2 text-white bg-green-400 border border-transparent rounded-md shadow-sm dark:bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm" id="edit_animal_button">Edit</span>
                         </div>
                     </div>
-
-                    <!-- class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm"> -->
                     
                     <!-- All animal info -->
                     <div>
-                    
-                        <!-- TEST -->
-                        <!-- <form method="POST" action="ws/ws.php?page=add-coords" onsubmit="fetchSendCoords(event)">
-                            <input type="text" name="animal_id" class="animal_id">
-                            <input type="text" name="lng" id="long_input">
-                            <input type="text" name="lat" id="lat_input">
-                            <input type="submit">
-                        </form> -->
 
                         <!-- Map -->
                         <div id="map" class="mb-3" style="height:250px;"></div>
@@ -660,59 +637,60 @@
 
                 <div class="min-h-screen px-4">
 
-                <!-- Hidden form
-                    View each animal -->
-                <form id="view-one-animal-form" action="ws/ws.php?page=view-one-animal" onsubmit="viewOneAnimal(event)" hidden>
-                    <input type="text" name="animal_id" class="animal_id">
-                    <input type="submit" id="button">
-                </form>
+                    <!-- Hidden form
+                        View each animal -->
+                    <form id="view-one-animal-form" action="ws/ws.php?page=view-one-animal" onsubmit="viewOneAnimal(event)" hidden>
+                        <input type="text" name="animal_id" class="animal_id">
+                        <input type="submit" id="button">
+                    </form>
 
-                <!-- Hidden form
-                    Displays count of species -->
-                <form method="POST" action="ws/ws.php?page=species-count" onsubmit="speciesCount(event)" hidden>
-                    <input type="text" name="species" id="species_name_for_count">
-                    <input type="submit" id="species_count_form">
-                </form>
+                    <!-- Hidden form
+                        Displays count of species -->
+                    <form method="POST" action="ws/ws.php?page=species-count" onsubmit="speciesCount(event)" hidden>
+                        <input type="text" name="species" id="species_name_for_count">
+                        <input type="submit" id="species_count_form">
+                    </form>
 
-                <!-- Hidden form 
-                    View animals per species -->
-                <form method="POST" action="ws/ws.php?page=animals-per-species" onsubmit="viewAnimalsPerSpecies(event)" hidden>
-                    <input type="text" id="species_for_list" name="species">
-                    <input type="submit" id="species_list_form">
-                </form>
+                    <!-- Hidden form 
+                        View animals per species -->
+                    <form method="POST" action="ws/ws.php?page=animals-per-species" onsubmit="viewAnimalsPerSpecies(event)" hidden>
+                        <input type="text" id="species_for_list" name="species">
+                        <input type="submit" id="species_list_form">
+                    </form>
 
-                <!-- Hidden form 
-                    Gets species name from species ID -->
-                <form method="POST" action="ws/ws.php?page=get-species-from-id" onsubmit="getSpeciesFromID(event)" hidden>
-                    <input type="text" name="species" id="species_id_for_form">
-                    <input type="submit" id="submit_speciesID_for_form">
-                </form>
+                    <!-- Hidden form 
+                        Gets species name from species ID -->
+                    <form method="POST" action="ws/ws.php?page=get-species-from-id" onsubmit="getSpeciesFromID(event)" hidden>
+                        <input type="text" name="species" id="species_id_for_form">
+                        <input type="submit" id="submit_speciesID_for_form">
+                    </form>
 
-                <!-- Heading with image, species, and animal type -->
-                <div class="grid grid-flow-col grid-rows-3 px-3 mt-6 mb-6">
-                    <div class="self-end col-span-2 row-span-1 -ml-6 text-xl font-semibold justify-self-center" id="species_name_div"></div>
-                    <div class="self-start col-span-2 row-span-1 -ml-6 justify-self-center" id="animal_type_div"></div>
-                    <div id="animal_type_icon" class="col-span-2 row-span-1 -ml-6 justify-self-center"></div>
+                    <!-- Heading with image, species, and animal type -->
+                    <div class="grid grid-flow-col grid-rows-3 px-3 mt-6 mb-6">
+                        <div class="self-end col-span-2 row-span-1 -ml-6 text-xl font-semibold justify-self-center" id="species_name_div"></div>
+                        <div class="self-start col-span-2 row-span-1 -ml-6 justify-self-center" id="animal_type_div"></div>
+                        <div id="animal_type_icon" class="col-span-2 row-span-1 -ml-6 justify-self-center"></div>
+                    </div>
+
+                    <!-- Species count -->
+                    <div>
+                        <div id="species_entries_div" class="pb-1 text-sm text-gray-800 dark:text-gray-50 text-small" hidden></div>
+                    </div>
+                    
+                    <!-- List of animals per species -->
+                    <div id="speciesSpinner">
+                        <div style="border-top-color:transparent" class="w-8 h-8 border-4 border-green-500 border-solid rounded-full animate-spin"></div>
+                    </div>
+                    <div id="list_of_animals_div" class="text-sm text-gray-800 border-b border-gray-400 justify-items-center" hidden></div>
+
                 </div>
-
-                <!-- Species count -->
-                <div>
-                    <div id="species_entries_div" class="pb-1 text-sm text-gray-800 dark:text-gray-50 text-small" hidden></div>
-                </div>
-                
-                <!-- List of animals per species -->
-                <div id="speciesSpinner">
-                    <div style="border-top-color:transparent" class="w-8 h-8 border-4 border-green-500 border-solid rounded-full animate-spin"></div>
-                </div>
-                <div id="list_of_animals_div" class="text-sm text-gray-800 border-b border-gray-400 justify-items-center" hidden></div>
-
-            </div>
             </section>
 
             <!-- Container 8
                 Edit animal page -->
 
             <section id="container8" hidden>
+
                 <div class="min-h-screen pb-24 mt-5">
 
                     <!-- Hidden form
@@ -767,7 +745,6 @@
                         <div class="image-upload_edit">
                             <label for="file-input_edit">
                                 <div class="my-1 mr-4 bg-cover border-none rounded-full shadow w-28 h-28" id="placeholder_image_edit"></div>
-                                <!-- <img src="imgs/upload.png" class="w-28 h-28"/> -->
                             </label>
                             <input type="file" name="sample_image_edit" id="file-input_edit" />
                         </div>
@@ -912,19 +889,7 @@
                         </dl>
                     </div>
                 </div>
-
-                <!-- Delete animal -->
-                <!-- <form method="POST" action="ws/ws.php?page=delete-animal" id="delete-animal" onsubmit="deleteAnimal(event)">
-                    <input type="text" name="animal_id" placeholder="Animal ID" class="animal_id" hidden>
-                    <input type="submit" value="Delete" class="btn btn-indigo">
-                </form> -->
                                 
-            </section>
-
-             <!-- Container 9
-                Admin panel - view species -->
-            <section id="container9" class="mb-20" hidden>
-                <div id="root"></div>
             </section>
 
             <!-- Container 10
@@ -1024,25 +989,21 @@
         </div>
     </div>
 
-             <!-- Container 11
-                About page -->
-            <section id="container11" hidden>
-                
-                       <!-- Header on every page: user pic, page title, settings icon -->
-       <div>
+    <!-- Pages outside main container -->
+    
+    <!-- Container 11
+        About page -->
+    <section id="container11" hidden>
+        
+    <!-- Manual header for about page -->
+    <div>
         <div class="relative bg-gray-50 dark:bg-gray-700">
             <div class="px-8 mx-auto max-w-7xl sm:px-6">
                 <div class="grid items-center py-6 border-b-2 border-gray-100 md:space-x-10">
                     <div class="flex items-center lg:w-0 lg:flex-1">
-                        <!-- <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
-                        </svg> -->
-
                         <span class="flex justify-self-end">
                             <!-- Back button -->
-                            <span class="w-6 mr-1">
-                               
-                            </span>
+                            <span class="w-6 mr-1"></span>
 
                             <!-- Koala icon -->
                             <span class="items-end">
@@ -1050,6 +1011,7 @@
                             </span>
                         </span>
                 
+                        <!-- Page title -->
                         <span class="m-auto">
                             <span class="text-2xl font-bold text-gray-600 dark:text-gray-50">About</span>
                         </span>
@@ -1058,7 +1020,7 @@
                             <!-- Help icon -->
                             <svg onclick="showHideAboutPage() & hideSettingsPage()" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-1 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                              </svg>
+                                </svg>
 
                             <!-- Settings icon -->
                             <svg onclick="showHideSettingsPage() & hideAboutPage() & getUserDetails()" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1071,160 +1033,121 @@
         </div>
     </div>
 
-                <div class="px-5 pt-4 leading-relaxed">
-                    <span class="grid mt-1 mr-7">
-                        <svg onclick="showHideAboutPage()" xmlns="http://www.w3.org/2000/svg" class="absolute inline w-6 h-6text-gray-800 justify-self-end dark:text-gray-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </span>
-                    <h1 class="mb-4 text-xl font-semibold text-gray-800 dark:text-gray-100">Hello, friend!</h1>
-                    <div class="space-y-4 text-gray-700 dark:text-gray-50">
-                        <p class="inline font-bold">Wildlife Watcher </p><p class="inline">was created to help wildlife enthusiasts like me keep track of animal encounters.</p>
-                        <p>Animals can be added to your account, and each encounter with the animal can be logged - like your own personal scientific journal
-                            <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                            </svg>
-                        </p>
-                        <p>Note: To use the GPS feature while adding an animal to your account, please ensure you have location services turned on for your device.</p>
-                        <p class="font-bold">Happy wildlife watching!!</p>
+    <!-- About info -->
+    <div class="px-5 pt-4 leading-relaxed">
+        <span class="grid mt-1 mr-7">
+            <svg onclick="showHideAboutPage()" xmlns="http://www.w3.org/2000/svg" class="absolute inline w-6 h-6text-gray-800 justify-self-end dark:text-gray-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </span>
+        <h1 class="mb-4 text-xl font-semibold text-gray-800 dark:text-gray-100">Hello, friend!</h1>
+        <div class="space-y-4 text-gray-700 dark:text-gray-50">
+            <p class="inline font-bold">Wildlife Watcher </p><p class="inline">was created to help wildlife enthusiasts like me keep track of animal encounters.</p>
+            <p>Animals can be added to your account, and each encounter with the animal can be logged - like your own personal scientific journal
+                <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+            </p>
+            <p>Note: To use the GPS feature while adding an animal to your account, please ensure you have location services turned on for your device.</p>
+            <p class="font-bold">Happy wildlife watching!!</p>
+        </div>
+    </div>
+
+    </section>
+
+    <!-- Container 4
+        Settings -->
+    <section id="container4" hidden>
+
+        <!-- Manual header for about page -->
+        <div id="settingsHeader">
+            <div class="relative bg-gray-50 dark:bg-gray-700">
+                <div class="px-8 mx-auto max-w-7xl sm:px-6">
+                    <div class="grid items-center py-6 border-b-2 border-gray-100 md:space-x-10">
+                        <div class="flex items-center lg:w-0 lg:flex-1">
+
+                            <span class="flex justify-self-end">
+                                <!-- Back button -->
+                                <span class="w-6 mr-1"></span>
+
+                                <!-- Koala icon -->
+                                <span class="items-end">
+                                    <img src="imgs/koala.png" alt="" class="inline w-7 h-7">
+                                </span>
+                            </span>
+                    
+                            <!-- Page title -->
+                            <span class="m-auto">
+                                <span class="text-2xl font-bold text-gray-600 dark:text-gray-50">Settings</span>
+                            </span>
+
+                            <span class="flex justify-self-end">
+                                <!-- Help icon -->
+                                <svg onclick="showHideAboutPage() & hideSettingsPage()" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-1 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+
+                                <!-- Settings icon -->
+                                <svg onclick="hideAboutPage() & showHideSettingsPage() & getUserDetails()" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                                </svg>
+                            </span>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-            </section>
-
-                 <!-- Container 4
-                Settings -->
-
-                <section id="container4" hidden>
-
-                    <div id="settingsHeader">
-                        <div class="relative bg-gray-50 dark:bg-gray-700">
-                            <div class="px-8 mx-auto max-w-7xl sm:px-6">
-                                <div class="grid items-center py-6 border-b-2 border-gray-100 md:space-x-10">
-                                    <div class="flex items-center lg:w-0 lg:flex-1">
-                                        <!-- <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
-                                        </svg> -->
+        <!-- Settings menu items -->
+        <div class="px-5 text-gray-600">
             
-                                        <span class="flex justify-self-end">
-                                            <!-- Back button -->
-                                            <span class="w-6 mr-1">
-                                               
-                                            </span>
-            
-                                            <!-- Koala icon -->
-                                            <span class="items-end">
-                                                <img src="imgs/koala.png" alt="" class="inline w-7 h-7">
-                                            </span>
-                                        </span>
-                                
-                                        <span class="m-auto">
-                                            <span class="text-2xl font-bold text-gray-600 dark:text-gray-50">Settings</span>
-                                        </span>
-            
-                                        <span class="flex justify-self-end">
-                                            <!-- Help icon -->
-                                            <svg onclick="showHideAboutPage() & hideSettingsPage()" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-1 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                              </svg>
-            
-                                            <!-- Settings icon -->
-                                            <svg onclick="hideAboutPage() & showHideSettingsPage() & getUserDetails()" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-                                            </svg>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div onclick="showPage('10'); return false" class="flex items-center justify-between py-4 border-b border-gray-300 dark:text-gray-50">
+                <p>Account details</p>
+                <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600 dark:text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+            </div>
 
+            <div onclick="logoutClick()" class="flex items-center justify-between py-4 border-b border-gray-300 dark:text-gray-50">
+                <p>Logout</p>
+                <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600 dark:text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+            </div>
 
-                    <div class="px-5 text-gray-600">
-                       
-                        <div onclick="showPage('10'); return false" class="flex items-center justify-between py-4 border-b border-gray-300 dark:text-gray-50">
-                            <p>Account details</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600 dark:text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                            </svg>
-                        </div>
-    
-                        <!-- <div class="flex items-center justify-between py-4 border-b border-gray-300">
-                            <p>About</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                            </svg>
-                        </div> -->
-    
-                        <!-- <div class="flex items-center justify-between py-4 border-b border-gray-300">
-                            <p>Contact me</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                            </svg>
-                        </div> -->
-    
-                        <div onclick="logoutClick()" class="flex items-center justify-between py-4 border-b border-gray-300 dark:text-gray-50">
-                            <p>Logout</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600 dark:text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                            </svg>
-                        </div>
-    
-                        <div onclick="checkAboutPage() & showPage('11'); return false" class="flex items-center justify-between py-4 border-b border-gray-300 dark:text-gray-50">
-                            <p>About</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600 dark:text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                            </svg>
-                        </div>
-    
-                        <!-- <div onclick="showUnsubscribeModal()" class="flex items-center justify-between py-4 border-b border-gray-300">
-                            <p>Unsubscribe</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                            </svg>
-                        </div> -->
-    
-                        <div class="py-4 border-b border-gray-300" @click="darkMode = !darkMode">
-                            <button id="darkmode_button" class="inline-flex items-center">
-    
-                                <span class="mr-2 dark:text-gray-50" x-text="darkMode ? 'Light mode' : 'Dark mode' "></span>
-    
-                                <!-- Sun -->
-                                <svg  x-show="darkMode" class="h-6 mr-1 text-yellow-200" xmlns="http://www.w3.org/2000/svg" class="inline-block w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                                </svg>
-        
-                                <!-- Moon -->
-                                <svg x-show="!darkMode" class="h-6 mr-1 text-indigo-500" xmlns="http://www.w3.org/2000/svg" class="inline-block w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                                </svg>
-        
-                            </button>
-                        </div>
-    
-                        <!-- <div onclick="showPage('9'); return false" class="flex items-center justify-between py-4 border-b border-gray-300">
-                            <p>Admin panel</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                            </svg>
-                        </div> -->
-                        
-                    </div>
-                        
-                    <!-- Hidden form 
-                        Logout -->
-                    <form method="GET" onsubmit="logout(event)" action="ws/ws.php?page=logout" hidden>
-                        <input type="submit" id="logout_button">
-                    </form>
-    
-                    <!-- Delete account -->
-                    <!-- <form onsubmit="deleteAccount(event)" action="ws/ws.php?page=delete-account" hidden>
-                        <input type="submit" value="Delete Account" class="btn btn-indigo">
-                    </form> -->
-    
-                </section>
+            <div onclick="checkAboutPage() & showPage('11'); return false" class="flex items-center justify-between py-4 border-b border-gray-300 dark:text-gray-50">
+                <p>About</p>
+                <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 font-bold text-green-600 dark:text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+            </div>
+
+            <!-- Dark/light mode toggle -->
+            <div class="py-4 border-b border-gray-300" @click="darkMode = !darkMode">
+                <button id="darkmode_button" class="inline-flex items-center">
+
+                    <span class="mr-2 dark:text-gray-50" x-text="darkMode ? 'Light mode' : 'Dark mode' "></span>
+
+                    <!-- Sun -->
+                    <svg  x-show="darkMode" class="h-6 mr-1 text-yellow-200" xmlns="http://www.w3.org/2000/svg" class="inline-block w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+
+                    <!-- Moon -->
+                    <svg x-show="!darkMode" class="h-6 mr-1 text-indigo-500" xmlns="http://www.w3.org/2000/svg" class="inline-block w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+
+                </button>
+            </div>
+        </div>
             
-  </div>
+        <!-- Hidden form 
+            Logout -->
+        <form method="GET" onsubmit="logout(event)" action="ws/ws.php?page=logout" hidden>
+            <input type="submit" id="logout_button">
+        </form>
+    </section>       
 
 </body>
 </html>
