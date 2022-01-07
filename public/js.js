@@ -6,17 +6,23 @@
 
 // Service worker
 
-// if ('serviceWorker' in navigator) {
-//     window.addEventListener('load', function() {
-//         navigator.serviceWorker.register('./sw.js').then(function(registration) {
-//             // Registration was successful
-//             console.log('ServiceWorker registration successful with scope: ', registration.scope);
-//         }, function(err) {
-//             // registration failed :(
-//             console.log('ServiceWorker registration failed: ', err);
-//         });
-//     });
-// }
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("./sw.js").then(
+      function (registration) {
+        // Registration was successful
+        console.log(
+          "ServiceWorker registration successful with scope: ",
+          registration.scope
+        );
+      },
+      function (err) {
+        // registration failed :(
+        console.log("ServiceWorker registration failed: ", err);
+      }
+    );
+  });
+}
 
 // Show/hide pages
 function showPage(sectionClicked) {
@@ -29,32 +35,31 @@ function showPage(sectionClicked) {
 
   const container3BackBtn = `<svg onclick="goBackFromAddAnimal()" id="backButton" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                            </svg>`
+                            </svg>`;
 
   const container5BackBtn = `<svg onclick="goBackFromViewSpecies()" id="backButton" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                            </svg>`
-                          
+                            </svg>`;
+
   const container7BackBtn = `<svg onclick="goBackFromAnimalList() & showPage('5'); return false & clearAnimalList()" id="backButton" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                            </svg>`
+                            </svg>`;
 
   const container6BackBtn = `<svg onclick="goBackFromAnimalPage() & showPage('7'); return false" id="backButton" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                            </svg>`
+                            </svg>`;
 
   const container8BackBtn = `<svg onclick="goBackFromEditAnimalPage() & showPage('6'); return false" id="backButton" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                            </svg>`
+                            </svg>`;
 
   const container1BackBtn = `<svg onclick="goBackFromAddLogPage() & showPage('6'); return false" id="backButton" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                            </svg>`
+                            </svg>`;
 
   const container10BackBtn = `<svg onclick="goBackFromEditUser()" id="backButton" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600 dark:text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                            </svg>`
-
+                            </svg>`;
 
   for (var i = 0; i < selection.length; i++) {
     selection[i].style.display = "none";
@@ -72,9 +77,6 @@ function showPage(sectionClicked) {
   if (document.getElementById("container3").style.display === "block") {
     title.innerText = "My Wildlife";
   }
-  // if (document.getElementById("container4").style.display === "block") {
-  //   title.innerText = "Settings";
-  // }
   if (document.getElementById("container5").style.display === "block") {
     buttonSpot.innerHTML = container5BackBtn;
   }
@@ -92,7 +94,7 @@ function showPage(sectionClicked) {
   }
   if (document.getElementById("container10").style.display === "block") {
     title.innerText = "Settings";
-    document.getElementById('container4').style.display = "none";
+    document.getElementById("container4").style.display = "none";
     showMainPages();
   }
 }
@@ -103,20 +105,16 @@ function hideSettingsHeader() {
 }
 
 function showEditUserPage() {
-
   const container = document.getElementById("pages");
   const page = document.getElementById("container10");
   page.style.display = "block";
   container.style.display = "none";
-
 }
 
 function showHideAboutPage() {
-
   const about = document.getElementById("container11");
   const pages = document.getElementById("pages");
   const container = document.getElementById("container");
-
 
   if (about.style.display === "block") {
     about.style.display = "none";
@@ -130,15 +128,8 @@ function showHideAboutPage() {
 }
 
 function hideAboutPage() {
-
   const about = document.getElementById("container11");
-  const pages = document.getElementById("pages");
-  const container = document.getElementById("container");
-
-    about.style.display = "none";
-    // container.style.display = "block";
-    // pages.style.display = "block";
-
+  about.style.display = "none";
 }
 
 function showMainPages() {
@@ -147,7 +138,7 @@ function showMainPages() {
   const header = document.getElementById("settingsHeader");
 
   container.style.display = "block";
-  pages.style.display = "block";   
+  pages.style.display = "block";
   header.style.display = "none";
 }
 
@@ -165,7 +156,7 @@ function showHideSettingsPage() {
   } else {
     settings.style.display = "block";
     container.style.display = "none";
-    pages.style.display = "none";  
+    pages.style.display = "none";
     header.style.display = "block";
   }
 }
@@ -174,25 +165,49 @@ function hideSettingsPage() {
   const settings = document.getElementById("container4");
   const pages = document.getElementById("pages");
   const container = document.getElementById("container");
-  
-    settings.style.display = "none";
-    // container.style.display = "block";
-    // pages.style.display = "block";
+
+  settings.style.display = "none";
 }
 
-// function checkAboutPage() {
+function goBack(current, prev, pageTitle, state) {
+  let currentPage = document.getElementById(current);
+  let previousPage = document.getElementById(prev);
+  let title = document.getElementById("page-title");
+  let backButton = document.getElementById("backButton");
 
-//   let about_page = document.getElementById("container11");
-//   let title = document.getElementById("page-title");
+  currentPage.style.display = "none";
+  previousPage.style.display = "block";
+  title.innerText = pageTitle;
+  backButton.style.display = state;
+}
 
-//   if (about_page.style.display == "block") {
-//     console.log("it's block");
-//     title.innerText = "About";
-//   } else {
-//     console.log("its not");
+function goBackFromAddAnimal() {
+  goBack("container2", "container3", "My Wildlife", "none");
+}
 
-//   }
-// }
+function goBackFromViewSpecies() {
+  goBack("container5", "container3", "My Wildlife", "none");
+}
+
+function goBackFromAnimalList() {
+  goBack("container7", "container5", "My Wildlife", "none");
+}
+
+function goBackFromAnimalPage() {
+  goBack("container6", "container7", "My Wildlife", "none");
+}
+
+function goBackFromEditAnimalPage() {
+  goBack("container8", "container6", "My Wildlife", "none");
+}
+
+function goBackFromAddLogPage() {
+  goBack("container1", "container6", "My Wildlife", "none");
+}
+
+function goBackFromEditUser() {
+  goBack("container10", "container4", "Settings", "none");
+}
 
 // Alerts
 function showAlert(msgtype, msg) {
@@ -286,6 +301,25 @@ function checkForLogin() {
   }
 }
 
+// Check if admin
+function checkIfAdmin(evt) {
+  evt.preventDefault();
+
+  fetch("ws/ws.php?page=check-if-admin", {
+    credentials: "include",
+  }).then(function (headers) {
+    if (headers.status === 200) {
+      localStorage.setItem("role", "admin");
+      showAdminPanel();
+    }
+  });
+}
+
+// Show admin panel to admin role
+function showAdminPanel() {
+  document.getElementById("root").removeAttribute("hidden");
+}
+
 // Validation regexes
 function validateText(text) {
   const nameRegex = /^[a-zA-Z !#$%^&*()+=\-';,.{}|":<>?~/]{2,30}$/; // Letters only, min 2, max 30
@@ -326,7 +360,6 @@ function register(evt) {
   const password = document.forms["register-form"]["password"].value;
   const formData = new FormData();
 
-  // Fetch
   formData.append(evt.target[0].name, evt.target[0].value);
   formData.append(evt.target[1].name, evt.target[1].value);
   formData.append(evt.target[2].name, evt.target[2].value);
@@ -636,7 +669,6 @@ function getSpeciesIDforDropdown_Add() {
 // Click button to send form
 function clickButtonTest() {
   let button = document.getElementById("species_id_button_1");
-
   button.click();
 }
 
@@ -869,27 +901,6 @@ function logoutClick() {
   document.getElementById("logout_button").click();
 }
 
-/* Container 6
-View individual animals page */
-
-// Individual animal page loading spinner on setTimout
-function animalSpinnerAdd() {
-  document.getElementById("page6").removeAttribute("hidden");
-  document.getElementById("loading_Page").setAttribute("hidden", "hidden");
-}
-
-function animalSpinnerRemove() {
-  window.setTimeout(function () {
-    animalSpinnerAdd();
-  }, 1000);
-  resetAnimalSpinner();
-}
-
-function resetAnimalSpinner() {
-  document.getElementById("loading_Page").removeAttribute("hidden");
-  document.getElementById("page6").setAttribute("hidden", "hidden");
-}
-
 /* Container 5
 Species list page */
 
@@ -910,7 +921,6 @@ function viewAnimals(evt) {
     }
     headers.json().then(function (body) {
       for (let i = 0; i < body.length; i++) {
-
         // Creates list
         const listContainer = document.getElementById("my_animals_list");
         const newList = document.createElement("ul");
@@ -931,21 +941,22 @@ function viewAnimals(evt) {
       }
       let spinner = document.getElementsByClassName("spinner");
 
-        for (i = 0; i < spinner.length; i++) {
-          spinner[i].innerHTML = "";
-        }
+      for (i = 0; i < spinner.length; i++) {
+        spinner[i].innerHTML = "";
+      }
     });
   });
 }
 
 // Get species ID from clicked species
 function getSpeciesID(clicked_id) {
+  let input = document.getElementById("species_id_for_form");
+  input.value = clicked_id;
+  document.getElementById("submit_speciesID_for_form").click();
 
-   let input = document.getElementById("species_id_for_form");
-   input.value = clicked_id;
-   document.getElementById("submit_speciesID_for_form").click();
-
-   setTimeout(function(){  document.getElementById("species_list_form").click(); }, 1000);
+  setTimeout(function () {
+    document.getElementById("species_list_form").click();
+  }, 1000);
 }
 
 // Species list loading spinner on setTimout
@@ -972,6 +983,27 @@ function resetSpeciesSpinner() {
     .setAttribute("hidden", "hidden");
 }
 
+/* Container 6
+View individual animals page */
+
+// Individual animal page loading spinner on setTimout
+function animalSpinnerAdd() {
+  document.getElementById("page6").removeAttribute("hidden");
+  document.getElementById("loading_Page").setAttribute("hidden", "hidden");
+}
+
+function animalSpinnerRemove() {
+  window.setTimeout(function () {
+    animalSpinnerAdd();
+  }, 1000);
+  resetAnimalSpinner();
+}
+
+function resetAnimalSpinner() {
+  document.getElementById("loading_Page").removeAttribute("hidden");
+  document.getElementById("page6").setAttribute("hidden", "hidden");
+}
+
 /* Container 7
 Map of species page */
 
@@ -991,15 +1023,15 @@ function viewOneAnimal(evt) {
   }).then(function (headers) {
     headers.json().then(function (body) {
       for (let i = 0; i < body.length; i++) {
-
-
         // Animal name on individual animal page
-        document.getElementById("animal_nickname_div").innerHTML =
-          `<span class="font-semibold text-xl">${body[i].nickname}</span>`;
+        document.getElementById(
+          "animal_nickname_div"
+        ).innerHTML = `<span class="font-semibold text-xl">${body[i].nickname}</span>`;
 
         // Animal name on add log page
-        document.getElementById("animal_nickname_div2").innerHTML =
-          `<span class="text-xl font-semibold mr-7">${body[i].nickname}</span>`;
+        document.getElementById(
+          "animal_nickname_div2"
+        ).innerHTML = `<span class="text-xl font-semibold mr-7">${body[i].nickname}</span>`;
 
         // Creates list of logs
         const listContainer = document.getElementById("logs");
@@ -1010,33 +1042,27 @@ function viewOneAnimal(evt) {
         let addLogText = `<p>No logs have been added for this animal</p><br>
         <span onclick="showPage('1'); return false" class="px-4 py-2 text-white dark:bg-green-600 bg-green-400 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">Add log</span>
         `;
-        
+
         // If no logs exist, insert button to add log. Otherwise, show all logs
         if (body[i].title === null) {
-
           let result = addLogText;
           newListItem.innerHTML = result;
           newList.appendChild(newListItem);
           listContainer.appendChild(newList);
-
         } else {
+          let result =
+          `<div class="pt-4">
+            <div class="mb-2">
+                <span class="text-gray-600 font-bold">${body[i].title}</span>
+                <span class="float-right inset-y-0 right-0 text-gray-400">${dateDiff}</span>
+            </div>
+            <div class="text-gray-800 border-b border-green-200 pb-3">${body[i].text}</div>
+          </div>`;
 
-          let result = `<div class="pt-4">
-          <div class="mb-2">
-              <span class="text-gray-600 font-bold">${body[i].title}</span>
-              <span class="float-right inset-y-0 right-0 text-gray-400">${dateDiff}</span>
-          </div>
-          <div class="text-gray-800 border-b border-green-200 pb-3">${body[i].text}</div>
-      </div>`;
-
-      newListItem.innerHTML = result;
-      newList.appendChild(newListItem);
-      listContainer.appendChild(newList);
+          newListItem.innerHTML = result;
+          newList.appendChild(newListItem);
+          listContainer.appendChild(newList);
         }
-
-        // newListItem.innerHTML = result;
-        // newList.appendChild(newListItem);
-        // listContainer.appendChild(newList);
 
         // Passes nickname to edit animal page
         passDataForEditAnimalName(body[i].nickname);
@@ -1104,7 +1130,6 @@ function viewAnimalsPerSpecies(evt) {
   }).then(function (headers) {
     headers.json().then(function (body) {
       for (let i = 0; i < body.length; i++) {
-
         // Creates list
         const listContainer = document.getElementById("list_of_animals_div");
         const newList = document.createElement("ul");
@@ -1117,15 +1142,16 @@ function viewAnimalsPerSpecies(evt) {
 
         const imagePath = "http://localhost:8080/ws/uploads/";
 
-        result = `<div class="grid grid-cols-3 items-center border-r rounded shadow border-l dark:bg-gray-300 bg-white border-t border-gray-300 py-2">
-                                <div class="px-3 font-bold col-span-2" onclick="getAnimalID(this.id) & button.click() & map_button.click() & animalSpinnerRemove() & showPage('6'); return false" id="${body[i].animal_id}">
-                                    <div class="grid justify-items-center w-20 dark:text-gray-600">
-                                      <div class="w-20 h-20 my-1 justify-self-center rounded-full shadow bg-cover border-none" style="background-image: url(${imagePath}${body[i].image})"></div>
-                                      <p>${body[i].nickname}</p>
-                                    </div>
-                                </div>
-                                <div class="justify-self-end pr-3 dark:text-gray-600 text-gray-500">${dateDiff}</div>
-                            </div>`;
+        result =
+        `<div class="grid grid-cols-3 items-center border-r rounded shadow border-l dark:bg-gray-300 bg-white border-t border-gray-300 py-2">
+            <div class="px-3 font-bold col-span-2" onclick="getAnimalID(this.id) & button.click() & map_button.click() & animalSpinnerRemove() & showPage('6'); return false" id="${body[i].animal_id}">
+                <div class="grid justify-items-center w-20 dark:text-gray-600">
+                  <div class="w-20 h-20 my-1 justify-self-center rounded-full shadow bg-cover border-none" style="background-image: url(${imagePath}${body[i].image})"></div>
+                  <p>${body[i].nickname}</p>
+                </div>
+            </div>
+            <div class="justify-self-end pr-3 dark:text-gray-600 text-gray-500">${dateDiff}</div>
+        </div>`;
 
         newListItem.innerHTML = result;
         newList.appendChild(newListItem);
@@ -1306,29 +1332,9 @@ function displayMap() {
   document.getElementById("map").style.display = "block";
 }
 
-// Put markers on map from fetch
-// function initMap(long, lat) {
-//   let data = { lat: parseFloat(lat), lng: parseFloat(long) };
-
-//   const map = new google.maps.Map(document.getElementById("map"), {
-//     zoom: 13,
-//     center: data,
-//   });
-
-//   const marker = new google.maps.Marker({
-//     position: data,
-//     map: map,
-//   });
-// }
-
-// Note: This example requires that you consent to location sharing when
-// prompted by your browser. If you see the error "The Geolocation service
-// failed.", it means you probably did not give permission for the browser to
-// locate you.
 let map, infoWindow;
 
 function initMap(long, lat) {
-
   let data = { lat: parseFloat(lat), lng: parseFloat(long) };
 
   map = new google.maps.Map(document.getElementById("map"), {
@@ -1339,14 +1345,14 @@ function initMap(long, lat) {
     scaleControl: false,
     streetViewControl: false,
     rotateControl: false,
-    fullscreenControl: true
+    fullscreenControl: true,
   });
 
   const marker = new google.maps.Marker({
     position: data,
-    map: map
+    map: map,
   });
-  
+
   infoWindow = new google.maps.InfoWindow();
 
   const locationButton = document.createElement("button");
@@ -1389,11 +1395,7 @@ function sendCoords(lng, lat) {
 }
 
 function fetchSendCoords(evt) {
-
-//  console.log(lat);
-//  console.log(lng);
-
-evt.preventDefault();
+  evt.preventDefault();
   const formData = new FormData();
 
   formData.append(evt.target[0].name, evt.target[0].value);
@@ -1516,25 +1518,6 @@ function humanized_time_span(date, ref_date, date_formats, time_units) {
   return render_date(get_format());
 }
 
-// Check if admin
-function checkIfAdmin(evt) {
-  evt.preventDefault();
-
-  fetch("ws/ws.php?page=check-if-admin", {
-    credentials: "include",
-  }).then(function (headers) {
-    if (headers.status === 200) {
-      localStorage.setItem("role", "admin");
-      showAdminPanel();
-    }
-  });
-}
-
-// Show admin panel to admin role
-function showAdminPanel() {
-  document.getElementById("root").removeAttribute("hidden");
-}
-
 // Get user details
 function getUserDetails() {
   fetch("ws/ws.php?page=view-user-details", {
@@ -1579,7 +1562,6 @@ function getAnimalDetails(evt) {
   }).then(function (headers) {
     headers.json().then(function (body) {
       for (let i = 0; i < body.length; i++) {
-
         // Both the value (when clicking 'edit') and the text before/after edit, receives the name of data
         let animalNameLabel = document.getElementById("animalNameLabel");
         let animalNameInput = document.getElementById("animalNameInput");
@@ -1793,7 +1775,6 @@ function getAnimalIDForDetails() {
 }
 
 // Edit animal name
-
 function doEditAnimalName(evt) {
   evt.preventDefault();
   const formData = new FormData();
@@ -1832,7 +1813,6 @@ function editAnimalNameClick() {
 }
 
 // Edit animal gender
-
 function doEditAnimalGender(evt) {
   evt.preventDefault();
   const formData = new FormData();
@@ -1871,7 +1851,6 @@ function editAnimalGenderClick() {
 }
 
 // Edit animal maturity
-
 function doEditAnimalMaturity(evt) {
   evt.preventDefault();
   const formData = new FormData();
@@ -1910,7 +1889,6 @@ function editAnimalMaturityClick() {
 }
 
 // Edit animal notes
-
 function doEditAnimalNotes(evt) {
   evt.preventDefault();
   const formData = new FormData();
@@ -1949,7 +1927,6 @@ function editAnimalNotesClick() {
 }
 
 // Edit animal type
-
 function afterAnimalTypeEdit() {
   document.getElementById("animalTypeLabel").removeAttribute("hidden");
   document.getElementById("editAnimalTypeButton").removeAttribute("hidden");
@@ -1967,7 +1944,6 @@ function editAnimalType() {
 }
 
 // Edit animal species
-
 function afterAnimalSpeciesEdit() {
   afterEditData(
     "animalSpeciesLabel",
@@ -2061,7 +2037,6 @@ function showUnsubscribeModal() {
 }
 
 function addNewSpecies() {
-  console.log("yep");
   document.getElementById("add_species_modal").removeAttribute("hidden");
 }
 
@@ -2114,7 +2089,6 @@ function viewPhoto(evt) {
 }
 
 // Post photo
-
 const sample_image = document.getElementsByName("sample_image")[0];
 
 sample_image.addEventListener("change", () => {
@@ -2122,8 +2096,7 @@ sample_image.addEventListener("change", () => {
 });
 
 const upload_image = (file) => {
-  // check file type
-
+  // Check file type
   if (!["image/jpeg", "image/png"].includes(file.type)) {
     document.getElementById("uploaded_image").innerHTML =
       "<div>Only .jpg and .png image are allowed</div>";
@@ -2133,7 +2106,7 @@ const upload_image = (file) => {
     return;
   }
 
-  // check file size (< 2MB)
+  // Check file size (< 2MB)
   if (file.size > 2 * 1024 * 1024) {
     document.getElementById("uploaded_image").innerHTML =
       "<div>File must be less than 2 MB</div>";
@@ -2154,8 +2127,7 @@ const upload_image = (file) => {
       return response.json();
     })
     .then(function (responseData) {
-
-    //   Hide placeholder image
+      //   Hide placeholder image
       hidePlaceholder();
 
       // Show uploaded image
@@ -2165,10 +2137,10 @@ const upload_image = (file) => {
         ')"></div>';
       document.getElementsByName("sample_image")[0].value = "";
 
-    //   Change 'add image' button to 'change image'
+      // Change 'add image' button to 'change image'
       document.getElementById("addImageLabel").innerHTML = "Change image";
 
-    //   Remove /uploads file path for form to find image ID, to add image ID to new animal
+      // Remove /uploads file path for form to find image ID, to add image ID to new animal
       let text = responseData["image_source"];
       let newValue = text.replace("uploads/", "");
 
@@ -2178,7 +2150,6 @@ const upload_image = (file) => {
 };
 
 // Edit animal photo
-
 const sample_image_edit = document.getElementsByName("sample_image_edit")[0];
 
 sample_image_edit.addEventListener("change", () => {
@@ -2186,8 +2157,7 @@ sample_image_edit.addEventListener("change", () => {
 });
 
 const upload_image_edit = (file) => {
-  // check file type
-
+  // Check file type
   if (!["image/jpeg", "image/png"].includes(file.type)) {
     document.getElementById("uploaded_image_edit").innerHTML =
       "<div>Only .jpg and .png image are allowed</div>";
@@ -2197,7 +2167,7 @@ const upload_image_edit = (file) => {
     return;
   }
 
-  // check file size (< 2MB)
+  // Check file size (< 2MB)
   if (file.size > 2 * 1024 * 1024) {
     document.getElementById("uploaded_image_edit").innerHTML =
       "<div>File must be less than 2 MB</div>";
@@ -2207,7 +2177,6 @@ const upload_image_edit = (file) => {
   }
 
   const form_data = new FormData();
-
   form_data.append("sample_image_edit", file);
 
   fetch("ws/ws.php?page=edit-image", {
@@ -2229,9 +2198,9 @@ const upload_image_edit = (file) => {
       document.getElementsByName("sample_image_edit")[0].value = "";
 
       // Change 'add image' button to 'change image'
-    //   document.getElementById("addImageLabel").innerHTML = "Change image";
+      //   document.getElementById("addImageLabel").innerHTML = "Change image";
 
-      // Remove /uploads file path for form to find image ID, to add image ID to new animal
+      // Remove/uploads file path for form to find image ID, to add image ID to new animal
       let text = responseData["image_source"];
       let newValue = text.replace("uploads/", "");
 
@@ -2246,21 +2215,21 @@ function hidePlaceholder() {
 }
 
 function editHidePlaceholder() {
-    let image = document.getElementById("placeholder_image_edit");
-    image.style.display = "none";
-  }
+  let image = document.getElementById("placeholder_image_edit");
+  image.style.display = "none";
+}
 
 function addImageClick() {
   document.getElementById("file-input").click();
 }
 
 function editImageClick() {
-    document.getElementById("file-input_edit").click();
-  }
+  document.getElementById("file-input_edit").click();
+}
 
 function editImageClick() {
-    document.getElementById("file-input_edit").click();
-  }
+  document.getElementById("file-input_edit").click();
+}
 
 // Get image ID for image add
 function getImageId(evt) {
@@ -2285,125 +2254,88 @@ function getImageId(evt) {
 
 // Get image ID for image edit
 function editGetImageId(evt) {
-    evt.preventDefault();
-    const formData = new FormData();
-  
-    formData.append(evt.target[0].name, evt.target[0].value);
-  
-    fetch(evt.target.action, {
-      method: "POST",
-      body: formData,
-      credentials: "include",
-    }).then(function (headers) {
-      headers.json().then(function (body) {
-        for (let i = 0; i < body.length; i++) {
-          let input = document.getElementById("image_id_edit");
-          input.value = body[i].image_id;
-        }
-      });
+  evt.preventDefault();
+  const formData = new FormData();
+
+  formData.append(evt.target[0].name, evt.target[0].value);
+
+  fetch(evt.target.action, {
+    method: "POST",
+    body: formData,
+    credentials: "include",
+  }).then(function (headers) {
+    headers.json().then(function (body) {
+      for (let i = 0; i < body.length; i++) {
+        let input = document.getElementById("image_id_edit");
+        input.value = body[i].image_id;
+      }
     });
-    setTimeout(function(){ document.getElementById("edit_image_button").click(); }, 3000);}
+  });
+  setTimeout(function () {
+    document.getElementById("edit_image_button").click();
+  }, 3000);
+}
 
 // Edit animal image
 function doEditAnimalImage(evt) {
-    evt.preventDefault();
-  
-    const formData = new FormData();
-  
-    formData.append(evt.target[0].name, evt.target[0].value);
-    formData.append(evt.target[1].name, evt.target[1].value);
-  
-    fetch(evt.target.action, {
-      method: "POST",
-      body: formData,
-      credentials: "include",
-    });
+  evt.preventDefault();
+
+  const formData = new FormData();
+
+  formData.append(evt.target[0].name, evt.target[0].value);
+  formData.append(evt.target[1].name, evt.target[1].value);
+
+  fetch(evt.target.action, {
+    method: "POST",
+    body: formData,
+    credentials: "include",
+  });
 }
 
 // Submit edit image form
 function doEditImage() {
-    document.getElementById("edit_image_button").click();
+  document.getElementById("edit_image_button").click();
 }
 
 function clearImage() {
-    document.getElementById("uploaded_image_edit").innerHTML = "";
+  document.getElementById("uploaded_image_edit").innerHTML = "";
 }
 
 // Get species name from species ID
 function getSpeciesFromID(evt) {
-    evt.preventDefault();
-    const formData = new FormData();
-  
-    formData.append(evt.target[0].name, evt.target[0].value);
-  
-    fetch(evt.target.action, {
-      method: "POST",
-      body: formData,
-      credentials: "include",
-    }).then(function (headers) {
-        headers.json().then(function (body) {
-            for (let i = 0; i < body.length; i++) {
+  evt.preventDefault();
+  const formData = new FormData();
 
-                let input = document.getElementById("species_for_list");
-                input.value = body[i].name;
+  formData.append(evt.target[0].name, evt.target[0].value);
 
-                let input2 = document.getElementById("species_name_for_count");
-                input2.value = body[i].name;
+  fetch(evt.target.action, {
+    method: "POST",
+    body: formData,
+    credentials: "include",
+  }).then(function (headers) {
+    headers.json().then(function (body) {
+      for (let i = 0; i < body.length; i++) {
+        let input = document.getElementById("species_for_list");
+        input.value = body[i].name;
 
-                // Outputs species to species page, individual animal page, add log page, edit animal page
-                const species_name = document.getElementById("species_name_div");
-                const species_name4 = document.getElementById("species_name_div4");
-                const species_name5 = document.getElementById("species_name_div5");
-                const species_name6 = document.getElementById("animalSpeciesLabel");
+        let input2 = document.getElementById("species_name_for_count");
+        input2.value = body[i].name;
 
-                species_name.innerHTML = `${body[i].name}`;
-                species_name4.innerHTML = `${body[i].name}`;
-                species_name5.innerHTML = `<span class="mr-7">${body[i].name}</span>`;
-                species_name6.innerHTML = `${body[i].name}`;
-                
-                setTimeout(function(){  document.getElementById("species_count_form").click(); }, 1000);
-            }
-        });
+        // Outputs species to species page, individual animal page, add log page, edit animal page
+        const species_name = document.getElementById("species_name_div");
+        const species_name4 = document.getElementById("species_name_div4");
+        const species_name5 = document.getElementById("species_name_div5");
+        const species_name6 = document.getElementById("animalSpeciesLabel");
+
+        species_name.innerHTML = `${body[i].name}`;
+        species_name4.innerHTML = `${body[i].name}`;
+        species_name5.innerHTML = `<span class="mr-7">${body[i].name}</span>`;
+        species_name6.innerHTML = `${body[i].name}`;
+
+        setTimeout(function () {
+          document.getElementById("species_count_form").click();
+        }, 1000);
+      }
     });
-}
-
-function goBack(current, prev, pageTitle, state) {
-
-  let currentPage = document.getElementById(current);
-  let previousPage = document.getElementById(prev);
-  let title = document.getElementById("page-title");
-  let backButton = document.getElementById("backButton");
-
-  currentPage.style.display = "none";
-  previousPage.style.display = "block";
-  title.innerText = pageTitle;
-  backButton.style.display = state;
-}
-
-function goBackFromAddAnimal() {
-  goBack("container2", "container3", "My Wildlife", "none");
-}
-
-function goBackFromViewSpecies() {
-  goBack("container5", "container3", "My Wildlife", "none");
-}
-
-function goBackFromAnimalList() {
-  goBack("container7", "container5", "My Wildlife", "none");
-}
-
-function goBackFromAnimalPage() {
-  goBack("container6", "container7", "My Wildlife", "none");
-}
-
-function goBackFromEditAnimalPage() {
-  goBack("container8", "container6", "My Wildlife", "none");
-}
-
-function goBackFromAddLogPage() {
-  goBack("container1", "container6", "My Wildlife", "none");
-}
-
-function goBackFromEditUser() {
-  goBack("container10", "container4", "Settings", "none");
+  });
 }
