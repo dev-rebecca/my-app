@@ -278,6 +278,36 @@ function getUserID() {
   });
 }
 
+
+// Get user details
+function getUserDetails() {
+  fetch("ws/ws.php?page=view-user-details", {
+    credentials: "include",
+  }).then(function (headers) {
+    headers.json().then(function (body) {
+      for (let i = 0; i < body.length; i++) {
+        let firstNameLabel = document.getElementById("firstNameLabel");
+        let firstNameInput = document.getElementById("firstNameInput");
+
+        let lastNameLabel = document.getElementById("lastNameLabel");
+        let lastNameInput = document.getElementById("lastNameInput");
+
+        let emailLabel = document.getElementById("emailLabel");
+        let emailInput = document.getElementById("emailInput");
+
+        firstNameLabel.innerHTML = body[i].first_name;
+        firstNameInput.value = body[i].first_name;
+
+        lastNameLabel.innerHTML = body[i].last_name;
+        lastNameInput.value = body[i].last_name;
+
+        emailLabel.innerHTML = body[i].email;
+        emailInput.value = body[i].email;
+      }
+    });
+  });
+}
+
 // Get animal ID
 function getAnimalID(clicked_id) {
   // Finds animal_id class name and changes value to animal IDs of animal clicked on
@@ -1004,6 +1034,10 @@ function resetAnimalSpinner() {
   document.getElementById("page6").setAttribute("hidden", "hidden");
 }
 
+function clearImage() {
+  document.getElementById("uploaded_image_edit").innerHTML = "";
+}
+
 /* Container 7
 Map of species page */
 
@@ -1162,6 +1196,45 @@ function viewAnimalsPerSpecies(evt) {
         document.getElementById("gender").innerHTML = body[i].gender;
         document.getElementById("maturity").innerHTML = body[i].maturity;
         document.getElementById("notes").innerHTML = body[i].notes;
+      }
+    });
+  });
+}
+
+// Get species name from species ID
+function getSpeciesFromID(evt) {
+  evt.preventDefault();
+  const formData = new FormData();
+
+  formData.append(evt.target[0].name, evt.target[0].value);
+
+  fetch(evt.target.action, {
+    method: "POST",
+    body: formData,
+    credentials: "include",
+  }).then(function (headers) {
+    headers.json().then(function (body) {
+      for (let i = 0; i < body.length; i++) {
+        let input = document.getElementById("species_for_list");
+        input.value = body[i].name;
+
+        let input2 = document.getElementById("species_name_for_count");
+        input2.value = body[i].name;
+
+        // Outputs species to species page, individual animal page, add log page, edit animal page
+        const species_name = document.getElementById("species_name_div");
+        const species_name4 = document.getElementById("species_name_div4");
+        const species_name5 = document.getElementById("species_name_div5");
+        const species_name6 = document.getElementById("animalSpeciesLabel");
+
+        species_name.innerHTML = `${body[i].name}`;
+        species_name4.innerHTML = `${body[i].name}`;
+        species_name5.innerHTML = `<span class="mr-7">${body[i].name}</span>`;
+        species_name6.innerHTML = `${body[i].name}`;
+
+        setTimeout(function () {
+          document.getElementById("species_count_form").click();
+        }, 1000);
       }
     });
   });
@@ -1518,36 +1591,6 @@ function humanized_time_span(date, ref_date, date_formats, time_units) {
   return render_date(get_format());
 }
 
-// Get user details
-function getUserDetails() {
-  fetch("ws/ws.php?page=view-user-details", {
-    credentials: "include",
-  }).then(function (headers) {
-    headers.json().then(function (body) {
-      for (let i = 0; i < body.length; i++) {
-        // Both the value (when clicking 'edit') and the text before/after edit, receives the name of data
-        let firstNameLabel = document.getElementById("firstNameLabel");
-        let firstNameInput = document.getElementById("firstNameInput");
-
-        let lastNameLabel = document.getElementById("lastNameLabel");
-        let lastNameInput = document.getElementById("lastNameInput");
-
-        let emailLabel = document.getElementById("emailLabel");
-        let emailInput = document.getElementById("emailInput");
-
-        firstNameLabel.innerHTML = body[i].first_name;
-        firstNameInput.value = body[i].first_name;
-
-        lastNameLabel.innerHTML = body[i].last_name;
-        lastNameInput.value = body[i].last_name;
-
-        emailLabel.innerHTML = body[i].email;
-        emailInput.value = body[i].email;
-      }
-    });
-  });
-}
-
 // Get animal details
 function getAnimalDetails(evt) {
   evt.preventDefault();
@@ -1615,158 +1658,6 @@ function afterEditData(label, editButton, form, saveButton) {
   document.getElementById(editButton).removeAttribute("hidden");
   document.getElementById(form).setAttribute("hidden", "hidden");
   document.getElementById(saveButton).setAttribute("hidden", "hidden");
-}
-
-// Edit first name
-function doEditFirstName(evt) {
-  evt.preventDefault();
-  const formData = new FormData();
-
-  formData.append(evt.target[0].name, evt.target[0].value);
-
-  fetch(evt.target.action, {
-    method: "POST",
-    body: formData,
-    credentials: "include",
-  });
-  afterFirstNameEdit();
-}
-
-function afterFirstNameEdit() {
-  afterEditData(
-    "firstNameLabel",
-    "editFirstNameButton",
-    "editFirstNameForm",
-    "clickFirstNameButton"
-  );
-}
-
-function editFirstName() {
-  editData(
-    "firstNameLabel",
-    "editFirstNameButton",
-    "editFirstNameForm",
-    "clickFirstNameButton"
-  );
-}
-
-function editFirstNameClick() {
-  document.getElementById("editFirstNameSubmit").click();
-  getUserDetails();
-}
-
-// Edit last name
-function doEditLastName(evt) {
-  evt.preventDefault();
-  const formData = new FormData();
-
-  formData.append(evt.target[0].name, evt.target[0].value);
-
-  fetch(evt.target.action, {
-    method: "POST",
-    body: formData,
-    credentials: "include",
-  });
-  afterLastNameEdit();
-}
-
-function afterLastNameEdit() {
-  afterEditData(
-    "lastNameLabel",
-    "editLastNameButton",
-    "editLastNameForm",
-    "clickLastNameButton"
-  );
-}
-
-function editLastName() {
-  editData(
-    "lastNameLabel",
-    "editLastNameButton",
-    "editLastNameForm",
-    "clickLastNameButton"
-  );
-}
-
-function editLastNameClick() {
-  document.getElementById("editLastNameSubmit").click();
-  getUserDetails();
-}
-
-// Edit email
-function doEditEmail(evt) {
-  evt.preventDefault();
-  const formData = new FormData();
-
-  formData.append(evt.target[0].name, evt.target[0].value);
-
-  fetch(evt.target.action, {
-    method: "POST",
-    body: formData,
-    credentials: "include",
-  });
-  afterEmailEdit();
-}
-
-function afterEmailEdit() {
-  afterEditData(
-    "emailLabel",
-    "editEmailButton",
-    "editEmailForm",
-    "clickEmailButton"
-  );
-}
-
-function editEmail() {
-  editData(
-    "emailLabel",
-    "editEmailButton",
-    "editEmailForm",
-    "clickEmailButton"
-  );
-}
-
-function editEmailClick() {
-  document.getElementById("editEmailSubmit").click();
-  getUserDetails();
-}
-
-// Edit password
-function doEditPassword(evt) {
-  evt.preventDefault();
-  const formData = new FormData();
-
-  formData.append(evt.target[0].name, evt.target[0].value);
-
-  fetch(evt.target.action, {
-    method: "POST",
-    body: formData,
-    credentials: "include",
-  });
-  afterPasswordEdit();
-}
-
-function afterPasswordEdit() {
-  afterEditData(
-    "passwordLabel",
-    "editPasswordButton",
-    "editPasswordForm",
-    "clickPasswordButton"
-  );
-}
-
-function editPassword() {
-  editData(
-    "passwordLabel",
-    "editPasswordButton",
-    "editPasswordForm",
-    "clickPasswordButton"
-  );
-}
-
-function editPasswordClick() {
-  document.getElementById("editPasswordSubmit").click();
-  getUserDetails();
 }
 
 // Get animal ID for editing
@@ -1971,69 +1862,6 @@ function editAnimalSpeciesClick() {
 
 function openSpeciesDropdown() {
   document.getElementById("editAnimalSpeciesButton").click();
-}
-
-function showUnsubscribeModal() {
-  let container = document.getElementById("body");
-  container.innerHTML = `<div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        <div class="flex justify-center h-auto self-center pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <!--
-            Background overlay, show/hide based on modal state.
-    
-            Entering: "ease-out duration-300"
-            From: "opacity-0"
-            To: "opacity-100"
-            Leaving: "ease-in duration-200"
-            From: "opacity-100"
-            To: "opacity-0"
-        -->
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-    
-        <!-- This element is to trick the browser into centering the modal contents. -->
-        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-    
-        <!--
-            Modal panel, show/hide based on modal state.
-    
-            Entering: "ease-out duration-300"
-            From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            To: "opacity-100 translate-y-0 sm:scale-100"
-            Leaving: "ease-in duration-200"
-            From: "opacity-100 translate-y-0 sm:scale-100"
-            To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-        -->
-            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="sm:flex sm:items-start">
-                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                            <!-- Heroicon name: outline/exclamation -->
-                            <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                            </svg>
-                        </div>
-                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                                Deactivate account
-                            </h3>
-                            <div class="mt-2">
-                                <p class="text-sm text-gray-500">
-                                Are you sure you want to deactivate your account? All of your data will be permanently removed. This action cannot be undone.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
-                        Deactivate
-                    </button>
-                    <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                        Cancel
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>`;
 }
 
 function addNewSpecies() {
@@ -2292,17 +2120,12 @@ function doEditAnimalImage(evt) {
   });
 }
 
-// Submit edit image form
-function doEditImage() {
-  document.getElementById("edit_image_button").click();
-}
+/* Container 10
+Account details */
 
-function clearImage() {
-  document.getElementById("uploaded_image_edit").innerHTML = "";
-}
 
-// Get species name from species ID
-function getSpeciesFromID(evt) {
+// Edit first name
+function doEditFirstName(evt) {
   evt.preventDefault();
   const formData = new FormData();
 
@@ -2312,30 +2135,143 @@ function getSpeciesFromID(evt) {
     method: "POST",
     body: formData,
     credentials: "include",
-  }).then(function (headers) {
-    headers.json().then(function (body) {
-      for (let i = 0; i < body.length; i++) {
-        let input = document.getElementById("species_for_list");
-        input.value = body[i].name;
-
-        let input2 = document.getElementById("species_name_for_count");
-        input2.value = body[i].name;
-
-        // Outputs species to species page, individual animal page, add log page, edit animal page
-        const species_name = document.getElementById("species_name_div");
-        const species_name4 = document.getElementById("species_name_div4");
-        const species_name5 = document.getElementById("species_name_div5");
-        const species_name6 = document.getElementById("animalSpeciesLabel");
-
-        species_name.innerHTML = `${body[i].name}`;
-        species_name4.innerHTML = `${body[i].name}`;
-        species_name5.innerHTML = `<span class="mr-7">${body[i].name}</span>`;
-        species_name6.innerHTML = `${body[i].name}`;
-
-        setTimeout(function () {
-          document.getElementById("species_count_form").click();
-        }, 1000);
-      }
-    });
   });
+  afterFirstNameEdit();
+}
+
+function afterFirstNameEdit() {
+  afterEditData(
+    "firstNameLabel",
+    "editFirstNameButton",
+    "editFirstNameForm",
+    "clickFirstNameButton"
+  );
+}
+
+function editFirstName() {
+  editData(
+    "firstNameLabel",
+    "editFirstNameButton",
+    "editFirstNameForm",
+    "clickFirstNameButton"
+  );
+}
+
+function editFirstNameClick() {
+  document.getElementById("editFirstNameSubmit").click();
+  getUserDetails();
+}
+
+// Edit last name
+function doEditLastName(evt) {
+  evt.preventDefault();
+  const formData = new FormData();
+
+  formData.append(evt.target[0].name, evt.target[0].value);
+
+  fetch(evt.target.action, {
+    method: "POST",
+    body: formData,
+    credentials: "include",
+  });
+  afterLastNameEdit();
+}
+
+function afterLastNameEdit() {
+  afterEditData(
+    "lastNameLabel",
+    "editLastNameButton",
+    "editLastNameForm",
+    "clickLastNameButton"
+  );
+}
+
+function editLastName() {
+  editData(
+    "lastNameLabel",
+    "editLastNameButton",
+    "editLastNameForm",
+    "clickLastNameButton"
+  );
+}
+
+function editLastNameClick() {
+  document.getElementById("editLastNameSubmit").click();
+  getUserDetails();
+}
+
+// Edit email
+function doEditEmail(evt) {
+  evt.preventDefault();
+  const formData = new FormData();
+
+  formData.append(evt.target[0].name, evt.target[0].value);
+
+  fetch(evt.target.action, {
+    method: "POST",
+    body: formData,
+    credentials: "include",
+  });
+  afterEmailEdit();
+}
+
+function afterEmailEdit() {
+  afterEditData(
+    "emailLabel",
+    "editEmailButton",
+    "editEmailForm",
+    "clickEmailButton"
+  );
+}
+
+function editEmail() {
+  editData(
+    "emailLabel",
+    "editEmailButton",
+    "editEmailForm",
+    "clickEmailButton"
+  );
+}
+
+function editEmailClick() {
+  document.getElementById("editEmailSubmit").click();
+  getUserDetails();
+}
+
+// Edit password
+function doEditPassword(evt) {
+  evt.preventDefault();
+  const formData = new FormData();
+
+  formData.append(evt.target[0].name, evt.target[0].value);
+
+  fetch(evt.target.action, {
+    method: "POST",
+    body: formData,
+    credentials: "include",
+  });
+  afterPasswordEdit();
+}
+
+function afterPasswordEdit() {
+  afterEditData(
+    "passwordLabel",
+    "editPasswordButton",
+    "editPasswordForm",
+    "clickPasswordButton"
+  );
+}
+
+function editPassword() {
+  editData(
+    "passwordLabel",
+    "editPasswordButton",
+    "editPasswordForm",
+    "clickPasswordButton"
+  );
+}
+
+function editPasswordClick() {
+  document.getElementById("editPasswordSubmit").click();
+  getUserDetails();
 }
